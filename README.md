@@ -1,7 +1,7 @@
 # Skin Analyzer — Frontend
 
 Interface React para análise de tom de pele via upload ou câmera.
-
+ 
 ## Pré-requisitos
 
 - Node.js 18+
