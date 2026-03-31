@@ -26,11 +26,11 @@ export function useCamera() {
       }
     } catch (err) {
       if (err.name === 'NotAllowedError') {
-        setError('Permissão para câmera negada. Verifique as configurações do navegador.')
+        setError('Camera permission denied. Check your browser settings.')
       } else if (err.name === 'NotFoundError') {
-        setError('Nenhuma câmera encontrada neste dispositivo.')
+        setError('No camera found on this device.')
       } else {
-        setError('Não foi possível acessar a câmera. Tente novamente.')
+        setError('Could not access the camera. Please try again.')
       }
     }
   }, [])

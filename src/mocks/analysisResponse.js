@@ -10,7 +10,7 @@ export const mockAnalysisResponse = {
       oleosidade: 'alta',
       imperfeicoes: ['poro_dilatado', 'brilho_excessivo'],
       uniformidade: 6.5,
-      notas: 'Região com tendência oleosa e poros visíveis',
+      notas: 'Area with oily tendency and visible pores',
     },
     bochecha_e: {
       tom_hex: '#c99070',
@@ -19,7 +19,7 @@ export const mockAnalysisResponse = {
       oleosidade: 'normal',
       imperfeicoes: ['mancha_solar'],
       uniformidade: 7.8,
-      notas: 'Tom uniforme com pequena mancha solar',
+      notas: 'Even tone with a small sun spot',
     },
     bochecha_d: {
       tom_hex: '#cb9272',
@@ -28,7 +28,7 @@ export const mockAnalysisResponse = {
       oleosidade: 'normal',
       imperfeicoes: [],
       uniformidade: 8.2,
-      notas: 'Região bem equilibrada e uniforme',
+      notas: 'Well-balanced and uniform region',
     },
     nariz: {
       tom_hex: '#bf7f62',
@@ -37,7 +37,7 @@ export const mockAnalysisResponse = {
       oleosidade: 'muito_alta',
       imperfeicoes: ['poro_dilatado', 'cravos', 'brilho_excessivo'],
       uniformidade: 5.1,
-      notas: 'Zona T com alta oleosidade e cravos visíveis',
+      notas: 'T-zone with high oiliness and visible blackheads',
     },
     queixo: {
       tom_hex: '#c68a6d',
@@ -46,7 +46,7 @@ export const mockAnalysisResponse = {
       oleosidade: 'normal',
       imperfeicoes: ['acne_leve'],
       uniformidade: 7.0,
-      notas: 'Leve acne na região do queixo',
+      notas: 'Mild acne in the chin area',
     },
   },
   comparacao_tons: {

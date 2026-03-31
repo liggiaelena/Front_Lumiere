@@ -1,31 +1,31 @@
 export function fitzpatrickLabel(n) {
   const labels = {
-    1: 'Tipo I — Pele muito clara, sempre queima, nunca bronzeia',
-    2: 'Tipo II — Pele clara, quase sempre queima, raramente bronzeia',
-    3: 'Tipo III — Pele média, às vezes queima, bronzeia gradualmente',
-    4: 'Tipo IV — Pele oliva, raramente queima, bronzeia facilmente',
-    5: 'Tipo V — Pele morena escura, muito raramente queima',
-    6: 'Tipo VI — Pele negra, nunca queima',
+    1: 'Type I — Very fair skin, always burns, never tans',
+    2: 'Type II — Fair skin, usually burns, rarely tans',
+    3: 'Type III — Medium skin, sometimes burns, gradually tans',
+    4: 'Type IV — Olive skin, rarely burns, tans easily',
+    5: 'Type V — Dark brown skin, very rarely burns',
+    6: 'Type VI — Deeply pigmented skin, never burns',
   }
-  return labels[n] || 'Tom desconhecido'
+  return labels[n] || 'Unknown skin type'
 }
 
 export function subtomLabel(s) {
   const labels = {
-    quente: 'Quente (dourado, pêssego, amarelado)',
-    frio: 'Frio (rosado, avermelhado, azulado)',
-    neutro: 'Neutro (equilíbrio entre quente e frio)',
+    quente: 'Warm (golden, peachy, yellowish)',
+    frio: 'Cool (rosy, reddish, bluish)',
+    neutro: 'Neutral (balance of warm and cool)',
   }
   return labels[s] || s
 }
 
 export function oleosidadeLabel(o) {
   const labels = {
-    seca: 'Seca',
+    seca: 'Dry',
     normal: 'Normal',
-    mista: 'Mista',
-    alta: 'Oleosa',
-    muito_alta: 'Muito oleosa',
+    mista: 'Combination',
+    alta: 'Oily',
+    muito_alta: 'Very oily',
   }
   return labels[o] || o
 }
@@ -37,36 +37,36 @@ export function deltaToPercent(delta) {
 
 export function imperfeicaoLabel(tipo) {
   const labels = {
-    poro_dilatado: 'Poro dilatado',
-    brilho_excessivo: 'Brilho excessivo',
-    mancha_solar: 'Mancha solar',
-    cravos: 'Cravos',
-    acne_leve: 'Acne leve',
-    acne_moderada: 'Acne moderada',
-    acne_severa: 'Acne severa',
-    olheira: 'Olheira',
-    rugas: 'Rugas',
-    hiperpigmentacao: 'Hiperpigmentação',
+    poro_dilatado: 'Enlarged pores',
+    brilho_excessivo: 'Excess shine',
+    mancha_solar: 'Sun spot',
+    cravos: 'Blackheads',
+    acne_leve: 'Mild acne',
+    acne_moderada: 'Moderate acne',
+    acne_severa: 'Severe acne',
+    olheira: 'Dark circles',
+    rugas: 'Wrinkles',
+    hiperpigmentacao: 'Hyperpigmentation',
   }
   return labels[tipo] || tipo
 }
 
 export function intensidadeLabel(i) {
   const labels = {
-    leve: 'Leve',
-    moderada: 'Moderada',
-    alta: 'Alta',
+    leve: 'Mild',
+    moderada: 'Moderate',
+    alta: 'High',
   }
   return labels[i] || i
 }
 
 export function regiaoLabel(r) {
   const labels = {
-    testa: 'Testa',
-    bochecha_e: 'Bochecha esq.',
-    bochecha_d: 'Bochecha dir.',
-    nariz: 'Nariz',
-    queixo: 'Queixo',
+    testa: 'Forehead',
+    bochecha_e: 'Left cheek',
+    bochecha_d: 'Right cheek',
+    nariz: 'Nose',
+    queixo: 'Chin',
   }
   return labels[r] || r
 }

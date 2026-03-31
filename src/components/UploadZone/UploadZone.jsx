@@ -6,10 +6,10 @@ const MAX_SIZE_BYTES = 10 * 1024 * 1024 // 10MB
 
 function validateFile(file) {
   if (!ACCEPTED_TYPES.includes(file.type)) {
-    return 'Formato inválido. Use JPG, PNG ou WebP.'
+    return 'Invalid format. Use JPG, PNG, or WebP.'
   }
   if (file.size > MAX_SIZE_BYTES) {
-    return 'Arquivo muito grande. Tamanho máximo: 10MB.'
+    return 'File too large. Maximum size: 10MB.'
   }
   return null
 }
@@ -82,7 +82,7 @@ export default function UploadZone({ onImageSelected, onOpenCamera }) {
       onClick={handleClick}
       role="button"
       tabIndex={0}
-      aria-label="Área de upload de imagem"
+      aria-label="Image upload area"
       onKeyDown={(e) => e.key === 'Enter' && handleClick()}
     >
       <input
@@ -98,8 +98,8 @@ export default function UploadZone({ onImageSelected, onOpenCamera }) {
         <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
       </svg>
 
-      <h2 className="upload-zone__title">Envie uma foto do seu rosto</h2>
-      <p className="upload-zone__subtitle">Arraste e solte aqui ou escolha uma opção abaixo</p>
+      <h2 className="upload-zone__title">Upload a photo of your face</h2>
+      <p className="upload-zone__subtitle">Drag and drop here or choose an option below</p>
 
       <div className="upload-zone__actions" onClick={(e) => e.stopPropagation()}>
         <button
@@ -107,27 +107,27 @@ export default function UploadZone({ onImageSelected, onOpenCamera }) {
           onClick={handleClick}
           type="button"
         >
-          Escolher arquivo
+          Choose file
         </button>
 
-        <span className="upload-zone__divider">ou</span>
+        <span className="upload-zone__divider">or</span>
 
         <button
           className="upload-zone__btn upload-zone__btn--secondary"
           onClick={onOpenCamera}
           type="button"
         >
-          Usar câmera
+          Use camera
         </button>
       </div>
 
-      <p className="upload-zone__hint">JPG, PNG ou WebP · máx. 10MB</p>
+      <p className="upload-zone__hint">JPG, PNG, or WebP · max 10MB</p>
 
       {error && <p className="upload-zone__error" role="alert">{error}</p>}
 
       {previewUrl && !error && (
         <div className="upload-zone__preview">
-          <img src={previewUrl} alt="Preview da imagem selecionada" className="upload-zone__preview-img" />
+          <img src={previewUrl} alt="Preview of selected image" className="upload-zone__preview-img" />
         </div>
       )}
     </div>

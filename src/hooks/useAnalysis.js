@@ -29,10 +29,10 @@ export function useAnalysis({ setStep }) {
     } catch (err) {
       const message =
         err?.response?.status === 413
-          ? 'Imagem muito grande. Use uma imagem menor que 10MB.'
+          ? 'Image too large. Please use an image smaller than 10MB.'
           : err?.response?.status === 422
-          ? 'Não foi possível detectar um rosto na imagem. Tente outra foto.'
-          : 'Erro ao analisar a imagem. Verifique sua conexão e tente novamente.'
+          ? 'Could not detect a face in the image. Please try another photo.'
+          : 'Error analyzing the image. Check your connection and try again.'
 
       setError(message)
       setStep('preview')

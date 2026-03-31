@@ -15,7 +15,7 @@ export default function ToneComparison({ comparacoes, regioes }) {
 
   return (
     <div className="tone-comparison">
-      <h3 className="tone-comparison__title">Comparação de tons por região</h3>
+      <h3 className="tone-comparison__title">Tone comparison by region</h3>
       <div className="tone-comparison__list">
         {Object.entries(comparacoes).map(([key, { delta, nivel }]) => {
           const [regionA, regionB] = key.split('_vs_')
@@ -54,7 +54,7 @@ export default function ToneComparison({ comparacoes, regioes }) {
                   />
                 </div>
                 <span className={`tone-comparison__level tone-comparison__level--${nivel}`}>
-                  {nivel}
+                  {{ baixo: 'Low', moderado: 'Moderate', alto: 'High' }[nivel] ?? nivel}
                 </span>
               </div>
             </div>

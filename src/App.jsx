@@ -54,7 +54,7 @@ export default function App() {
           <div className="app__logo" aria-hidden="true" />
           <div>
             <h1 className="app__title">Skin Analyzer</h1>
-            <p className="app__subtitle">Análise inteligente do seu tom de pele</p>
+            <p className="app__subtitle">Intelligent skin tone analysis</p>
           </div>
         </div>
       </header>
@@ -76,7 +76,7 @@ export default function App() {
         )}
 
         {step === 'analyzing' && (
-          <LoadingSpinner message="Analisando sua pele..." />
+          <LoadingSpinner message="Analyzing your skin..." />
         )}
 
         {step === 'result' && result && (
@@ -90,7 +90,7 @@ export default function App() {
           <div className="app__error">
             <p className="app__error-message">{error}</p>
             <button className="app__error-retry" onClick={handleRetry}>
-              Tentar novamente
+              Try again
             </button>
           </div>
         )}

@@ -11,8 +11,8 @@ export default function RegionCard({ regionName, data }) {
         <div
           className="region-card__swatch"
           style={{ backgroundColor: tom_hex }}
-          title={`Cor detectada: ${tom_hex}`}
-          aria-label={`Tom de pele detectado: ${tom_hex}`}
+          title={`Detected color: ${tom_hex}`}
+          aria-label={`Detected skin tone: ${tom_hex}`}
         />
         <div className="region-card__header-info">
           <p className="region-card__name">{regionName}</p>
@@ -23,7 +23,7 @@ export default function RegionCard({ regionName, data }) {
 
       <div className="region-card__uniformity">
         <div className="region-card__uniformity-label">
-          <span>Uniformidade</span>
+          <span>Uniformity</span>
           <span>{uniformidade}/10</span>
         </div>
         <div className="region-card__uniformity-bar">
@@ -47,7 +47,7 @@ export default function RegionCard({ regionName, data }) {
           ))}
         </div>
       ) : (
-        <p className="region-card__no-imperfeicoes">Sem imperfeições detectadas</p>
+        <p className="region-card__no-imperfeicoes">No imperfections detected</p>
       )}
 
       {notas && <p className="region-card__notas">{notas}</p>}

@@ -19,15 +19,15 @@ export default function CameraCapture({ onCapture, onClose }) {
   }
 
   return (
-    <div className="camera-capture" role="dialog" aria-modal="true" aria-label="Câmera">
+    <div className="camera-capture" role="dialog" aria-modal="true" aria-label="Camera">
       <div className="camera-capture__modal">
         <div className="camera-capture__header">
-          <h2 className="camera-capture__title">Tirar foto</h2>
+          <h2 className="camera-capture__title">Take a photo</h2>
           <button
             className="camera-capture__close"
             onClick={() => { stopCamera(); onClose() }}
             type="button"
-            aria-label="Fechar câmera"
+            aria-label="Close camera"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -62,7 +62,7 @@ export default function CameraCapture({ onCapture, onClose }) {
             onClick={handleCapture}
             disabled={!isReady || !!error}
             type="button"
-            aria-label="Capturar foto"
+            aria-label="Capture photo"
           />
         </div>
       </div>

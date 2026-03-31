@@ -1,10 +1,10 @@
 import './FacePreview.css'
 
 const checklist = [
-  'Rosto bem iluminado e centralizado',
-  'Sem óculos ou acessórios cobrindo o rosto',
-  'Expressão neutra, olhando para a frente',
-  'Maquiagem removida para melhor resultado',
+  'Face well-lit and centered in the frame',
+  'No glasses or accessories covering the face',
+  'Neutral expression, looking straight ahead',
+  'Makeup removed for best results',
 ]
 
 export default function FacePreview({ imageUrl, onAnalyze, onChangePhoto }) {
@@ -14,14 +14,14 @@ export default function FacePreview({ imageUrl, onAnalyze, onChangePhoto }) {
         <div className="face-preview__image-wrap">
           <img
             src={imageUrl}
-            alt="Foto selecionada para análise"
+            alt="Selected photo for analysis"
             className="face-preview__image"
           />
         </div>
 
         <div className="face-preview__info">
           <div>
-            <h2 className="face-preview__title">Pronto para analisar?</h2>
+            <h2 className="face-preview__title">Ready to analyze?</h2>
             <ul className="face-preview__checklist">
               {checklist.map((item) => (
                 <li key={item} className="face-preview__checklist-item">
@@ -49,14 +49,14 @@ export default function FacePreview({ imageUrl, onAnalyze, onChangePhoto }) {
               onClick={onAnalyze}
               type="button"
             >
-              Analisar pele
+              Analyze skin
             </button>
             <button
               className="face-preview__btn face-preview__btn--ghost"
               onClick={onChangePhoto}
               type="button"
             >
-              Trocar foto
+              Change photo
             </button>
           </div>
         </div>
