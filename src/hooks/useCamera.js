@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from 'react'
 
-export function useCamera() {
+export function useCamera(cameraT) {
   const [error, setError] = useState(null)
   const [isReady, setIsReady] = useState(false)
   const videoRef = useRef(null)
@@ -26,14 +26,14 @@ export function useCamera() {
       }
     } catch (err) {
       if (err.name === 'NotAllowedError') {
-        setError('Camera permission denied. Check your browser settings.')
+        setError(cameraT?.permissionDenied ?? 'Camera permission denied. Check your browser settings.')
       } else if (err.name === 'NotFoundError') {
-        setError('No camera found on this device.')
+        setError(cameraT?.notFound ?? 'No camera found on this device.')
       } else {
-        setError('Could not access the camera. Please try again.')
+        setError(cameraT?.error ?? 'Could not access the camera. Please try again.')
       }
     }
-  }, [])
+  }, [cameraT])
 
   const stopCamera = useCallback(() => {
     if (streamRef.current) {

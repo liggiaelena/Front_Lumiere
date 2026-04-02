@@ -3,7 +3,7 @@ import { useLanguage } from '../../i18n/LanguageContext.jsx'
 
 export default function RegionCard({ regionName, data }) {
   const { t } = useLanguage()
-  const { tom_hex, tom_fitzpatrick, oleosidade, imperfeicoes, uniformidade, notas } = data
+  const { tom_hex, tom_fitzpatrick, oleosidade, imperfeicoes = [], uniformidade, notas } = data
   const uniformPercent = ((uniformidade / 10) * 100).toFixed(0)
 
   return (

@@ -5,7 +5,7 @@ import { useLanguage } from '../../i18n/LanguageContext.jsx'
 
 export default function CameraCapture({ onCapture, onClose }) {
   const { t } = useLanguage()
-  const { videoRef, error, isReady, startCamera, stopCamera, capture } = useCamera()
+  const { videoRef, error, isReady, startCamera, stopCamera, capture } = useCamera(t.camera)
 
   useEffect(() => {
     startCamera()

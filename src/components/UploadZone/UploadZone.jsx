@@ -81,7 +81,7 @@ export default function UploadZone({ onImageSelected, onOpenCamera }) {
         <button className="upload-zone__btn upload-zone__btn--primary" onClick={handleClick} type="button">
           {t.upload.chooseFile}
         </button>
-        <span className="upload-zone__divider">or</span>
+        <span className="upload-zone__divider">{t.upload.or}</span>
         <button className="upload-zone__btn upload-zone__btn--secondary" onClick={onOpenCamera} type="button">
           {t.upload.useCamera}
         </button>

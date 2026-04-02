@@ -12,6 +12,7 @@ export const translations = {
       hint: 'JPG, PNG, or WebP · max 10MB',
       errorFormat: 'Invalid format. Use JPG, PNG, or WebP.',
       errorSize: 'File too large. Maximum size: 10MB.',
+      or: 'or',
     },
     preview: {
       title: 'Ready to analyze?',
@@ -103,6 +104,7 @@ export const translations = {
       hint: 'JPG, PNG ou WebP · máx 10MB',
       errorFormat: 'Formato inválido. Use JPG, PNG ou WebP.',
       errorSize: 'Arquivo muito grande. Tamanho máximo: 10MB.',
+      or: 'ou',
     },
     preview: {
       title: 'Pronto para analisar?',
@@ -194,6 +196,7 @@ export const translations = {
       hint: 'JPG, PNG ou WebP · max 10 Mo',
       errorFormat: 'Format invalide. Utilisez JPG, PNG ou WebP.',
       errorSize: 'Fichier trop volumineux. Taille maximale : 10 Mo.',
+      or: 'ou',
     },
     preview: {
       title: 'Prêt à analyser ?',
@@ -285,6 +288,7 @@ export const translations = {
       hint: 'JPG、PNG 或 WebP · 最大 10MB',
       errorFormat: '格式无效。请使用 JPG、PNG 或 WebP。',
       errorSize: '文件太大。最大大小：10MB。',
+      or: '或',
     },
     preview: {
       title: '准备好分析了吗？',
@@ -376,6 +380,7 @@ export const translations = {
       hint: 'JPG、PNG 或 WebP · 最大 10MB',
       errorFormat: '格式無效。請使用 JPG、PNG 或 WebP。',
       errorSize: '檔案太大。最大大小：10MB。',
+      or: '或',
     },
     preview: {
       title: '準備好分析了嗎？',
@@ -467,6 +472,7 @@ export const translations = {
       hint: 'JPG, PNG veya WebP · maks 10MB',
       errorFormat: 'Geçersiz format. JPG, PNG veya WebP kullanın.',
       errorSize: 'Dosya çok büyük. Maksimum boyut: 10MB.',
+      or: 'veya',
     },
     preview: {
       title: 'Analiz etmeye hazır mısınız?',
