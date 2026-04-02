@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import './RegionCard.css'
 import { useLanguage } from '../../i18n/LanguageContext.jsx'
 
@@ -5,6 +6,14 @@ export default function RegionCard({ regionName, data }) {
   const { t } = useLanguage()
   const { tom_hex, tom_fitzpatrick, oleosidade, imperfeicoes = [], uniformidade, notas } = data
   const uniformPercent = ((uniformidade / 10) * 100).toFixed(0)
+  const [animatedWidth, setAnimatedWidth] = useState(0)
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      setAnimatedWidth(uniformPercent)
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [uniformPercent])
 
   return (
     <div className="region-card">
@@ -30,7 +39,7 @@ export default function RegionCard({ regionName, data }) {
         <div className="region-card__uniformity-bar">
           <div
             className="region-card__uniformity-fill"
-            style={{ width: `${uniformPercent}%` }}
+            style={{ width: `${animatedWidth}%` }}
             role="progressbar"
             aria-valuenow={uniformidade}
             aria-valuemin={0}

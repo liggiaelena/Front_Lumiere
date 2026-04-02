@@ -96,7 +96,7 @@ function AppInner() {
         )}
 
         {step === 'analyzing' && (
-          <LoadingSpinner message={t.loading} />
+          <LoadingSpinner />
         )}
 
         {step === 'result' && result && (

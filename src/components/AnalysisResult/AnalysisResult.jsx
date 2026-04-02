@@ -3,6 +3,7 @@ import { useLanguage } from '../../i18n/LanguageContext.jsx'
 import RegionCard from '../RegionCard/RegionCard.jsx'
 import ToneComparison from '../ToneComparison/ToneComparison.jsx'
 import Recommendations from '../Recommendations/Recommendations.jsx'
+import UniformityRadar from '../UniformityRadar/UniformityRadar.jsx'
 
 const REGION_ORDER = ['testa', 'bochecha_e', 'bochecha_d', 'nariz', 'queixo']
 
@@ -17,6 +18,12 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
     imperfeicoes,
     recommendations,
   } = result
+
+  const palette = REGION_ORDER.filter((k) => regioes[k]?.tom_hex).map((k) => ({
+    key: k,
+    label: t.regions[k] ?? k,
+    hex: regioes[k].tom_hex,
+  }))
 
   return (
     <div className="analysis-result">
@@ -35,6 +42,26 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
           </p>
         </div>
       </div>
+
+      {palette.length > 0 && (
+        <div className="analysis-result__palette">
+          <p className="analysis-result__palette-title">Your Skin Palette</p>
+          <div className="analysis-result__palette-swatches">
+            {palette.map(({ key, label, hex }) => (
+              <div key={key} className="analysis-result__palette-item">
+                <div
+                  className="analysis-result__palette-swatch"
+                  style={{ backgroundColor: hex }}
+                  title={hex}
+                />
+                <span className="analysis-result__palette-label">{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <UniformityRadar regioes={regioes} />
 
       <section>
         <h3 className="analysis-result__section-title">{t.result.byRegion}</h3>
