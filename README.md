@@ -1,86 +1,91 @@
 # Skin Analyzer — Frontend
 
-Interface React para análise de tom de pele via upload ou câmera.
- 
-## Pré-requisitos
+React interface for skin tone analysis via photo upload or camera capture.
+
+## Prerequisites
 
 - Node.js 18+
 - npm 9+
+- Backend running on port 8001 (see `Back_Lumiere`)
 
-## Instalação
+## Setup
 
 ```bash
-cd skin-analyzer
+cd Front_Lumiere
 npm install
-```
-
-## Rodando em desenvolvimento
-
-```bash
 npm run dev
 ```
 
-Acesse em: **http://localhost:5173**
+Open the URL printed in the terminal (e.g. `http://localhost:5173`).
 
-## Build para produção
+## Build for production
 
 ```bash
 npm run build
-npm run preview   # preview local do build em http://localhost:4173
+npm run preview   # local preview at http://localhost:4173
 ```
 
-## Variáveis de ambiente
+## Environment variables
 
-Crie um arquivo `.env` na raiz do projeto (use `.env.example` como base):
+Optionally create a `.env` file in the project root to override the backend URL:
 
 ```env
-VITE_API_URL=http://localhost:8000
+VITE_API_URL=http://localhost:8001
 ```
 
-| Variável | Padrão | Descrição |
+| Variable | Default | Description |
 |---|---|---|
-| `VITE_API_URL` | `http://localhost:8000` | URL base do backend FastAPI |
+| `VITE_API_URL` | `http://localhost:8001` | Backend FastAPI base URL |
 
-## Modo mock (sem backend)
+## Features
 
-Por padrão o app roda com dados simulados — nenhum backend necessário.
+- Upload a face photo (JPG/PNG/WebP, max 10MB) or take one with the camera
+- Skin tone analysis by facial region (forehead, cheeks, nose, chin)
+- Fitzpatrick scale classification + undertone detection
+- Imperfection detection (pores, acne, shine, sun spots, etc.)
+- Foundation shade recommendations (Fenty Beauty, MAC, Maybelline)
+- Multi-language support: **EN / PT / FR / 中文 / 繁中 / TR**
 
-Para ativar o backend real, edite [`src/hooks/useAnalysis.js`](src/hooks/useAnalysis.js):
+## App flow
 
-```js
-const USE_MOCK = false  // troque de true para false
+```
+Upload / Camera → Preview → Analyzing... → Results + Foundation Matches
 ```
 
-## Onde cada parte roda
-
-| Serviço | URL | Observação |
-|---|---|---|
-| Frontend (dev) | http://localhost:5173 | `npm run dev` |
-| Frontend (preview) | http://localhost:4173 | `npm run preview` |
-| Backend (esperado) | http://localhost:8000 | Projeto `backend-skin-analyzer` |
-| API endpoint | http://localhost:8000/api/analyze | POST multipart/form-data |
-
-## Estrutura resumida
+## Project structure
 
 ```
 src/
-├── components/     # UploadZone, CameraCapture, FacePreview,
-│                   # AnalysisResult, RegionCard, ToneComparison, LoadingSpinner
-├── hooks/          # useAnalysis, useCamera
-├── services/       # api.js (Axios)
-├── utils/          # colorUtils.js (labels em pt-BR)
-├── mocks/          # analysisResponse.js (JSON de exemplo)
+├── components/
+│   ├── AnalysisResult/     # Main results screen
+│   ├── CameraCapture/      # Camera modal
+│   ├── FacePreview/        # Photo confirmation screen
+│   ├── LoadingSpinner/     # Loading state
+│   ├── Recommendations/    # Foundation shade cards
+│   ├── RegionCard/         # Per-region analysis card
+│   ├── ToneComparison/     # Cross-region color comparison
+│   └── UploadZone/         # Drag-and-drop / file upload
+├── hooks/
+│   ├── useAnalysis.js      # API call + state management
+│   └── useCamera.js        # Camera stream management
+├── i18n/
+│   ├── LanguageContext.jsx # Language context provider
+│   └── translations.js     # All UI strings in 6 languages
+├── services/
+│   └── api.js              # Axios instance (base URL config)
+├── mocks/
+│   └── analysisResponse.js # Sample response for development
+├── utils/
+│   └── colorUtils.js       # Helper functions
 ├── App.jsx
 └── main.jsx
 ```
 
-## Fluxo da aplicação
+## Service URLs
 
-```
-Upload / Câmera → Preview → Analisando... → Resultado
-```
-
-1. Usuário faz upload de uma foto (JPG/PNG/WebP, máx. 10MB) ou tira foto pela câmera
-2. Visualiza a imagem e confirma antes de enviar
-3. App exibe spinner enquanto aguarda resposta do backend
-4. Resultado exibe tom Fitzpatrick, subtom, análise por região e imperfeições detectadas
+| Service | URL |
+|---|---|
+| Frontend (dev) | http://localhost:5173 |
+| Frontend (preview) | http://localhost:4173 |
+| Backend | http://localhost:8001 |
+| API endpoint | http://localhost:8001/api/analyze |
