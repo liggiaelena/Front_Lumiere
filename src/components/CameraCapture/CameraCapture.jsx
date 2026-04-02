@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 import './CameraCapture.css'
 import { useCamera } from '../../hooks/useCamera.js'
+import { useLanguage } from '../../i18n/LanguageContext.jsx'
 
 export default function CameraCapture({ onCapture, onClose }) {
+  const { t } = useLanguage()
   const { videoRef, error, isReady, startCamera, stopCamera, capture } = useCamera()
 
   useEffect(() => {
@@ -19,15 +21,15 @@ export default function CameraCapture({ onCapture, onClose }) {
   }
 
   return (
-    <div className="camera-capture" role="dialog" aria-modal="true" aria-label="Camera">
+    <div className="camera-capture" role="dialog" aria-modal="true" aria-label={t.camera.title}>
       <div className="camera-capture__modal">
         <div className="camera-capture__header">
-          <h2 className="camera-capture__title">Take a photo</h2>
+          <h2 className="camera-capture__title">{t.camera.title}</h2>
           <button
             className="camera-capture__close"
             onClick={() => { stopCamera(); onClose() }}
             type="button"
-            aria-label="Close camera"
+            aria-label={t.camera.close}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -42,13 +44,7 @@ export default function CameraCapture({ onCapture, onClose }) {
             </div>
           ) : (
             <>
-              <video
-                ref={videoRef}
-                className="camera-capture__video"
-                autoPlay
-                playsInline
-                muted
-              />
+              <video ref={videoRef} className="camera-capture__video" autoPlay playsInline muted />
               <div className="camera-capture__guide" aria-hidden="true">
                 <div className="camera-capture__guide-oval" />
               </div>
@@ -62,7 +58,7 @@ export default function CameraCapture({ onCapture, onClose }) {
             onClick={handleCapture}
             disabled={!isReady || !!error}
             type="button"
-            aria-label="Capture photo"
+            aria-label={t.camera.capture}
           />
         </div>
       </div>

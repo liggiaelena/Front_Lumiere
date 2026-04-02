@@ -1,10 +1,10 @@
 import { useState, useRef, useCallback } from 'react'
 
 export function useCamera() {
-  const [stream, setStream] = useState(null)
   const [error, setError] = useState(null)
   const [isReady, setIsReady] = useState(false)
   const videoRef = useRef(null)
+  const streamRef = useRef(null)
 
   const startCamera = useCallback(async () => {
     setError(null)
@@ -16,7 +16,7 @@ export function useCamera() {
           height: { ideal: 720 },
         },
       })
-      setStream(mediaStream)
+      streamRef.current = mediaStream
       if (videoRef.current) {
         videoRef.current.srcObject = mediaStream
         videoRef.current.onloadedmetadata = () => {
@@ -36,12 +36,12 @@ export function useCamera() {
   }, [])
 
   const stopCamera = useCallback(() => {
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop())
-      setStream(null)
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop())
+      streamRef.current = null
       setIsReady(false)
     }
-  }, [stream])
+  }, [])
 
   const capture = useCallback(() => {
     return new Promise((resolve) => {
@@ -68,5 +68,5 @@ export function useCamera() {
     })
   }, [isReady])
 
-  return { videoRef, stream, error, isReady, startCamera, stopCamera, capture }
+  return { videoRef, error, isReady, startCamera, stopCamera, capture }
 }

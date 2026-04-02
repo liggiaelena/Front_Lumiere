@@ -64,4 +64,33 @@ export const mockAnalysisResponse = {
     { tipo: 'brilho_excessivo', intensidade: 'alta', regiao: 'nariz' },
     { tipo: 'acne_leve', intensidade: 'leve', regiao: 'queixo' },
   ],
+  recommendations: [
+    {
+      brand: 'Fenty Beauty',
+      shade_name: '340W',
+      shade_code: '340W',
+      undertone: 'quente',
+      fitzpatrick_range: [3, 4],
+      price_range: '$38–$42',
+      where_to_buy: 'https://www.fentybeauty.com',
+    },
+    {
+      brand: 'MAC',
+      shade_name: 'NC35',
+      shade_code: 'NC35',
+      undertone: 'quente',
+      fitzpatrick_range: [3, 4],
+      price_range: '$35–$40',
+      where_to_buy: 'https://www.maccosmetics.com',
+    },
+    {
+      brand: 'Maybelline',
+      shade_name: '320 Warm Nude',
+      shade_code: '320',
+      undertone: 'quente',
+      fitzpatrick_range: [3, 4],
+      price_range: '$10–$14',
+      where_to_buy: 'https://www.maybelline.com',
+    },
+  ],
 }

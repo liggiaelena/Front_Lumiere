@@ -1,17 +1,13 @@
 import './AnalysisResult.css'
+import { useLanguage } from '../../i18n/LanguageContext.jsx'
 import RegionCard from '../RegionCard/RegionCard.jsx'
 import ToneComparison from '../ToneComparison/ToneComparison.jsx'
-import { fitzpatrickLabel, subtomLabel, imperfeicaoLabel, regiaoLabel, intensidadeLabel } from '../../utils/colorUtils.js'
+import Recommendations from '../Recommendations/Recommendations.jsx'
 
-const REGION_ORDER = [
-  { key: 'testa', label: 'Forehead' },
-  { key: 'bochecha_e', label: 'Left cheek' },
-  { key: 'bochecha_d', label: 'Right cheek' },
-  { key: 'nariz', label: 'Nose' },
-  { key: 'queixo', label: 'Chin' },
-]
+const REGION_ORDER = ['testa', 'bochecha_e', 'bochecha_d', 'nariz', 'queixo']
 
 export default function AnalysisResult({ result, onNewAnalysis }) {
+  const { t } = useLanguage()
   const {
     tom_geral_fitzpatrick,
     subtom_predominante,
@@ -19,6 +15,7 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
     regioes,
     comparacao_tons,
     imperfeicoes,
+    recommendations,
   } = result
 
   return (
@@ -31,20 +28,20 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
         />
         <div className="analysis-result__hero-info">
           <h2 className="analysis-result__hero-title">
-            {fitzpatrickLabel(tom_geral_fitzpatrick)}
+            {t.fitzpatrick[tom_geral_fitzpatrick] ?? t.fitzpatrick.unknown}
           </h2>
           <p className="analysis-result__hero-subtitle">
-            Predominant undertone: {subtomLabel(subtom_predominante)}
+            {t.result.undertoneLabel}: {t.undertones[subtom_predominante] ?? subtom_predominante}
           </p>
         </div>
       </div>
 
       <section>
-        <h3 className="analysis-result__section-title">Analysis by region</h3>
+        <h3 className="analysis-result__section-title">{t.result.byRegion}</h3>
         <div className="analysis-result__regions-grid">
-          {REGION_ORDER.map(({ key, label }) =>
+          {REGION_ORDER.map((key) =>
             regioes[key] ? (
-              <RegionCard key={key} regionName={label} data={regioes[key]} />
+              <RegionCard key={key} regionName={t.regions[key] ?? key} data={regioes[key]} />
             ) : null
           )}
         </div>
@@ -54,17 +51,17 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
 
       {imperfeicoes && imperfeicoes.length > 0 && (
         <div className="analysis-result__imperfeicoes">
-          <h3 className="analysis-result__section-title">Detected imperfections</h3>
+          <h3 className="analysis-result__section-title">{t.result.imperfectionsTitle}</h3>
           <ul className="analysis-result__imperfeicoes-list">
             {imperfeicoes.map((imp, i) => (
               <li key={i} className="analysis-result__imperfeicoes-item">
-                <span>{imperfeicaoLabel(imp.tipo)}</span>
+                <span>{t.imperfections[imp.tipo] ?? imp.tipo}</span>
                 <div className="analysis-result__imperfeicoes-badges">
                   <span className="analysis-result__badge analysis-result__badge--regiao">
-                    {regiaoLabel(imp.regiao)}
+                    {t.regions[imp.regiao] ?? imp.regiao}
                   </span>
                   <span className={`analysis-result__badge analysis-result__badge--${imp.intensidade}`}>
-                    {intensidadeLabel(imp.intensidade)}
+                    {t.intensity[imp.intensidade] ?? imp.intensidade}
                   </span>
                 </div>
               </li>
@@ -73,13 +70,11 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
         </div>
       )}
 
+      <Recommendations recommendations={recommendations} />
+
       <div className="analysis-result__footer">
-        <button
-          className="analysis-result__btn-new"
-          onClick={onNewAnalysis}
-          type="button"
-        >
-          New analysis
+        <button className="analysis-result__btn-new" onClick={onNewAnalysis} type="button">
+          {t.result.newAnalysis}
         </button>
       </div>
     </div>

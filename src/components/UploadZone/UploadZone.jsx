@@ -1,24 +1,22 @@
 import { useState, useRef } from 'react'
 import './UploadZone.css'
+import { useLanguage } from '../../i18n/LanguageContext.jsx'
 
 const ACCEPTED_TYPES = ['image/jpeg', 'image/png', 'image/webp']
-const MAX_SIZE_BYTES = 10 * 1024 * 1024 // 10MB
-
-function validateFile(file) {
-  if (!ACCEPTED_TYPES.includes(file.type)) {
-    return 'Invalid format. Use JPG, PNG, or WebP.'
-  }
-  if (file.size > MAX_SIZE_BYTES) {
-    return 'File too large. Maximum size: 10MB.'
-  }
-  return null
-}
+const MAX_SIZE_BYTES = 10 * 1024 * 1024
 
 export default function UploadZone({ onImageSelected, onOpenCamera }) {
+  const { t } = useLanguage()
   const [isDragging, setIsDragging] = useState(false)
   const [error, setError] = useState(null)
   const [previewUrl, setPreviewUrl] = useState(null)
   const inputRef = useRef(null)
+
+  function validateFile(file) {
+    if (!ACCEPTED_TYPES.includes(file.type)) return t.upload.errorFormat
+    if (file.size > MAX_SIZE_BYTES) return t.upload.errorSize
+    return null
+  }
 
   function handleFile(file) {
     const validationError = validateFile(file)
@@ -33,44 +31,22 @@ export default function UploadZone({ onImageSelected, onOpenCamera }) {
     onImageSelected(file, url)
   }
 
-  function handleDragEnter(e) {
-    e.preventDefault()
-    setIsDragging(true)
-  }
-
-  function handleDragOver(e) {
-    e.preventDefault()
-    setIsDragging(true)
-  }
-
-  function handleDragLeave(e) {
-    e.preventDefault()
-    setIsDragging(false)
-  }
-
+  function handleDragEnter(e) { e.preventDefault(); setIsDragging(true) }
+  function handleDragOver(e) { e.preventDefault(); setIsDragging(true) }
+  function handleDragLeave(e) { e.preventDefault(); setIsDragging(false) }
   function handleDrop(e) {
-    e.preventDefault()
-    setIsDragging(false)
+    e.preventDefault(); setIsDragging(false)
     const file = e.dataTransfer.files[0]
     if (file) handleFile(file)
   }
-
   function handleInputChange(e) {
     const file = e.target.files[0]
     if (file) handleFile(file)
   }
+  function handleClick() { inputRef.current?.click() }
 
-  function handleClick() {
-    inputRef.current?.click()
-  }
-
-  const zoneClass = [
-    'upload-zone',
-    isDragging ? 'upload-zone--active' : '',
-    error ? 'upload-zone--error' : '',
-  ]
-    .filter(Boolean)
-    .join(' ')
+  const zoneClass = ['upload-zone', isDragging ? 'upload-zone--active' : '', error ? 'upload-zone--error' : '']
+    .filter(Boolean).join(' ')
 
   return (
     <div
@@ -98,30 +74,20 @@ export default function UploadZone({ onImageSelected, onOpenCamera }) {
         <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
       </svg>
 
-      <h2 className="upload-zone__title">Upload a photo of your face</h2>
-      <p className="upload-zone__subtitle">Drag and drop here or choose an option below</p>
+      <h2 className="upload-zone__title">{t.upload.title}</h2>
+      <p className="upload-zone__subtitle">{t.upload.subtitle}</p>
 
       <div className="upload-zone__actions" onClick={(e) => e.stopPropagation()}>
-        <button
-          className="upload-zone__btn upload-zone__btn--primary"
-          onClick={handleClick}
-          type="button"
-        >
-          Choose file
+        <button className="upload-zone__btn upload-zone__btn--primary" onClick={handleClick} type="button">
+          {t.upload.chooseFile}
         </button>
-
         <span className="upload-zone__divider">or</span>
-
-        <button
-          className="upload-zone__btn upload-zone__btn--secondary"
-          onClick={onOpenCamera}
-          type="button"
-        >
-          Use camera
+        <button className="upload-zone__btn upload-zone__btn--secondary" onClick={onOpenCamera} type="button">
+          {t.upload.useCamera}
         </button>
       </div>
 
-      <p className="upload-zone__hint">JPG, PNG, or WebP · max 10MB</p>
+      <p className="upload-zone__hint">{t.upload.hint}</p>
 
       {error && <p className="upload-zone__error" role="alert">{error}</p>}
 

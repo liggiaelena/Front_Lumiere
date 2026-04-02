@@ -1,7 +1,8 @@
 import './RegionCard.css'
-import { oleosidadeLabel, imperfeicaoLabel } from '../../utils/colorUtils.js'
+import { useLanguage } from '../../i18n/LanguageContext.jsx'
 
 export default function RegionCard({ regionName, data }) {
+  const { t } = useLanguage()
   const { tom_hex, tom_fitzpatrick, oleosidade, imperfeicoes, uniformidade, notas } = data
   const uniformPercent = ((uniformidade / 10) * 100).toFixed(0)
 
@@ -18,12 +19,12 @@ export default function RegionCard({ regionName, data }) {
           <p className="region-card__name">{regionName}</p>
           <p className="region-card__fitzpatrick">Fitzpatrick {tom_fitzpatrick}</p>
         </div>
-        <span className="region-card__badge">{oleosidadeLabel(oleosidade)}</span>
+        <span className="region-card__badge">{t.oiliness[oleosidade] ?? oleosidade}</span>
       </div>
 
       <div className="region-card__uniformity">
         <div className="region-card__uniformity-label">
-          <span>Uniformity</span>
+          <span>{t.result.uniformity}</span>
           <span>{uniformidade}/10</span>
         </div>
         <div className="region-card__uniformity-bar">
@@ -42,12 +43,12 @@ export default function RegionCard({ regionName, data }) {
         <div className="region-card__imperfeicoes">
           {imperfeicoes.map((imp) => (
             <span key={imp} className="region-card__imperfeicao-tag">
-              {imperfeicaoLabel(imp)}
+              {t.imperfections[imp] ?? imp}
             </span>
           ))}
         </div>
       ) : (
-        <p className="region-card__no-imperfeicoes">No imperfections detected</p>
+        <p className="region-card__no-imperfeicoes">{t.result.noImperfections}</p>
       )}
 
       {notas && <p className="region-card__notas">{notas}</p>}

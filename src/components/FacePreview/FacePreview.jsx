@@ -1,40 +1,24 @@
 import './FacePreview.css'
-
-const checklist = [
-  'Face well-lit and centered in the frame',
-  'No glasses or accessories covering the face',
-  'Neutral expression, looking straight ahead',
-  'Makeup removed for best results',
-]
+import { useLanguage } from '../../i18n/LanguageContext.jsx'
 
 export default function FacePreview({ imageUrl, onAnalyze, onChangePhoto }) {
+  const { t } = useLanguage()
+
   return (
     <div className="face-preview">
       <div className="face-preview__layout">
         <div className="face-preview__image-wrap">
-          <img
-            src={imageUrl}
-            alt="Selected photo for analysis"
-            className="face-preview__image"
-          />
+          <img src={imageUrl} alt="Selected photo for analysis" className="face-preview__image" />
         </div>
 
         <div className="face-preview__info">
           <div>
-            <h2 className="face-preview__title">Ready to analyze?</h2>
+            <h2 className="face-preview__title">{t.preview.title}</h2>
             <ul className="face-preview__checklist">
-              {checklist.map((item) => (
+              {t.preview.checklist.map((item) => (
                 <li key={item} className="face-preview__checklist-item">
-                  <svg
-                    className="face-preview__check-icon"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    aria-hidden="true"
-                  >
+                  <svg className="face-preview__check-icon" width="16" height="16" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                   </svg>
                   {item}
@@ -44,19 +28,11 @@ export default function FacePreview({ imageUrl, onAnalyze, onChangePhoto }) {
           </div>
 
           <div className="face-preview__actions">
-            <button
-              className="face-preview__btn face-preview__btn--primary"
-              onClick={onAnalyze}
-              type="button"
-            >
-              Analyze skin
+            <button className="face-preview__btn face-preview__btn--primary" onClick={onAnalyze} type="button">
+              {t.preview.analyze}
             </button>
-            <button
-              className="face-preview__btn face-preview__btn--ghost"
-              onClick={onChangePhoto}
-              type="button"
-            >
-              Change photo
+            <button className="face-preview__btn face-preview__btn--ghost" onClick={onChangePhoto} type="button">
+              {t.preview.changePhoto}
             </button>
           </div>
         </div>

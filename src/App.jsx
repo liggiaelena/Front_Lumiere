@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import { LanguageProvider, useLanguage } from './i18n/LanguageContext.jsx'
 import UploadZone from './components/UploadZone/UploadZone.jsx'
 import CameraCapture from './components/CameraCapture/CameraCapture.jsx'
 import FacePreview from './components/FacePreview/FacePreview.jsx'
@@ -7,7 +8,17 @@ import AnalysisResult from './components/AnalysisResult/AnalysisResult.jsx'
 import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner.jsx'
 import { useAnalysis } from './hooks/useAnalysis.js'
 
-export default function App() {
+const LANGUAGES = [
+  { code: 'en', label: 'EN' },
+  { code: 'pt', label: 'PT' },
+  { code: 'fr', label: 'FR' },
+  { code: 'zh', label: '中文' },
+  { code: 'tw', label: '繁中' },
+  { code: 'tr', label: 'TR' },
+]
+
+function AppInner() {
+  const { lang, setLang, t } = useLanguage()
   const [step, setStep] = useState('upload')
   const [imageFile, setImageFile] = useState(null)
   const [imageUrl, setImageUrl] = useState(null)
@@ -29,10 +40,6 @@ export default function App() {
     setStep('preview')
   }
 
-  function handleAnalyze() {
-    analyze(imageFile)
-  }
-
   function handleRetry() {
     setStep('upload')
     setImageFile(null)
@@ -52,9 +59,22 @@ export default function App() {
       <header className="app__header">
         <div className="app__header-inner">
           <div className="app__logo" aria-hidden="true" />
-          <div>
-            <h1 className="app__title">Skin Analyzer</h1>
-            <p className="app__subtitle">Intelligent skin tone analysis</p>
+          <div className="app__header-titles">
+            <h1 className="app__title">{t.app.title}</h1>
+            <p className="app__subtitle">{t.app.subtitle}</p>
+          </div>
+          <div className="app__lang-switcher">
+            {LANGUAGES.map(({ code, label }) => (
+              <button
+                key={code}
+                className={`app__lang-btn${lang === code ? ' app__lang-btn--active' : ''}`}
+                onClick={() => setLang(code)}
+                type="button"
+                aria-label={`Switch to ${label}`}
+              >
+                {label}
+              </button>
+            ))}
           </div>
         </div>
       </header>
@@ -70,13 +90,13 @@ export default function App() {
         {step === 'preview' && (
           <FacePreview
             imageUrl={imageUrl}
-            onAnalyze={handleAnalyze}
+            onAnalyze={() => analyze(imageFile)}
             onChangePhoto={handleRetry}
           />
         )}
 
         {step === 'analyzing' && (
-          <LoadingSpinner message="Analyzing your skin..." />
+          <LoadingSpinner message={t.loading} />
         )}
 
         {step === 'result' && result && (
@@ -90,7 +110,7 @@ export default function App() {
           <div className="app__error">
             <p className="app__error-message">{error}</p>
             <button className="app__error-retry" onClick={handleRetry}>
-              Try again
+              {t.errors.tryAgain}
             </button>
           </div>
         )}
@@ -103,5 +123,13 @@ export default function App() {
         />
       )}
     </div>
+  )
+}
+
+export default function App() {
+  return (
+    <LanguageProvider>
+      <AppInner />
+    </LanguageProvider>
   )
 }
