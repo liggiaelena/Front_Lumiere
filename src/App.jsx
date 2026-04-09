@@ -5,7 +5,7 @@ import UploadZone from './components/UploadZone/UploadZone.jsx'
 import CameraCapture from './components/CameraCapture/CameraCapture.jsx'
 import FacePreview from './components/FacePreview/FacePreview.jsx'
 import AnalysisResult from './components/AnalysisResult/AnalysisResult.jsx'
-import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner.jsx'
+import FaceScanningAnimation from './components/FaceScanningAnimation/FaceScanningAnimation.jsx'
 import { useAnalysis } from './hooks/useAnalysis.js'
 
 const LANGUAGES = [
@@ -95,8 +95,8 @@ function AppInner() {
           />
         )}
 
-        {step === 'analyzing' && (
-          <LoadingSpinner />
+        {step === 'analyzing' && imageUrl && (
+          <FaceScanningAnimation imageUrl={imageUrl} />
         )}
 
         {step === 'result' && result && (
