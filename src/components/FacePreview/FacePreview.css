@@ -71,6 +71,42 @@
   margin-top: 1px;
 }
 
+.face-preview__consent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.face-preview__consent-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.face-preview__consent-checkbox {
+  margin-top: 2px;
+  accent-color: var(--color-accent);
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.face-preview__consent-error {
+  font-size: 0.78rem;
+  color: var(--color-error);
+  margin: 0;
+}
+
+.face-preview__btn--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .face-preview__actions {
   display: flex;
   flex-direction: column;

@@ -1,8 +1,19 @@
+import { useState } from 'react'
 import './FacePreview.css'
 import { useLanguage } from '../../i18n/LanguageContext.jsx'
 
 export default function FacePreview({ imageUrl, onAnalyze, onChangePhoto }) {
   const { t } = useLanguage()
+  const [consented, setConsented] = useState(false)
+  const [showConsentError, setShowConsentError] = useState(false)
+
+  function handleAnalyze() {
+    if (!consented) {
+      setShowConsentError(true)
+      return
+    }
+    onAnalyze()
+  }
 
   return (
     <div className="face-preview">
@@ -27,8 +38,33 @@ export default function FacePreview({ imageUrl, onAnalyze, onChangePhoto }) {
             </ul>
           </div>
 
+          <div className="face-preview__consent">
+            <label className="face-preview__consent-label">
+              <input
+                type="checkbox"
+                className="face-preview__consent-checkbox"
+                checked={consented}
+                onChange={(e) => {
+                  setConsented(e.target.checked)
+                  if (e.target.checked) setShowConsentError(false)
+                }}
+              />
+              <span>{t.preview.consentLabel}</span>
+            </label>
+            {showConsentError && (
+              <p className="face-preview__consent-error" role="alert">
+                {t.preview.consentRequired}
+              </p>
+            )}
+          </div>
+
           <div className="face-preview__actions">
-            <button className="face-preview__btn face-preview__btn--primary" onClick={onAnalyze} type="button">
+            <button
+              className={`face-preview__btn face-preview__btn--primary${!consented ? ' face-preview__btn--disabled' : ''}`}
+              onClick={handleAnalyze}
+              type="button"
+              aria-disabled={!consented}
+            >
               {t.preview.analyze}
             </button>
             <button className="face-preview__btn face-preview__btn--ghost" onClick={onChangePhoto} type="button">

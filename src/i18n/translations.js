@@ -24,6 +24,8 @@ export const translations = {
       ],
       analyze: 'Analyze skin',
       changePhoto: 'Change photo',
+      consentLabel: 'I consent to my photo being processed for skin analysis. No image is stored — processing happens in memory only.',
+      consentRequired: 'Please accept the privacy consent to continue.',
     },
     loading: 'Analyzing your skin...',
     errors: {
@@ -116,6 +118,8 @@ export const translations = {
       ],
       analyze: 'Analisar pele',
       changePhoto: 'Trocar foto',
+      consentLabel: 'Concordo que minha foto seja processada para análise de pele. Nenhuma imagem é armazenada — o processamento ocorre apenas na memória.',
+      consentRequired: 'Por favor, aceite o consentimento de privacidade para continuar.',
     },
     loading: 'Analisando sua pele...',
     errors: {
@@ -208,6 +212,8 @@ export const translations = {
       ],
       analyze: 'Analyser la peau',
       changePhoto: 'Changer la photo',
+      consentLabel: "J'accepte que ma photo soit traitée pour l'analyse de peau. Aucune image n'est stockée — le traitement s'effectue uniquement en mémoire.",
+      consentRequired: 'Veuillez accepter le consentement de confidentialité pour continuer.',
     },
     loading: 'Analyse de votre peau en cours...',
     errors: {
@@ -300,6 +306,8 @@ export const translations = {
       ],
       analyze: '分析肤色',
       changePhoto: '更换照片',
+      consentLabel: '我同意将我的照片用于皮肤分析处理。不存储任何图像——处理仅在内存中进行。',
+      consentRequired: '请接受隐私同意以继续。',
     },
     loading: '正在分析您的皮肤...',
     errors: {
@@ -392,6 +400,8 @@ export const translations = {
       ],
       analyze: '分析膚色',
       changePhoto: '更換照片',
+      consentLabel: '我同意將我的照片用於皮膚分析處理。不儲存任何圖像——處理僅在記憶體中進行。',
+      consentRequired: '請接受隱私同意以繼續。',
     },
     loading: '正在分析您的皮膚...',
     errors: {
@@ -484,6 +494,8 @@ export const translations = {
       ],
       analyze: 'Cildi analiz et',
       changePhoto: 'Fotoğrafı değiştir',
+      consentLabel: 'Fotoğrafımın cilt analizi için işlenmesine izin veriyorum. Hiçbir görüntü saklanmaz — işlem yalnızca bellekte gerçekleşir.',
+      consentRequired: 'Devam etmek için lütfen gizlilik onayını kabul edin.',
     },
     loading: 'Cildiniz analiz ediliyor...',
     errors: {
