@@ -6,6 +6,8 @@ import CameraCapture from './components/CameraCapture/CameraCapture.jsx'
 import FacePreview from './components/FacePreview/FacePreview.jsx'
 import AnalysisResult from './components/AnalysisResult/AnalysisResult.jsx'
 import FaceScanningAnimation from './components/FaceScanningAnimation/FaceScanningAnimation.jsx'
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.jsx'
+import './components/ErrorBoundary/ErrorBoundary.css'
 import { useAnalysis } from './hooks/useAnalysis.js'
 
 const LANGUAGES = [
@@ -100,10 +102,12 @@ function AppInner() {
         )}
 
         {step === 'result' && result && (
-          <AnalysisResult
-            result={result}
-            onNewAnalysis={handleNewAnalysis}
-          />
+          <ErrorBoundary onReset={handleNewAnalysis}>
+            <AnalysisResult
+              result={result}
+              onNewAnalysis={handleNewAnalysis}
+            />
+          </ErrorBoundary>
         )}
 
         {error && step !== 'analyzing' && (

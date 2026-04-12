@@ -171,6 +171,44 @@
   color: var(--color-error);
 }
 
+.analysis-result__bisenet {
+  width: 100%;
+}
+
+.analysis-result__bisenet-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.analysis-result__bisenet-swatch {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.analysis-result__bisenet-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.analysis-result__bisenet-hex {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.analysis-result__bisenet-rgb {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
 .analysis-result__footer {
   display: flex;
   justify-content: center;

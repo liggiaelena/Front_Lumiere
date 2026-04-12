@@ -43,26 +43,20 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
           </p>
         </div>
         {skin_tone?.median_hex && (
-  <div className="analysis-result__skin-tone">
-    <p className="analysis-result__palette-title">Detected Skin Tone (BiSeNet)</p>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '8px' }}>
-      <div style={{
-        width: 48,
-        height: 48,
-        borderRadius: '50%',
-        backgroundColor: skin_tone.median_hex,
-        border: '2px solid #ccc',
-        flexShrink: 0,
-      }} />
-      <div>
-        <p style={{ margin: 0, fontWeight: 600 }}>{skin_tone.median_hex.toUpperCase()}</p>
-        <p style={{ margin: 0, fontSize: '0.85rem', opacity: 0.7 }}>
-          RGB: {skin_tone.median_rgb.join(', ')}
-        </p>
-      </div>
-    </div>
-  </div>
-)}
+          <div className="analysis-result__bisenet">
+            <p className="analysis-result__palette-title">Detected Skin Tone (BiSeNet)</p>
+            <div className="analysis-result__bisenet-row">
+              <div
+                className="analysis-result__bisenet-swatch"
+                style={{ backgroundColor: skin_tone.median_hex }}
+              />
+              <div className="analysis-result__bisenet-info">
+                <p className="analysis-result__bisenet-hex">{skin_tone.median_hex.toUpperCase()}</p>
+                <p className="analysis-result__bisenet-rgb">RGB: {skin_tone.median_rgb.join(', ')}</p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {palette.length > 0 && (
