@@ -13,6 +13,7 @@ export const translations = {
       errorFormat: 'Invalid format. Use JPG, PNG, or WebP.',
       errorSize: 'File too large. Maximum size: 10MB.',
       or: 'or',
+      privacyNotice: 'Your photo is processed in memory only and never stored or shared.',
     },
     preview: {
       title: 'Ready to analyze?',
@@ -107,6 +108,7 @@ export const translations = {
       errorFormat: 'Formato inválido. Use JPG, PNG ou WebP.',
       errorSize: 'Arquivo muito grande. Tamanho máximo: 10MB.',
       or: 'ou',
+      privacyNotice: 'Sua foto é processada apenas na memória e nunca armazenada ou compartilhada.',
     },
     preview: {
       title: 'Pronto para analisar?',
@@ -201,6 +203,7 @@ export const translations = {
       errorFormat: 'Format invalide. Utilisez JPG, PNG ou WebP.',
       errorSize: 'Fichier trop volumineux. Taille maximale : 10 Mo.',
       or: 'ou',
+      privacyNotice: 'Votre photo est traitée uniquement en mémoire et jamais stockée ni partagée.',
     },
     preview: {
       title: 'Prêt à analyser ?',
@@ -295,6 +298,7 @@ export const translations = {
       errorFormat: '格式无效。请使用 JPG、PNG 或 WebP。',
       errorSize: '文件太大。最大大小：10MB。',
       or: '或',
+      privacyNotice: '您的照片仅在内存中处理，不会被存储或共享。',
     },
     preview: {
       title: '准备好分析了吗？',
@@ -389,6 +393,7 @@ export const translations = {
       errorFormat: '格式無效。請使用 JPG、PNG 或 WebP。',
       errorSize: '檔案太大。最大大小：10MB。',
       or: '或',
+      privacyNotice: '您的照片僅在記憶體中處理，不會被儲存或分享。',
     },
     preview: {
       title: '準備好分析了嗎？',
@@ -483,6 +488,7 @@ export const translations = {
       errorFormat: 'Geçersiz format. JPG, PNG veya WebP kullanın.',
       errorSize: 'Dosya çok büyük. Maksimum boyut: 10MB.',
       or: 'veya',
+      privacyNotice: 'Fotoğrafınız yalnızca bellekte işlenir, asla saklanmaz veya paylaşılmaz.',
     },
     preview: {
       title: 'Analiz etmeye hazır mısınız?',

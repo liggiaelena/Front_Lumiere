@@ -89,6 +89,13 @@ export default function UploadZone({ onImageSelected, onOpenCamera }) {
 
       <p className="upload-zone__hint">{t.upload.hint}</p>
 
+      <p className="upload-zone__privacy">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true" style={{display:'inline',marginRight:'4px',verticalAlign:'middle'}}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+        </svg>
+        {t.upload.privacyNotice}
+      </p>
+
       {error && <p className="upload-zone__error" role="alert">{error}</p>}
 
       {previewUrl && !error && (

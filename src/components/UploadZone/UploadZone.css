@@ -52,6 +52,13 @@
   margin-top: 1rem;
 }
 
+.upload-zone__privacy {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  margin-top: 0.5rem;
+  opacity: 0.8;
+}
+
 .upload-zone__error {
   font-size: 0.875rem;
   color: var(--color-error);
