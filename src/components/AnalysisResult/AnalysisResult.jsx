@@ -17,6 +17,7 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
     comparacao_tons,
     imperfeicoes,
     recommendations,
+    skin_tone,
   } = result
 
   const palette = REGION_ORDER.filter((k) => regioes[k]?.tom_hex).map((k) => ({
@@ -41,6 +42,27 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
             {t.result.undertoneLabel}: {t.undertones[subtom_predominante] ?? subtom_predominante}
           </p>
         </div>
+        {skin_tone?.median_hex && (
+  <div className="analysis-result__skin-tone">
+    <p className="analysis-result__palette-title">Detected Skin Tone (BiSeNet)</p>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '8px' }}>
+      <div style={{
+        width: 48,
+        height: 48,
+        borderRadius: '50%',
+        backgroundColor: skin_tone.median_hex,
+        border: '2px solid #ccc',
+        flexShrink: 0,
+      }} />
+      <div>
+        <p style={{ margin: 0, fontWeight: 600 }}>{skin_tone.median_hex.toUpperCase()}</p>
+        <p style={{ margin: 0, fontSize: '0.85rem', opacity: 0.7 }}>
+          RGB: {skin_tone.median_rgb.join(', ')}
+        </p>
+      </div>
+    </div>
+  </div>
+)}
       </div>
 
       {palette.length > 0 && (

@@ -50,11 +50,14 @@ export default function RegionCard({ regionName, data }) {
 
       {imperfeicoes.length > 0 ? (
         <div className="region-card__imperfeicoes">
-          {imperfeicoes.map((imp) => (
-            <span key={imp} className="region-card__imperfeicao-tag">
-              {t.imperfections[imp] ?? imp}
-            </span>
-          ))}
+          {imperfeicoes.map((imp, i) => {
+            const tipo = typeof imp === 'object' ? imp.tipo : imp
+            return (
+              <span key={`${tipo}-${i}`} className="region-card__imperfeicao-tag">
+                {t.imperfections[tipo] ?? tipo}
+              </span>
+            )
+          })}
         </div>
       ) : (
         <p className="region-card__no-imperfeicoes">{t.result.noImperfections}</p>
