@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"  stop-color="#2B1A0E"/>
+      <stop offset="100%" stop-color="#140C05"/>
+    </radialGradient>
+    <linearGradient id="prism" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%"   stop-color="#FFF8DC"/>
+      <stop offset="45%"  stop-color="#FFD166"/>
+      <stop offset="100%" stop-color="#F4916A"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="circle-clip">
+      <circle cx="32" cy="32" r="30"/>
+    </clipPath>
+  </defs>
+
+  <!-- Dark background circle -->
+  <circle cx="32" cy="32" r="31" fill="url(#bg)"/>
+
+  <!-- Spectrum rays fanning right — clipped to circle -->
+  <g clip-path="url(#circle-clip)">
+    <polygon points="37,32 62,12 62,18" fill="#FF8FAB" opacity="0.92"/>
+    <polygon points="37,32 62,18 62,26" fill="#FFBF9B" opacity="0.88"/>
+    <polygon points="37,32 62,26 62,34" fill="#FFD97F" opacity="0.88"/>
+    <polygon points="37,32 62,34 62,42" fill="#FFE566" opacity="0.85"/>
+    <polygon points="37,32 62,42 62,50" fill="#FFF4A0" opacity="0.75"/>
+  </g>
+
+  <!-- Prism triangle (bold, filled) -->
+  <polygon
+    points="17,49 32,11 47,49"
+    fill="url(#prism)"
+    filter="url(#glow)"
+  />
+
+  <!-- Left face highlight -->
+  <polygon points="17,49 32,11 32,49" fill="white" opacity="0.15"/>
+
+  <!-- Strong outline -->
+  <polygon
+    points="17,49 32,11 47,49"
+    fill="none"
+    stroke="#FFD166"
+    stroke-width="1.5"
+    stroke-linejoin="round"
+  />
+
+  <!-- Apex sparkle -->
+  <circle cx="32" cy="13" r="2.8" fill="white" opacity="0.95" filter="url(#glow)"/>
+  <!-- 4-point star at apex -->
+  <line x1="32" y1="8"  x2="32" y2="18" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="27" y1="13" x2="37" y2="13" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+
+  <!-- Border ring -->
+  <circle cx="32" cy="32" r="30" fill="none" stroke="#FFD166" stroke-width="1.2" opacity="0.4"/>
+</svg>
