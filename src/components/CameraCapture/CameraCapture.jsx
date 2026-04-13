@@ -45,9 +45,35 @@ export default function CameraCapture({ onCapture, onClose }) {
           ) : (
             <>
               <video ref={videoRef} className="camera-capture__video" autoPlay playsInline muted />
-              <div className="camera-capture__guide" aria-hidden="true">
-                <div className="camera-capture__guide-oval" />
-              </div>
+
+              {/* Dark cutout overlay — SVG with transparent oval hole */}
+              <svg
+                className="camera-capture__overlay"
+                viewBox="0 0 100 100"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              >
+                <defs>
+                  <mask id="oval-mask">
+                    <rect width="100" height="100" fill="white" />
+                    <ellipse cx="50" cy="48" rx="28" ry="36" fill="black" />
+                  </mask>
+                </defs>
+                <rect width="100" height="100" fill="rgba(0,0,0,0.55)" mask="url(#oval-mask)" />
+                {/* Oval border */}
+                <ellipse
+                  cx="50" cy="48" rx="28" ry="36"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.85)"
+                  strokeWidth="0.6"
+                  strokeDasharray="3 1.5"
+                />
+              </svg>
+
+              {/* Alignment hint */}
+              <p className="camera-capture__hint" aria-live="polite">
+                Align your face inside the oval
+              </p>
             </>
           )}
         </div>
