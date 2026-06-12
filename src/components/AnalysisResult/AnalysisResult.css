@@ -229,4 +229,22 @@
 
 .analysis-result__btn-new:hover {
   background-color: #b57a5e;
+
+.medical-alert {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #f5c542;
+  border-radius: 12px;
+  background: #fff8dc;
+  color: #3d2f00;
+}
+
+.medical-alert strong {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.medical-alert p {
+  margin: 0.25rem 0;
+}  
 }

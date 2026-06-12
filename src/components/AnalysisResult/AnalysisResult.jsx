@@ -28,6 +28,7 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
 
   return (
     <div className="analysis-result">
+      
       <div className="analysis-result__hero">
         <div
           className="analysis-result__swatch"
