@@ -18,6 +18,8 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
     imperfeicoes,
     recommendations,
     skin_tone,
+    medical_alert,
+    recommendations_blocked,
   } = result
 
   const palette = REGION_ORDER.filter((k) => regioes[k]?.tom_hex).map((k) => ({
@@ -26,9 +28,16 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
     hex: regioes[k].tom_hex,
   }))
 
-  return (
+    return (
     <div className="analysis-result">
-      
+      {medical_alert && (
+        <div className={`medical-alert medical-alert--${medical_alert.severity || 'info'}`}>
+          <strong>{medical_alert.title}</strong>
+          <p>{medical_alert.message}</p>
+          <p>{medical_alert.recommendation}</p>
+        </div>
+      )}
+
       <div className="analysis-result__hero">
         <div
           className="analysis-result__swatch"
@@ -114,7 +123,16 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
         </div>
       )}
 
-      <Recommendations recommendations={recommendations} />
+            {recommendations_blocked ? (
+        <div className="recommendations-blocked">
+          <h3 className="analysis-result__section-title">Recommendations paused</h3>
+          <p>
+            Makeup recommendations are paused because this result may require medical review first.
+          </p>
+        </div>
+      ) : (
+        <Recommendations recommendations={recommendations} />
+      )}
 
       <div className="analysis-result__footer">
         <button className="analysis-result__btn-new" onClick={onNewAnalysis} type="button">
