@@ -48,6 +48,29 @@ export const translations = {
       findIt: 'Find it →',
       vs: 'vs',
     },
+    medicalAlert: {
+      title: 'Not a medical diagnosis',
+      message:
+        'Lumière provides cosmetic guidance and educational prototype analysis only. It does not diagnose, treat, or replace advice from a licensed healthcare professional.',
+      recommendation:
+        'If you notice persistent, painful, changing, spreading, bleeding, or concerning skin changes, please consult a licensed healthcare professional.',
+    },
+    recommendationsBlocked: {
+      title: 'Recommendations paused',
+      message: 'Makeup recommendations are paused because this result may require medical review first.',
+    },
+    recommendations: {
+      banner: {
+        spfWarning: 'Based on your detected condition (Melasma), we highly recommend using an SPF 30+ sunscreen daily to prevent further pigmentation.',
+      },
+      badge: {
+        dermatologicallyTested: 'Dermatologically Tested',
+      },
+      step: {
+        colorCorrectorTitle: 'Step 1: Color Correction',
+        colorCorrectorDesc: 'Apply a color corrector before your foundation to neutralize hyperpigmentation or redness.',
+      },
+    },
     fitzpatrick: {
       1: 'Type I — Very fair skin, always burns, never tans',
       2: 'Type II — Fair skin, usually burns, rarely tans',
@@ -142,6 +165,29 @@ export const translations = {
       foundationSubtitle: 'Tons selecionados para o seu tipo de pele e subtom',
       findIt: 'Encontrar →',
       vs: 'vs',
+    },
+    medicalAlert: {
+      title: 'Não é um diagnóstico médico',
+      message:
+        'A Lumière oferece apenas orientações cosméticas e análise educacional de protótipo. Ela não diagnostica, trata nem substitui a orientação de um profissional de saúde licenciado.',
+      recommendation:
+        'Se notar alterações persistentes, dolorosas, em mudança, espalhando-se, sangrando ou preocupantes na pele, consulte um profissional de saúde licenciado.',
+    },
+    recommendationsBlocked: {
+      title: 'Recomendações pausadas',
+      message: 'As recomendações de maquiagem foram pausadas porque este resultado pode exigir uma avaliação médica primeiro.',
+    },
+    recommendations: {
+      banner: {
+        spfWarning: 'Com base na sua condição detectada (melasma), recomendamos fortemente o uso diário de protetor solar FPS 30+ para evitar mais pigmentação.',
+      },
+      badge: {
+        dermatologicallyTested: 'Testado dermatologicamente',
+      },
+      step: {
+        colorCorrectorTitle: 'Passo 1: Correção de cor',
+        colorCorrectorDesc: 'Aplique um corretor de cor antes da base para neutralizar a hiperpigmentação ou a vermelhidão.',
+      },
     },
     fitzpatrick: {
       1: 'Tipo I — Pele muito clara, sempre queima, nunca bronzeia',
@@ -238,6 +284,29 @@ export const translations = {
       findIt: 'Trouver →',
       vs: 'vs',
     },
+    medicalAlert: {
+      title: 'Pas un diagnostic médical',
+      message:
+        'Lumière fournit uniquement des conseils cosmétiques et une analyse éducative de prototype. Elle ne diagnostique pas, ne traite pas et ne remplace pas les conseils d’un professionnel de santé agréé.',
+      recommendation:
+        'Si vous remarquez des changements cutanés persistants, douloureux, changeants, qui s’étendent, saignent ou vous inquiètent, consultez un professionnel de santé agréé.',
+    },
+    recommendationsBlocked: {
+      title: 'Recommandations en pause',
+      message: 'Les recommandations de maquillage sont en pause car ce résultat peut d’abord nécessiter un avis médical.',
+    },
+    recommendations: {
+      banner: {
+        spfWarning: 'D’après votre état détecté (mélasma), nous vous recommandons fortement d’utiliser quotidiennement un écran solaire SPF 30+ pour prévenir une nouvelle pigmentation.',
+      },
+      badge: {
+        dermatologicallyTested: 'Testé dermatologiquement',
+      },
+      step: {
+        colorCorrectorTitle: 'Étape 1 : Correction de couleur',
+        colorCorrectorDesc: 'Appliquez un correcteur de couleur avant votre fond de teint pour neutraliser l’hyperpigmentation ou la rougeur.',
+      },
+    },
     fitzpatrick: {
       1: 'Type I — Peau très claire, brûle toujours, ne bronze jamais',
       2: 'Type II — Peau claire, brûle souvent, bronze rarement',
@@ -332,6 +401,29 @@ export const translations = {
       foundationSubtitle: '根据您的肤色和色调选择的色号',
       findIt: '查找 →',
       vs: '对比',
+    },
+    medicalAlert: {
+      title: '这不是医学诊断',
+      message:
+        'Lumière 仅提供化妆建议和教育性的原型分析。它不会诊断、治疗，也不会替代持牌医疗专业人员的建议。',
+      recommendation:
+        '如果您注意到持续、疼痛、变化、扩散、出血或其他令人担忧的皮肤变化，请咨询持牌医疗专业人员。',
+    },
+    recommendationsBlocked: {
+      title: '推荐已暂停',
+      message: '由于此结果可能首先需要医学审核，妆容推荐已暂停。',
+    },
+    recommendations: {
+      banner: {
+        spfWarning: '根据您检测到的状态（黄褐斑），我们强烈建议您每天使用 SPF 30+ 的防晒霜，以防止进一步色沉。',
+      },
+      badge: {
+        dermatologicallyTested: '经皮肤科测试',
+      },
+      step: {
+        colorCorrectorTitle: '步骤 1：校色',
+        colorCorrectorDesc: '在粉底前使用校色产品来中和色沉或泛红。',
+      },
     },
     fitzpatrick: {
       1: 'I型 — 极浅肤色，容易晒伤，从不晒黑',
@@ -428,6 +520,29 @@ export const translations = {
       findIt: '查找 →',
       vs: '對比',
     },
+    medicalAlert: {
+      title: '這不是醫學診斷',
+      message:
+        'Lumière 只提供彩妝指導與教育性原型分析。它不會診斷、治療，也不會取代持牌醫療專業人員的建議。',
+      recommendation:
+        '如果您注意到持續、疼痛、變化、擴散、出血或其他令人擔憂的皮膚變化，請諮詢持牌醫療專業人員。',
+    },
+    recommendationsBlocked: {
+      title: '推薦已暫停',
+      message: '由於此結果可能首先需要醫學審核，妝容推薦已暫停。',
+    },
+    recommendations: {
+      banner: {
+        spfWarning: '根據您檢測到的狀況（黃褐斑），我們強烈建議您每天使用 SPF 30+ 的防曬乳，以預防進一步色沉。',
+      },
+      badge: {
+        dermatologicallyTested: '經皮膚科測試',
+      },
+      step: {
+        colorCorrectorTitle: '步驟 1：校色',
+        colorCorrectorDesc: '在粉底前使用校色產品來中和色沉或泛紅。',
+      },
+    },
     fitzpatrick: {
       1: 'I型 — 極淺膚色，容易曬傷，從不曬黑',
       2: 'II型 — 淺膚色，通常曬傷，很少曬黑',
@@ -522,6 +637,29 @@ export const translations = {
       foundationSubtitle: 'Cilt tonunuz ve alt tonunuz için seçilen renkler',
       findIt: 'Bul →',
       vs: 'vs',
+    },
+    medicalAlert: {
+      title: 'Bu tıbbi bir tanı değildir',
+      message:
+        'Lumière yalnızca kozmetik rehberlik ve eğitim amaçlı prototip analizi sağlar. Tanı koymaz, tedavi etmez ve lisanslı bir sağlık profesyonelinin tavsiyesinin yerini almaz.',
+      recommendation:
+        'Süregelen, ağrılı, değişen, yayılan, kanayan veya endişe verici cilt değişiklikleri fark ederseniz, lütfen lisanslı bir sağlık profesyoneline başvurun.',
+    },
+    recommendationsBlocked: {
+      title: 'Öneriler duraklatıldı',
+      message: 'Bu sonuç önce tıbbi değerlendirme gerektirebilir; makyaj önerileri duraklatıldı.',
+    },
+    recommendations: {
+      banner: {
+        spfWarning: 'Tespit edilen durumunuza göre (melazma), daha fazla pigmentasyon oluşumunu önlemek için günlük olarak SPF 30+ güneş koruyucu kullanmanızı şiddetle öneririz.',
+      },
+      badge: {
+        dermatologicallyTested: 'Dermatolojik olarak test edilmiştir',
+      },
+      step: {
+        colorCorrectorTitle: 'Adım 1: Renk Düzeltme',
+        colorCorrectorDesc: 'Hiperpigmentasyonu veya kızarıklığı nötralize etmek için fondöteninizden önce bir renk düzeltici uygulayın.',
+      },
     },
     fitzpatrick: {
       1: 'Tip I — Çok açık cilt, her zaman yanar, hiç bronzlaşmaz',

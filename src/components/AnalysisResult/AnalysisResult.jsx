@@ -17,10 +17,25 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
     comparacao_tons,
     imperfeicoes,
     recommendations,
+    condition_map: conditionMapFromResult,
     skin_tone,
     medical_alert,
     recommendations_blocked,
   } = result
+
+  // Defensive fallback so Recommendations never crashes if the backend omits
+  // or sends an empty condition map.
+  const safeRecommendations = Array.isArray(recommendations) ? recommendations : []
+  const safeConditionMap =
+    conditionMapFromResult &&
+    typeof conditionMapFromResult === 'object' &&
+    Object.keys(conditionMapFromResult).length > 0
+      ? conditionMapFromResult
+      : {
+          vitiligo: false,
+          melasma: false,
+          wine_stain: false,
+        }
 
   const palette = REGION_ORDER.filter((k) => regioes[k]?.tom_hex).map((k) => ({
     key: k,
@@ -28,13 +43,27 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
     hex: regioes[k].tom_hex,
   }))
 
-    return (
+  const localizedMedicalAlert = medical_alert
+    ? {
+        title: t.medicalAlert?.title ?? medical_alert.title ?? '',
+        message: t.medicalAlert?.message ?? medical_alert.message ?? '',
+        recommendation: t.medicalAlert?.recommendation ?? medical_alert.recommendation ?? '',
+        severity: medical_alert.severity || 'info',
+      }
+    : null
+
+  const localizedRecommendationsBlocked = {
+    title: t.recommendationsBlocked?.title ?? 'Recommendations paused',
+    message: t.recommendationsBlocked?.message ?? 'Makeup recommendations are paused because this result may require medical review first.',
+  }
+  
+  return (
     <div className="analysis-result">
-      {medical_alert && (
-        <div className={`medical-alert medical-alert--${medical_alert.severity || 'info'}`}>
-          <strong>{medical_alert.title}</strong>
-          <p>{medical_alert.message}</p>
-          <p>{medical_alert.recommendation}</p>
+      {localizedMedicalAlert && (
+        <div className={`medical-alert medical-alert--${localizedMedicalAlert.severity}`}>
+          <strong>{localizedMedicalAlert.title}</strong>
+          <p>{localizedMedicalAlert.message}</p>
+          <p>{localizedMedicalAlert.recommendation}</p>
         </div>
       )}
 
@@ -123,15 +152,13 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
         </div>
       )}
 
-            {recommendations_blocked ? (
+      {recommendations_blocked ? (
         <div className="recommendations-blocked">
-          <h3 className="analysis-result__section-title">Recommendations paused</h3>
-          <p>
-            Makeup recommendations are paused because this result may require medical review first.
-          </p>
+          <h3 className="analysis-result__section-title">{localizedRecommendationsBlocked.title}</h3>
+          <p>{localizedRecommendationsBlocked.message}</p>
         </div>
       ) : (
-        <Recommendations recommendations={recommendations} />
+        <Recommendations recommendations={safeRecommendations} conditionMap={safeConditionMap} />
       )}
 
       <div className="analysis-result__footer">

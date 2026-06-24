@@ -73,6 +73,7 @@ export const mockAnalysisResponse = {
       fitzpatrick_range: [3, 4],
       price_range: '$38–$42',
       where_to_buy: 'https://www.fentybeauty.com',
+      category: 'foundation'
     },
     {
       brand: 'MAC',
@@ -82,6 +83,7 @@ export const mockAnalysisResponse = {
       fitzpatrick_range: [3, 4],
       price_range: '$35–$40',
       where_to_buy: 'https://www.maccosmetics.com',
+      category: 'foundation'
     },
     {
       brand: 'Maybelline',
@@ -91,6 +93,7 @@ export const mockAnalysisResponse = {
       fitzpatrick_range: [3, 4],
       price_range: '$10–$14',
       where_to_buy: 'https://www.maybelline.com',
+      category: 'foundation'
     },
   ],
   medical_alert: {
@@ -101,4 +104,23 @@ export const mockAnalysisResponse = {
   recommendation:
     "If you notice persistent, painful, changing, spreading, bleeding, or concerning skin changes, please consult a licensed healthcare professional.",
 },
+
+
+// ─── 💡 手動新增後端模擬資料 (修改此處的值來測試不同 UI 效果) ───
+// ─── 💡 Manually add backend simulation data (modify the value here to test different UI effects). ───
+  condition_map: {
+    // 設為 true 測試：SPF Banner + 校色步驟
+    // Set to true to test: SPF Banner + Color Correction Step
+    melasma: false, 
+    
+    
+    // 設為 true 測試：商品卡片亮起 Dermatologically Tested 徽章
+    // Set to true to test: Product card shows Dermatologically Tested badge
+    vitiligo: true,     
+
+
+    // 設為 true 測試：徽章 + 校色步驟
+    // Set to true to test: Badge + Color Correction Step
+    wine_stain: false,   } 
+
 }
