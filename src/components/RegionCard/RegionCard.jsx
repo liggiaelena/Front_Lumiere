@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import './RegionCard.css'
 import { useLanguage } from '../../i18n/LanguageContext.jsx'
 
-export default function RegionCard({ regionName, data }) {
+export default function RegionCard({ regionName, data, conditions = [] }) {
   const { t } = useLanguage()
   const { tom_hex, tom_fitzpatrick, oleosidade, imperfeicoes = [], uniformidade, notas } = data
   const uniformPercent = ((uniformidade / 10) * 100).toFixed(0)
@@ -62,6 +62,28 @@ export default function RegionCard({ regionName, data }) {
       ) : (
         <p className="region-card__no-imperfeicoes">{t.result.noImperfections}</p>
       )}
+
+      {conditions.length > 0 && (
+        <div className="region-card__conditions">
+          {conditions.map((condition, index) => {
+            const type = condition?.type ?? 'outro'
+            const areaPercent = Number(condition?.areaPercent)
+
+            return (
+              <span
+                key={`${type}-${index}`}
+                className="region-card__condition-tag"
+              >
+                {t.conditions?.[type] ?? type}
+                {Number.isFinite(areaPercent)
+                  ? ` · ${areaPercent.toFixed(2)}%`
+                  : ''}
+              </span>
+            )
+          })}
+        </div>
+      )}
+
 
       {notas && <p className="region-card__notas">{notas}</p>}
     </div>

@@ -47,6 +47,16 @@ export const translations = {
       foundationSubtitle: 'Shades selected for your skin tone and undertone',
       findIt: 'Find it →',
       vs: 'vs',
+      conditionsTitle: 'Detected condition indicators',
+      conditionsSubtitle:
+      'Segmentation indicators by facial region. This is not a medical diagnosis.',
+      healthySkinTone: 'Healthy Skin Tone',
+      regionUnavailable: 'Region unavailable',
+    },
+    conditions: {
+    vitiligo: 'Vitiligo',
+    melasma: 'Melasma',
+    wine_stain: 'Port-wine stain',
     },
     medicalAlert: {
       title: 'Not a medical diagnosis',
@@ -165,6 +175,16 @@ export const translations = {
       foundationSubtitle: 'Tons selecionados para o seu tipo de pele e subtom',
       findIt: 'Encontrar →',
       vs: 'vs',
+      conditionsTitle: 'Indicadores de condições detectadas',
+    conditionsSubtitle:
+    'Indicadores de segmentação por região facial. Isto não é um diagnóstico médico.',
+    healthySkinTone: 'Tom de pele saudável',
+    regionUnavailable: 'Região indisponível',
+    },
+    conditions: {
+    vitiligo: 'Vitiligo',
+    melasma: 'Melasma',
+    wine_stain: 'Mancha vinho do Porto',
     },
     medicalAlert: {
       title: 'Não é um diagnóstico médico',
@@ -283,6 +303,16 @@ export const translations = {
       foundationSubtitle: 'Teintes sélectionnées pour votre carnation et sous-ton',
       findIt: 'Trouver →',
       vs: 'vs',
+      conditionsTitle: 'Indicateurs de conditions détectées',
+      conditionsSubtitle:
+      'Indicateurs de segmentation par région du visage. Ceci n’est pas un diagnostic médical.',
+      healthySkinTone: 'Teint sain',
+      regionUnavailable: 'Région non disponible',
+    },
+    conditions: {
+    vitiligo: 'Vitiligo',
+    melasma: 'Mélasma',
+    wine_stain: 'Tache de vin',
     },
     medicalAlert: {
       title: 'Pas un diagnostic médical',
@@ -401,6 +431,15 @@ export const translations = {
       foundationSubtitle: '根据您的肤色和色调选择的色号',
       findIt: '查找 →',
       vs: '对比',
+      conditionsTitle: '检测到的皮肤状况指标',
+      conditionsSubtitle: '按面部区域显示的分割指标。这不是医学诊断。',
+      healthySkinTone: '健康肤色',
+      regionUnavailable: '区域不可用',
+    },
+    conditions: {
+    vitiligo: '白癜风',
+    melasma: '黄褐斑',
+    wine_stain: '葡萄酒色斑',
     },
     medicalAlert: {
       title: '这不是医学诊断',
@@ -519,6 +558,15 @@ export const translations = {
       foundationSubtitle: '根據您的膚色和色調選擇的色號',
       findIt: '查找 →',
       vs: '對比',
+      conditionsTitle: '偵測到的皮膚狀況指標',
+      conditionsSubtitle: '依臉部區域顯示的分割指標。這不是醫學診斷。',
+      healthySkinTone: '健康膚色',
+      regionUnavailable: '區域無法使用',
+    },
+    conditions: {
+    vitiligo: '白癜風',
+    melasma: '黃褐斑',
+    wine_stain: '葡萄酒色斑',
     },
     medicalAlert: {
       title: '這不是醫學診斷',
@@ -637,6 +685,16 @@ export const translations = {
       foundationSubtitle: 'Cilt tonunuz ve alt tonunuz için seçilen renkler',
       findIt: 'Bul →',
       vs: 'vs',
+      conditionsTitle: 'Algılanan durum göstergeleri',
+      conditionsSubtitle:
+      'Yüz bölgesine göre segmentasyon göstergeleri. Bu tıbbi bir tanı değildir.',
+      healthySkinTone: 'Sağlıklı cilt tonu',
+      regionUnavailable: 'Bölge kullanılamıyor',
+    },
+    conditions: {
+    vitiligo: 'Vitiligo',
+    melasma: 'Melazma',
+    wine_stain: 'Porto şarabı lekesi',
     },
     medicalAlert: {
       title: 'Bu tıbbi bir tanı değildir',

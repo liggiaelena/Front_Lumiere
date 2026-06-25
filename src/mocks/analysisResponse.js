@@ -2,6 +2,10 @@ export const mockAnalysisResponse = {
   tom_geral_fitzpatrick: 4,
   subtom_predominante: 'quente',
   tom_geral_hex: '#c68b6e',
+  skin_tone: {
+  median_hex: '#c68b6e',
+  median_rgb: [198, 139, 110],
+},
   regioes: {
     testa: {
       tom_hex: '#c4856a',
@@ -105,6 +109,23 @@ export const mockAnalysisResponse = {
     "If you notice persistent, painful, changing, spreading, bleeding, or concerning skin changes, please consult a licensed healthcare professional.",
 },
 
+segformer_condition_map: {
+  vitiligo: {
+    detected: true,
+    area_percent: 4.8,
+    zones: ['left_cheek', 'chin'],
+  },
+  melasma: {
+    detected: false,
+    area_percent: 0,
+    zones: [],
+  },
+  wine_stain: {
+    detected: false,
+    area_percent: 0,
+    zones: [],
+  },
+},
 
 // ─── 💡 手動新增後端模擬資料 (修改此處的值來測試不同 UI 效果) ───
 // ─── 💡 Manually add backend simulation data (modify the value here to test different UI effects). ───

@@ -104,3 +104,20 @@
   border-top: 1px solid var(--color-border);
   padding-top: 0.75rem;
 }
+
+
+.region-card__conditions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.region-card__condition-tag {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid #f0c99c;
+  border-radius: 99px;
+  background-color: #fff8e8;
+  color: #8a5500;
+  text-transform: capitalize;
+}

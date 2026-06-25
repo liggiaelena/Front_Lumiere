@@ -4,7 +4,15 @@ import RegionCard from '../RegionCard/RegionCard.jsx'
 import ToneComparison from '../ToneComparison/ToneComparison.jsx'
 import Recommendations from '../Recommendations/Recommendations.jsx'
 import UniformityRadar from '../UniformityRadar/UniformityRadar.jsx'
+import ConditionsPanel from '../ConditionsPanel/ConditionsPanel.jsx'
 
+const ZONE_TO_REGION_KEY = {
+  forehead: 'testa',
+  left_cheek: 'bochecha_e',
+  right_cheek: 'bochecha_d',
+  center_face: 'nariz',
+  chin: 'queixo',
+}
 const REGION_ORDER = ['testa', 'bochecha_e', 'bochecha_d', 'nariz', 'queixo']
 
 export default function AnalysisResult({ result, onNewAnalysis }) {
@@ -18,6 +26,7 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
     imperfeicoes,
     recommendations,
     condition_map: conditionMapFromResult,
+    segformer_condition_map: segformerConditionMapFromResult,
     skin_tone,
     medical_alert,
     recommendations_blocked,
@@ -36,7 +45,39 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
           melasma: false,
           wine_stain: false,
         }
+  const safeSegformerConditionMap =
+    segformerConditionMapFromResult &&
+    typeof segformerConditionMapFromResult === 'object'
+      ? segformerConditionMapFromResult
+      : {}
 
+  const conditionsByRegion = Object.entries(safeSegformerConditionMap).reduce(
+    (groupedConditions, [type, details]) => {
+      if (!details?.detected || !Array.isArray(details.zones)) {
+        return groupedConditions
+      }
+
+      details.zones.forEach((zone) => {
+        const regionKey = ZONE_TO_REGION_KEY[zone]
+
+        if (!regionKey) {
+          return
+        }
+
+        if (!groupedConditions[regionKey]) {
+          groupedConditions[regionKey] = []
+        }
+
+        groupedConditions[regionKey].push({
+          type,
+          areaPercent: details.area_percent ?? 0,
+        })
+      })
+
+      return groupedConditions
+    },
+    {}
+  )
   const palette = REGION_ORDER.filter((k) => regioes[k]?.tom_hex).map((k) => ({
     key: k,
     label: t.regions[k] ?? k,
@@ -83,7 +124,7 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
         </div>
         {skin_tone?.median_hex && (
           <div className="analysis-result__bisenet">
-            <p className="analysis-result__palette-title">Detected Skin Tone (BiSeNet)</p>
+            <p className="analysis-result__palette-title"> {t.result.healthySkinTone ?? 'Healthy Skin Tone'}</p>
             <div className="analysis-result__bisenet-row">
               <div
                 className="analysis-result__bisenet-swatch"
@@ -123,7 +164,12 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
         <div className="analysis-result__regions-grid">
           {REGION_ORDER.map((key) =>
             regioes[key] ? (
-              <RegionCard key={key} regionName={t.regions[key] ?? key} data={regioes[key]} />
+              <RegionCard
+                key={key}
+                regionName={t.regions[key] ?? key}
+                data={regioes[key]}
+                conditions={conditionsByRegion[key] ?? []}
+              />
             ) : null
           )}
         </div>
@@ -151,6 +197,8 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
           </ul>
         </div>
       )}
+
+      <ConditionsPanel conditionMap={safeSegformerConditionMap} />
 
       {recommendations_blocked ? (
         <div className="recommendations-blocked">
