@@ -26,6 +26,9 @@
   /* Success/Tested Badge Green */
   --color-error: #C1121F;
   /* Error/Risk Alert Red */
+  --color-warning: #D97706;
+  --color-warning-light: #FFF4E5;
+  --color-warning-text: #3D2300;
 
   /* 4. Compatibility Aliases (Backwards Compatibility) */
   --color-bg: var(--color-background);
@@ -39,6 +42,17 @@
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.10);
   --font-sans: 'Noto Sans', 'Noto Sans TC', 'Noto Sans SC', system-ui, sans-serif;
   --transition: 0.2s ease;
+
+  /* 6. Hover & Overlay Variants */
+  --color-accent-hover: #c49363;
+  --color-overlay: rgba(61, 47, 32, 0.65);
+
+  /* 7. Spacing Scale Tokens */
+  --spacing-xs: 0.25rem;  /* 4px */
+  --spacing-sm: 0.5rem;   /* 8px */
+  --spacing-md: 1rem;     /* 16px */
+  --spacing-lg: 1.5rem;   /* 24px */
+  --spacing-xl: 2rem;     /* 32px */
 }
 
 *,
@@ -133,8 +147,7 @@ body {
 .app__logo {
   width: 32px;
   height: 32px;
-  background-color: var(--color-accent);
-  border-radius: 50%;
+  object-fit: contain;
 }
 
 .app__title {

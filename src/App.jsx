@@ -60,7 +60,7 @@ function AppInner() {
     <div className="app">
       <header className="app__header">
         <div className="app__header-inner">
-          <div className="app__logo" aria-hidden="true" />
+          <img src="/logo.svg" className="app__logo" alt="Lumière Logo" />
           <div className="app__header-titles">
             <h1 className="app__title">Lumière</h1>
             <p className="app__subtitle">{t.app.subtitle}</p>

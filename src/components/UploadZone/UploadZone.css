@@ -93,7 +93,7 @@
 }
 
 .upload-zone__btn--primary:hover {
-  background-color: #c49363;
+  background-color: var(--color-accent-hover);
 }
 
 .upload-zone__btn--secondary {

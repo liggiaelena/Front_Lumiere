@@ -145,7 +145,7 @@
 }
 
 .face-preview__btn--primary:hover {
-  background-color: #c49363;
+  background-color: var(--color-accent-hover);
 }
 
 .face-preview__btn--ghost {

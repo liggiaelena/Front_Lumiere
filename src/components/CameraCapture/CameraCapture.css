@@ -131,8 +131,8 @@
 
 .camera-capture__shutter:hover {
   transform: scale(1.05);
-  background-color: #c49363;
-  border-color: #c49363;
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
 }
 
 .camera-capture__shutter:disabled {
