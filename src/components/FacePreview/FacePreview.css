@@ -326,7 +326,8 @@
   line-height: 1.6;
   color: var(--color-text);
   margin: 0;
-  text-align: left;
+  text-align: justify;
+  text-justify: inter-character;
   white-space: pre-line;
 }
 
