@@ -2,12 +2,21 @@ import './Recommendations.css'
 import { useLanguage } from '../../i18n/LanguageContext.jsx'
 
 export default function Recommendations({ recommendations, conditionMap }) {
-  const { t: translations } = useLanguage()
+  const { t: translations, lang } = useLanguage()
 
   const safeConditionMap = conditionMap && typeof conditionMap === 'object' ? conditionMap : {}
   const showSpfWarning = safeConditionMap?.melasma === true
   const showDermatologyBadge = safeConditionMap?.vitiligo === true || safeConditionMap?.wine_stain === true
   const showColorCorrectorStep = safeConditionMap?.wine_stain === true || safeConditionMap?.melasma === true
+
+  const FOOTNOTES = {
+    en: 'Tested: Dermatologically tested',
+    tw: '經測試：經臨床皮膚科測試',
+    zh: '经测试：经临床皮肤科测试',
+    pt: 'Testado: Testado dermatologicamente',
+    fr: 'Testé : Testé dermatologiquement',
+    tr: 'Test edilmiştir: Dermatolojik olarak test edilmiştir',
+  }
 
   const t = (key, fallback = '') => {
     const value = String(key)
@@ -32,6 +41,7 @@ export default function Recommendations({ recommendations, conditionMap }) {
 
       <h3 className="recommendations__title">{t('result.foundationTitle', 'Foundation Matches')}</h3>
       <p className="recommendations__subtitle">{t('result.foundationSubtitle', 'Shades selected for your skin tone and undertone')}</p>
+      <p className="recommendations__disclaimer">{FOOTNOTES[lang] || FOOTNOTES.en}</p>
 
       <div className="recommendations__grid">
         {recommendations.reduce((acc, rec, index) => {
@@ -52,6 +62,8 @@ export default function Recommendations({ recommendations, conditionMap }) {
             <div key={rec?.id ?? index} className="recommendations__card">
               <div className="recommendations__card-header">
                 <span className="recommendations__brand">{rec?.brand ?? ''}</span>
+              </div>
+              <div className="recommendations__badges-row">
                 {showDermatologyBadge && (
                   <span className="dermatology-badge">{t('recommendations.badge.dermatologicallyTested', 'Dermatologically Tested')}</span>
                 )}
@@ -60,11 +72,13 @@ export default function Recommendations({ recommendations, conditionMap }) {
                 </span>
               </div>
               <div className="recommendations__shade-row">
-                <div
-                  className="recommendations__shade-dot"
-                  style={{ backgroundColor: rec?.shade_hex ?? '#c68b6e' }}
-                  title={rec?.shade_hex ?? ''}
-                />
+                <div className="swatch-isolation-wrapper">
+                  <div
+                    className="recommendations__shade-dot"
+                    style={{ backgroundColor: rec?.shade_hex ?? '#c68b6e' }}
+                    title={rec?.shade_hex ?? ''}
+                  />
+                </div>
                 <p className="recommendations__shade-name">{rec?.shade_name ?? ''}</p>
               </div>
               <div className="recommendations__card-footer">

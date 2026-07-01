@@ -85,7 +85,7 @@ export default function RegionCard({ regionName, data, conditions = [] }) {
       )}
 
 
-      {notas && <p className="region-card__notas">{notas}</p>}
+      {notas && <p className="region-card__notas">{t.notes?.[notas] ?? notas}</p>}
     </div>
   )
 }

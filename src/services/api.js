@@ -9,27 +9,19 @@ const api = axios.create({
 })
 
 function buildMockAnalysisResponse() {
-  return {
-    ...mockAnalysisResponse,
-    condition_map: {
-      ...(mockAnalysisResponse.condition_map ?? {}),
-    },
-  }
+  return mockAnalysisResponse
 }
 
-export async function analyzeImage(file) {
+export async function analyzeImage(file, lang = 'en') {
   if (import.meta.env.DEV) {
-  //console.log("Local Development Mode 🛠️");
-    return buildMockAnalysisResponse()
-  }else {
-  //console.log("Official launch mode 🚀");
-}
+    return buildMockAnalysisResponse(lang)
+  }
 
   const formData = new FormData()
   formData.append('file', file)
 
   try {
-    const response = await api.post('/api/analyze', formData, {
+    const response = await api.post(`/api/analyze?lang=${lang}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -38,7 +30,7 @@ export async function analyzeImage(file) {
     return response.data
   } catch (error) {
     if (import.meta.env.DEV) {
-      return buildMockAnalysisResponse()
+      return buildMockAnalysisResponse(lang)
     }
 
     throw error

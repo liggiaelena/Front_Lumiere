@@ -62,7 +62,7 @@ function AppInner() {
         <div className="app__header-inner">
           <div className="app__logo" aria-hidden="true" />
           <div className="app__header-titles">
-            <h1 className="app__title">{t.app.title}</h1>
+            <h1 className="app__title">Lumière</h1>
             <p className="app__subtitle">{t.app.subtitle}</p>
           </div>
           <div className="app__lang-switcher">

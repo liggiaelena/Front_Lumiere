@@ -21,7 +21,7 @@ export default function UniformityRadar({ regioes }) {
 
   return (
     <div className="uniformity-radar">
-      <p className="uniformity-radar__title">Skin Uniformity Map</p>
+      <p className="uniformity-radar__title">{t.result.uniformityMap ?? 'Skin Uniformity Map'}</p>
       <ResponsiveContainer width="100%" height={260}>
         <RadarChart data={data} margin={{ top: 10, right: 30, bottom: 10, left: 30 }}>
           <PolarGrid stroke="var(--color-border)" />
@@ -31,8 +31,8 @@ export default function UniformityRadar({ regioes }) {
           />
           <Radar
             dataKey="score"
-            stroke="var(--color-accent)"
-            fill="var(--color-accent)"
+            stroke="var(--color-secondary)"
+            fill="var(--color-secondary)"
             fillOpacity={0.25}
             strokeWidth={2}
           />
@@ -44,7 +44,7 @@ export default function UniformityRadar({ regioes }) {
               fontSize: '0.8rem',
               color: 'var(--color-text)',
             }}
-            formatter={(value) => [`${value}/10`, 'Uniformity']}
+            formatter={(value) => [`${value}/10`, t.result.uniformity ?? 'Uniformity']}
           />
         </RadarChart>
       </ResponsiveContainer>

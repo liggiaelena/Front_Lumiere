@@ -22,7 +22,7 @@
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  border: 3px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--color-primary);
   flex-shrink: 0;
 }
 
@@ -186,7 +186,7 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  border: 2px solid var(--color-border);
+  border: 1px solid var(--color-primary);
   flex-shrink: 0;
 }
 
@@ -228,7 +228,7 @@
 }
 
 .analysis-result__btn-new:hover {
-  background-color: #b57a5e;
+  background-color: #c49363;
 }
 
 .medical-alert {
@@ -266,4 +266,102 @@
 
 .recommendations-blocked p {
   margin: 0.25rem 0;
+}
+
+/* Medical Alert Modal Overlay styling */
+.medical-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(61, 47, 32, 0.65); /* Warm dark tint backdrop overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000; /* Ensure it overlays everything including header */
+  padding: 1.5rem;
+  backdrop-filter: blur(4px); /* Modern blur effect */
+}
+
+.medical-modal-card {
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(140, 98, 57, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.medical-modal-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-error); /* Warning color for medical warning */
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.medical-modal-icon {
+  flex-shrink: 0;
+  color: var(--color-error);
+}
+
+.medical-modal-body {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.medical-modal-recommendation {
+  background-color: #fff9e6; /* Soft warm warning callout background */
+  border-left: 3px solid #ffc107;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  color: #664d03;
+  font-weight: 500;
+  font-size: 0.84rem;
+  margin: 0;
+}
+
+.medical-modal-confirm-btn {
+  background-color: var(--color-accent);
+  color: var(--color-surface);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  align-self: flex-end;
+}
+
+.medical-modal-confirm-btn:hover {
+  background-color: #c49363;
+  transform: translateY(-1px);
+}
+
+.medical-modal-confirm-btn:active {
+  transform: translateY(0);
 }

@@ -1,20 +1,43 @@
 :root {
-  --color-primary: #1a1a2e;
-  --color-accent: #c68b6e;
-  --color-accent-light: #f5e6dc;
-  --color-text: #2d2d2d;
-  --color-text-muted: #6b6b6b;
-  --color-bg: #fafaf8;
-  --color-surface: #ffffff;
-  --color-border: #e8e4df;
-  --color-success: #2d6a4f;
-  --color-error: #c1121f;
+  /* 1. Core Brand Colors & Backgrounds */
+  --color-primary: #8C6239;
+  /* Warm Chestnut Brown - For main headers, borders, key labels */
+  --color-accent: #D4A373;
+  /* Amber Gold - Dedicated for primary CTA/Emphasis Buttons */
+  --color-accent-light: #F5EBE0;
+  /* Almond Milk White Light Variant */
+  --color-background: #F5EBE0;
+  /* Almond Milk White - Global application/reading area background */
+  --color-surface: #FFFFFF;
+  /* Pure White - For isolating cards/modals against background */
+
+  /* 2. Typography & Layout Borders */
+  --color-text: #2D2D2D;
+  /* Dark Charcoal - Main paragraph and text color */
+  --color-muted-text: #6B6B6B;
+  /* Muted Grey - For secondary labels or hints */
+  --color-border: #8C6239;
+  /* Warm Chestnut Brown Thin Border */
+
+  /* 3. Functional/Auxiliary Colors */
+  --color-secondary: #1A365D;
+  /* Deep Sea Blue - Strictly reserved for AI charts, radar graphics, data lines */
+  --color-success: #2D6A4F;
+  /* Success/Tested Badge Green */
+  --color-error: #C1121F;
+  /* Error/Risk Alert Red */
+
+  /* 4. Compatibility Aliases (Backwards Compatibility) */
+  --color-bg: var(--color-background);
+  --color-text-muted: var(--color-muted-text);
+
+  /* 5. Radii & Shadows */
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 20px;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.10);
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Noto Sans', 'Noto Sans TC', 'Noto Sans SC', system-ui, sans-serif;
   --transition: 0.2s ease;
 }
 
@@ -32,10 +55,24 @@ html {
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--color-bg);
+  background-color: var(--color-background);
   color: var(--color-text);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+}
+
+.swatch-isolation-wrapper {
+  background-color: var(--color-surface) !important;
+  /* 強制純白，阻絕杏仁奶白背景 */
+  padding: 4px;
+  /* 呼應 Agent 預留 of 4px padding */
+  border-radius: 50%;
+  /* 因為 Swatch 通常是圓形，外圈隔離層也必須是圓形 */
+  box-shadow: 0px 4px 12px rgba(140, 98, 57, 0.15);
+  /* 暖栗棕調性軟陰影 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .app {
@@ -124,4 +161,10 @@ body {
   .app__main {
     padding: 3rem 2rem;
   }
+}
+
+/* Typography & Layout Defense - Ensure Noto Sans & Wrap globally */
+button, p, h1, h2, h3, h4, h5, h6, span, label, a, li {
+  word-break: break-word;
+  font-family: var(--font-sans);
 }

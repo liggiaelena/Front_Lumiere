@@ -3,7 +3,7 @@ import { analyzeImage } from '../services/api.js'
 import { useLanguage } from '../i18n/LanguageContext.jsx'
 
 export function useAnalysis({ setStep }) {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [result, setResult] = useState(null)
@@ -14,7 +14,7 @@ export function useAnalysis({ setStep }) {
     setStep('analyzing')
 
     try {
-      const data = await analyzeImage(file)
+      const data = await analyzeImage(file, lang)
       setResult(data)
       setStep('result')
     } catch (err) {

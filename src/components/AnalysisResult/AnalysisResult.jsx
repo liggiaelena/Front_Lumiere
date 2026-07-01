@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './AnalysisResult.css'
 import { useLanguage } from '../../i18n/LanguageContext.jsx'
 import RegionCard from '../RegionCard/RegionCard.jsx'
@@ -16,7 +17,17 @@ const ZONE_TO_REGION_KEY = {
 const REGION_ORDER = ['testa', 'bochecha_e', 'bochecha_d', 'nariz', 'queixo']
 
 export default function AnalysisResult({ result, onNewAnalysis }) {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
+  const [showMedicalModal, setShowMedicalModal] = useState(true)
+
+  const CONFIRM_TEXT = {
+    en: 'Confirm',
+    tw: '確認',
+    zh: '确认',
+    pt: 'Confirmar',
+    fr: 'Confirmer',
+    tr: 'Onayla',
+  }
   const {
     tom_geral_fitzpatrick,
     subtom_predominante,
@@ -100,20 +111,38 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
   
   return (
     <div className="analysis-result">
-      {localizedMedicalAlert && (
-        <div className={`medical-alert medical-alert--${localizedMedicalAlert.severity}`}>
-          <strong>{localizedMedicalAlert.title}</strong>
-          <p>{localizedMedicalAlert.message}</p>
-          <p>{localizedMedicalAlert.recommendation}</p>
+      {localizedMedicalAlert && showMedicalModal && (
+        <div className="medical-modal-overlay">
+          <div className="medical-modal-card">
+            <h3 className="medical-modal-title">
+              <svg className="medical-modal-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+              </svg>
+              {localizedMedicalAlert.title}
+            </h3>
+            <div className="medical-modal-body">
+              <p>{localizedMedicalAlert.message}</p>
+              <p className="medical-modal-recommendation">{localizedMedicalAlert.recommendation}</p>
+            </div>
+            <button
+              type="button"
+              className="medical-modal-confirm-btn"
+              onClick={() => setShowMedicalModal(false)}
+            >
+              {CONFIRM_TEXT[lang] || CONFIRM_TEXT.en}
+            </button>
+          </div>
         </div>
       )}
 
       <div className="analysis-result__hero">
-        <div
-          className="analysis-result__swatch"
-          style={{ backgroundColor: tom_geral_hex || '#c68b6e' }}
-          aria-label="Overall skin tone"
-        />
+        <div className="swatch-isolation-wrapper">
+          <div
+            className="analysis-result__swatch"
+            style={{ backgroundColor: tom_geral_hex || '#c68b6e' }}
+            aria-label="Overall skin tone"
+          />
+        </div>
         <div className="analysis-result__hero-info">
           <h2 className="analysis-result__hero-title">
             {t.fitzpatrick[tom_geral_fitzpatrick] ?? t.fitzpatrick.unknown}
@@ -126,10 +155,12 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
           <div className="analysis-result__bisenet">
             <p className="analysis-result__palette-title"> {t.result.healthySkinTone ?? 'Healthy Skin Tone'}</p>
             <div className="analysis-result__bisenet-row">
-              <div
-                className="analysis-result__bisenet-swatch"
-                style={{ backgroundColor: skin_tone.median_hex }}
-              />
+              <div className="swatch-isolation-wrapper">
+                <div
+                  className="analysis-result__bisenet-swatch"
+                  style={{ backgroundColor: skin_tone.median_hex }}
+                />
+              </div>
               <div className="analysis-result__bisenet-info">
                 <p className="analysis-result__bisenet-hex">{skin_tone.median_hex.toUpperCase()}</p>
                 <p className="analysis-result__bisenet-rgb">RGB: {skin_tone.median_rgb.join(', ')}</p>
@@ -141,7 +172,7 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
 
       {palette.length > 0 && (
         <div className="analysis-result__palette">
-          <p className="analysis-result__palette-title">Your Skin Palette</p>
+          <p className="analysis-result__palette-title">{t.result.skinPalette ?? 'Your Skin Palette'}</p>
           <div className="analysis-result__palette-swatches">
             {palette.map(({ key, label, hex }) => (
               <div key={key} className="analysis-result__palette-item">
