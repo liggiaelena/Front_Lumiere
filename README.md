@@ -1,6 +1,10 @@
-# Skin Analyzer — Frontend
+# Lumière — Skin Analyzer Frontend
 
 React interface for skin tone analysis via photo upload or camera capture.
+
+## About
+
+Lumière is an AI-powered beauty assistant that helps users find inclusive foundation shades by analysing their skin tone and conditions. The frontend guides the user from photo capture to a detailed results screen: per-region tone comparison (forehead, cheeks, nose, chin), imperfection detection (pores, acne, shine, sun spots), and personalised shade recommendations from Fenty Beauty, MAC, and Maybelline. The interface is fully localised in six languages and designed to be inclusive for all skin tones, including users with vitiligo, melasma, or port wine stains.
 
 ## Prerequisites
 
@@ -51,6 +55,18 @@ VITE_API_URL=http://localhost:8001
 ```
 Upload / Camera → Preview → Analyzing... → Results + Foundation Matches
 ```
+
+### Usage Example
+
+1. **Upload or capture** — drag-and-drop a face photo onto the upload zone, select a file, or click "Take photo" to open the camera modal.
+2. **Preview** — the app shows the captured image and a pre-flight checklist (face centred, good lighting). Click "Analyze" to proceed.
+3. **Analysis** — the image is sent to `POST /api/analyze`. A loading spinner is shown while the backend runs MediaPipe, BiSeNet, and Claude Vision.
+4. **Results** — the results screen displays:
+   - Overall Fitzpatrick type and dominant undertone
+   - A `RegionCard` for each facial zone (tone swatch, oiliness, imperfections, uniformity score)
+   - A `ToneComparison` panel showing colour delta between zones (low / moderate / high)
+   - A `Recommendations` panel with three foundation shade cards (brand, shade code, price range)
+5. **Language** — switch language at any time via the language selector; all labels and descriptions update instantly.
 
 ## Project structure
 

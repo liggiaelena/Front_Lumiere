@@ -13,10 +13,6 @@ function buildMockAnalysisResponse() {
 }
 
 export async function analyzeImage(file, lang = 'en') {
-  if (import.meta.env.DEV) {
-    return buildMockAnalysisResponse(lang)
-  }
-
   const formData = new FormData()
   formData.append('file', file)
 
