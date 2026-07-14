@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import { LanguageProvider, useLanguage } from './i18n/LanguageContext.jsx'
 import UploadZone from './components/UploadZone/UploadZone.jsx'
+import LandingPage from './components/LandingPage/LandingPage.jsx'
 import CameraCapture from './components/CameraCapture/CameraCapture.jsx'
 import FacePreview from './components/FacePreview/FacePreview.jsx'
 import SkinAnalysisDashboard from './components/SkinAnalysisDashboard/SkinAnalysisDashboard.jsx'
@@ -21,12 +22,16 @@ const LANGUAGES = [
 
 function AppInner() {
   const { lang, setLang, t } = useLanguage()
-  const [step, setStep] = useState('upload')
+  const [step, setStep] = useState('landing')
   const [imageFile, setImageFile] = useState(null)
   const [imageUrl, setImageUrl] = useState(null)
   const [showCamera, setShowCamera] = useState(false)
 
   const { loading, error, result, analyze, reset } = useAnalysis({ setStep })
+
+  function handleContinueToUpload() {
+  setStep('upload')
+}
 
   function handleImageSelected(file, previewUrl) {
     setImageFile(file)
@@ -82,8 +87,14 @@ function AppInner() {
       </header>
 
       {/* Use full-bleed layout modifier when showing the dashboard */}
-      <main className={`app__main${step === 'result' ? ' app__main--dashboard' : ''}`}>
-        {step === 'upload' && (
+<main
+  className={`app__main${step === 'result' ? ' app__main--dashboard' : ''}${step === 'landing' ? ' app__main--landing' : ''}`}
+>
+  {step === 'landing' && (
+  <LandingPage onContinue={handleContinueToUpload} />
+)}
+  
+          {step === 'upload' && (
           <UploadZone
             onImageSelected={handleImageSelected}
             onOpenCamera={() => setShowCamera(true)}

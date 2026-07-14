@@ -217,3 +217,7 @@ button, p, h1, h2, h3, h4, h5, h6, span, label, a, li {
   word-break: break-word;
   font-family: var(--font-sans);
 }
+
+.app__main--landing {
+  max-width: 1180px;
+}
