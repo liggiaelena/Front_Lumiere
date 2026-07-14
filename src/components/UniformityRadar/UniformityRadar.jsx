@@ -12,7 +12,7 @@ export default function UniformityRadar({ regioes }) {
   const data = REGION_ORDER
     .filter((k) => regioes[k])
     .map((k) => ({
-      region: t.regions[k] ?? k,
+      region: t.regions?.[k] ?? k,
       score: regioes[k].uniformidade ?? 0,
       fullMark: 10,
     }))

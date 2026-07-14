@@ -26,9 +26,14 @@
   /* Success/Tested Badge Green */
   --color-error: #C1121F;
   /* Error/Risk Alert Red */
+  --color-error-light: #FFF5F5;
+  --color-exception-bg: rgba(255, 0, 0, 0.1);
+  --color-exception-border: rgba(255, 0, 0, 0.3);
+  --color-exception-text: #FF0000;
   --color-warning: #D97706;
   --color-warning-light: #FFF4E5;
   --color-warning-text: #3D2300;
+  --color-success-light: #F0FDF4;
 
   /* 4. Compatibility Aliases (Backwards Compatibility) */
   --color-bg: var(--color-background);
@@ -53,6 +58,12 @@
   --spacing-md: 1rem;     /* 16px */
   --spacing-lg: 1.5rem;   /* 24px */
   --spacing-xl: 2rem;     /* 32px */
+  --spacing-2xl: 3rem;    /* 48px */
+
+  /* 8. Dashboard Layout Tokens */
+  --sidebar-width: 240px;   /* Fixed sidebar width on desktop */
+  --header-height: 64px;    /* Dashboard top header height */
+  --card-radius: var(--radius-md); /* Unified bento card border radius */
 }
 
 *,
@@ -100,6 +111,17 @@ body {
   border-bottom: 1px solid var(--color-border);
   padding: 1rem 1.5rem;
   box-shadow: var(--shadow-sm);
+}
+
+/* Dashboard mode: header goes full-bleed edge-to-edge with no outer padding */
+.app--dashboard-mode .app__header {
+  padding: 0.75rem 0;
+}
+
+.app--dashboard-mode .app__header-inner {
+  max-width: none;
+  padding: 0 var(--spacing-md);
+  margin: 0;
 }
 
 .app__header-inner {
@@ -173,6 +195,20 @@ body {
 @media (min-width: 768px) {
   .app__main {
     padding: 3rem 2rem;
+  }
+}
+
+/* Dashboard full-bleed modifier: removes max-width and padding constraints */
+.app__main--dashboard {
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .app__main--dashboard {
+    padding: 0;
   }
 }
 

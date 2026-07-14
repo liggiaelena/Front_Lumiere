@@ -4,7 +4,7 @@ import { LanguageProvider, useLanguage } from './i18n/LanguageContext.jsx'
 import UploadZone from './components/UploadZone/UploadZone.jsx'
 import CameraCapture from './components/CameraCapture/CameraCapture.jsx'
 import FacePreview from './components/FacePreview/FacePreview.jsx'
-import AnalysisResult from './components/AnalysisResult/AnalysisResult.jsx'
+import SkinAnalysisDashboard from './components/SkinAnalysisDashboard/SkinAnalysisDashboard.jsx'
 import FaceScanningAnimation from './components/FaceScanningAnimation/FaceScanningAnimation.jsx'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.jsx'
 import './components/ErrorBoundary/ErrorBoundary.css'
@@ -57,7 +57,7 @@ function AppInner() {
   }
 
   return (
-    <div className="app">
+    <div className={`app${step === 'result' ? ' app--dashboard-mode' : ''}`}>
       <header className="app__header">
         <div className="app__header-inner">
           <img src="/logo.svg" className="app__logo" alt="Lumière Logo" />
@@ -81,7 +81,8 @@ function AppInner() {
         </div>
       </header>
 
-      <main className="app__main">
+      {/* Use full-bleed layout modifier when showing the dashboard */}
+      <main className={`app__main${step === 'result' ? ' app__main--dashboard' : ''}`}>
         {step === 'upload' && (
           <UploadZone
             onImageSelected={handleImageSelected}
@@ -101,10 +102,12 @@ function AppInner() {
           <FaceScanningAnimation imageUrl={imageUrl} />
         )}
 
+        {/* Dashboard replaces the old flat AnalysisResult layout */}
         {step === 'result' && result && (
           <ErrorBoundary onReset={handleNewAnalysis}>
-            <AnalysisResult
+            <SkinAnalysisDashboard
               result={result}
+              imageUrl={imageUrl}
               onNewAnalysis={handleNewAnalysis}
             />
           </ErrorBoundary>

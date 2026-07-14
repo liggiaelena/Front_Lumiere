@@ -16,8 +16,8 @@ export default function ToneComparison({ comparacoes, regioes }) {
       <div className="tone-comparison__list">
         {Object.entries(comparacoes).map(([key, { delta, nivel }]) => {
           const [regionA, regionB] = key.split('_vs_')
-          const labelA = t.regions[regionA] ?? regionA
-          const labelB = t.regions[regionB] ?? regionB
+          const labelA = t.regions?.[regionA] ?? regionA
+          const labelB = t.regions?.[regionB] ?? regionB
           const colorA = getSwatchColor(regioes, regionA)
           const colorB = getSwatchColor(regioes, regionB)
           const percent = deltaToPercent(delta)
@@ -44,7 +44,7 @@ export default function ToneComparison({ comparacoes, regioes }) {
                   />
                 </div>
                 <span className={`tone-comparison__level tone-comparison__level--${nivel}`}>
-                  {t.comparison[nivel] ?? nivel}
+                  {t.comparison?.[nivel] ?? nivel}
                 </span>
               </div>
             </div>

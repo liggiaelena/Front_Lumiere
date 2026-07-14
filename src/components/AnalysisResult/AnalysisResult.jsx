@@ -91,7 +91,7 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
   )
   const palette = REGION_ORDER.filter((k) => regioes[k]?.tom_hex).map((k) => ({
     key: k,
-    label: t.regions[k] ?? k,
+    label: t.regions?.[k] ?? k,
     hex: regioes[k].tom_hex,
   }))
 
@@ -139,16 +139,16 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
         <div className="swatch-isolation-wrapper">
           <div
             className="analysis-result__swatch"
-            style={{ backgroundColor: tom_geral_hex || '#c68b6e' }}
+            style={{ backgroundColor: tom_geral_hex || 'var(--color-exception-text)' }}
             aria-label="Overall skin tone"
           />
         </div>
         <div className="analysis-result__hero-info">
           <h2 className="analysis-result__hero-title">
-            {t.fitzpatrick[tom_geral_fitzpatrick] ?? t.fitzpatrick.unknown}
+            {t.fitzpatrick?.[tom_geral_fitzpatrick] ?? t.fitzpatrick?.unknown}
           </h2>
           <p className="analysis-result__hero-subtitle">
-            {t.result.undertoneLabel}: {t.undertones[subtom_predominante] ?? subtom_predominante}
+            {t.result.undertoneLabel}: {t.undertones?.[subtom_predominante] ?? subtom_predominante}
           </p>
         </div>
         {skin_tone?.median_hex && (
@@ -197,7 +197,7 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
             regioes[key] ? (
               <RegionCard
                 key={key}
-                regionName={t.regions[key] ?? key}
+                regionName={t.regions?.[key] ?? key}
                 data={regioes[key]}
                 conditions={conditionsByRegion[key] ?? []}
               />
@@ -214,13 +214,13 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
           <ul className="analysis-result__imperfeicoes-list">
             {imperfeicoes.map((imp, i) => (
               <li key={i} className="analysis-result__imperfeicoes-item">
-                <span>{t.imperfections[imp.tipo] ?? imp.tipo}</span>
+                <span>{t.imperfections?.[imp.tipo] ?? imp.tipo}</span>
                 <div className="analysis-result__imperfeicoes-badges">
                   <span className="analysis-result__badge analysis-result__badge--regiao">
-                    {t.regions[imp.regiao] ?? imp.regiao}
+                    {t.regions?.[imp.regiao] ?? imp.regiao}
                   </span>
                   <span className={`analysis-result__badge analysis-result__badge--${imp.intensidade}`}>
-                    {t.intensity[imp.intensidade] ?? imp.intensidade}
+                    {t.intensity?.[imp.intensidade] ?? imp.intensidade}
                   </span>
                 </div>
               </li>

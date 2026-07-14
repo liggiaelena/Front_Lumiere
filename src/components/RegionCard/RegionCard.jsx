@@ -28,7 +28,7 @@ export default function RegionCard({ regionName, data, conditions = [] }) {
           <p className="region-card__name">{regionName}</p>
           <p className="region-card__fitzpatrick">Fitzpatrick {tom_fitzpatrick}</p>
         </div>
-        <span className="region-card__badge">{t.oiliness[oleosidade] ?? oleosidade}</span>
+        <span className="region-card__badge">{t.oiliness?.[oleosidade] ?? oleosidade}</span>
       </div>
 
       <div className="region-card__uniformity">
@@ -54,7 +54,7 @@ export default function RegionCard({ regionName, data, conditions = [] }) {
             const tipo = typeof imp === 'object' ? imp.tipo : imp
             return (
               <span key={`${tipo}-${i}`} className="region-card__imperfeicao-tag">
-                {t.imperfections[tipo] ?? tipo}
+                {t.imperfections?.[tipo] ?? tipo}
               </span>
             )
           })}

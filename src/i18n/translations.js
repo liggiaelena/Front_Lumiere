@@ -144,7 +144,10 @@ export const translations = {
     "conditions": {
       "vitiligo": "Vitiligo",
       "melasma": "Melasma",
-      "wine_stain": "Port-wine stain"
+      "wine_stain": "Port-wine stain",
+      "forehead_wrinkle": "Forehead wrinkle",
+      "crow_s_feet": "Crow's feet",
+      "nasolabial_fold": "Nasolabial fold"
     },
     "intensity": {
       "leve": "Mild",
@@ -319,7 +322,10 @@ export const translations = {
     "conditions": {
       "vitiligo": "Vitiligo",
       "melasma": "Melasma",
-      "wine_stain": "Mancha em vinho do Porto"
+      "wine_stain": "Mancha em vinho do Porto",
+      "forehead_wrinkle": "Rugas na testa",
+      "crow_s_feet": "Pés de galinha",
+      "nasolabial_fold": "Bigode chinês"
     },
     "intensity": {
       "leve": "Leve",
@@ -494,7 +500,10 @@ export const translations = {
     "conditions": {
       "vitiligo": "Vitiligo",
       "melasma": "Mélasme",
-      "wine_stain": "Tache de vin"
+      "wine_stain": "Tache de vin",
+      "forehead_wrinkle": "Rides du front",
+      "crow_s_feet": "Pattes d'oie",
+      "nasolabial_fold": "Sillon nasogénien"
     },
     "intensity": {
       "leve": "Légère",
@@ -669,7 +678,10 @@ export const translations = {
     "conditions": {
       "vitiligo": "白斑症 (白癜风)",
       "melasma": "黄褐斑 (黑斑)",
-      "wine_stain": "鲜红斑痣 (红酒色斑)"
+      "wine_stain": "鲜红斑痣 (红酒色斑)",
+      "forehead_wrinkle": "抬头纹",
+      "crow_s_feet": "鱼尾纹",
+      "nasolabial_fold": "法令纹"
     },
     "intensity": {
       "leve": "輕微",
@@ -844,7 +856,10 @@ export const translations = {
     "conditions": {
       "vitiligo": "白斑症",
       "melasma": "黃褐斑",
-      "wine_stain": "鮮紅斑痣"
+      "wine_stain": "鮮紅斑痣",
+      "forehead_wrinkle": "抬頭紋",
+      "crow_s_feet": "魚尾紋",
+      "nasolabial_fold": "法令紋"
     },
     "intensity": {
       "leve": "輕微",
@@ -1019,7 +1034,10 @@ export const translations = {
     "conditions": {
       "vitiligo": "Vitiligo",
       "melasma": "Melazma",
-      "wine_stain": "Şarap lekesi"
+      "wine_stain": "Şarap lekesi",
+      "forehead_wrinkle": "Alın kırışıklığı",
+      "crow_s_feet": "Kaz ayakları",
+      "nasolabial_fold": "Nasolabial kıvrım"
     },
     "intensity": {
       "leve": "Hafif",

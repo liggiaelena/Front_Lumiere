@@ -75,7 +75,7 @@ export default function Recommendations({ recommendations, conditionMap }) {
                 <div className="swatch-isolation-wrapper">
                   <div
                     className="recommendations__shade-dot"
-                    style={{ backgroundColor: rec?.shade_hex ?? '#c68b6e' }}
+                    style={{ backgroundColor: rec?.shade_hex ?? 'var(--color-exception-text)' }}
                     title={rec?.shade_hex ?? ''}
                   />
                 </div>
