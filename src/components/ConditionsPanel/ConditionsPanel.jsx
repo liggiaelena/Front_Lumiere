@@ -19,7 +19,7 @@ function getSafePercent(value) {
   return Math.min(100, Math.max(0, percent))
 }
 
-export default function ConditionsPanel({ conditionMap = {} }) {
+export default function ConditionsPanel({ conditionMap = {}, hideHeader = false }) {
   const { t } = useLanguage()
 
   const detectedConditions = Object.entries(conditionMap)
@@ -35,15 +35,19 @@ export default function ConditionsPanel({ conditionMap = {} }) {
   }
 
   return (
-    <section className="conditions-panel">
-      <h3 className="analysis-result__section-title">
-        {t.result.conditionsTitle ?? 'Condition indicators'}
-      </h3>
+    <section className={`conditions-panel${hideHeader ? ' conditions-panel--bento' : ''}`}>
+      {!hideHeader && (
+        <>
+          <h3 className="analysis-result__section-title">
+            {t.result.conditionsTitle ?? 'Condition indicators'}
+          </h3>
 
-      <p className="conditions-panel__subtitle">
-        {t.result.conditionsSubtitle ??
-          'Detected segmentation indicators by facial region. This is not a medical diagnosis.'}
-      </p>
+          <p className="conditions-panel__subtitle">
+            {t.result.conditionsSubtitle ??
+              'Detected segmentation indicators by facial region. This is not a medical diagnosis.'}
+          </p>
+        </>
+      )}
 
       <div className="conditions-panel__list">
         {detectedConditions.map(({ type, areaPercent, zones }) => (

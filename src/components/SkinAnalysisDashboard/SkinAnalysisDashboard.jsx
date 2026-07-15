@@ -113,6 +113,9 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
     return acc
   }, {})
 
+  const detectedConditions = Object.entries(safeSegformerMap)
+    .filter(([, details]) => details?.detected === true)
+
   /* Localized medical alert */
   const localizedAlert = medical_alert ? {
     title: t.medicalAlert?.title ?? medical_alert.title ?? '',
@@ -168,13 +171,27 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
              ───────────────────────────────────────── */}
           <main className="dashboard__grid" id="dashboard-main-grid">
 
-            {/* ── Col 1, Row 1-3: Main Visual Card ── */}
+            {/* ── Col 1, Row 1-2: Main Visual Card ── */}
             <MainVisualCard
               imageUrl={imageUrl}
               selectedRegion={selectedRegion}
               onRegionSelect={setSelectedRegion}
               conditionOverlay={condition_overlay}
             />
+
+            {/* ── Col 1, Row 3: Overall Conditions Bento Card ── */}
+            {detectedConditions.length > 0 && (
+              <article className="bento-card grid-area--conditions" aria-label="Skin conditions card">
+                <div className="bento-card__header">
+                  <h3 className="bento-card__title">
+                    {t.result.conditionsTitle ?? 'Condition indicators'}
+                  </h3>
+                </div>
+                <div className="bento-card__body">
+                  <ConditionsPanel conditionMap={safeSegformerMap} hideHeader={true} />
+                </div>
+              </article>
+            )}
 
             {/* ── Col 2, Row 1: Skin Tone Card ── */}
             <SkinToneCard

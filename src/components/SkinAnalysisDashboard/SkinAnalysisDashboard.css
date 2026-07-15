@@ -298,10 +298,16 @@
 }
 
 /* ─── 7. Grid Placement ─── */
-/* Col 1, Row 1-3 — Main Visual Card */
+/* Col 1, Row 1-2 — Main Visual Card */
 .grid-area--main-visual {
   grid-column: 1;
-  grid-row: 1 / 4; /* Spans rows 1–3 */
+  grid-row: 1 / 3; /* Spans rows 1–2 */
+}
+
+/* Col 1, Row 3 — Condition Indicators Card */
+.grid-area--conditions {
+  grid-column: 1;
+  grid-row: 3;
 }
 
 /* Col 2, Row 1 — Skin Tone Card */
@@ -1237,7 +1243,8 @@
   .grid-area--texture-spots { grid-column: 1; grid-row: 2; }
   .grid-area--multi-zone { grid-column: 1; grid-row: 3; }
   .grid-area--sensitive-skin { grid-column: 2; grid-row: 3; }
-  .grid-area--recommendations { grid-column: 1 / -1; grid-row: 4; }
+  .grid-area--conditions { grid-column: 1 / -1; grid-row: 4; }
+  .grid-area--recommendations { grid-column: 1 / -1; grid-row: 5; }
 
   .reco-card__product-list {
     display: grid;
@@ -1261,6 +1268,7 @@
   .grid-area--texture-spots,
   .grid-area--under-eye,
   .grid-area--sensitive-skin,
+  .grid-area--conditions,
   .grid-area--recommendations {
     grid-column: 1 !important;
     grid-row: auto !important;

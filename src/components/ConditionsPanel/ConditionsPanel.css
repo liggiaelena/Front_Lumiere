@@ -1,26 +1,27 @@
 .conditions-panel {
-  margin: 1.25rem 0;
-  padding: 1.25rem;
+  margin: var(--spacing-lg) 0;
+  padding: var(--spacing-lg);
   border: 1px solid var(--color-border);
-  border-radius: 16px;
-  background: #fff;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
 }
 
 .conditions-panel__subtitle {
-  margin: -0.35rem 0 1rem;
+  margin-top: calc(-1 * var(--spacing-xs));
+  margin-bottom: var(--spacing-md);
   color: var(--color-text-muted);
   font-size: 0.9rem;
 }
 
 .conditions-panel__list {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--spacing-sm);
 }
 
 .conditions-panel__item {
-  padding: 0.9rem;
+  padding: var(--spacing-md);
   border: 1px solid var(--color-accent-light);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   background: var(--color-surface);
 }
 
@@ -28,15 +29,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 0.7rem;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
 }
 
 .conditions-panel__condition {
-  padding: 0.3rem 0.6rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: 999px;
-  background: #f4e1d8;
-  color: #7a3e2a;
+  background: var(--color-exception-bg);
+  color: var(--color-exception-text);
+  border: 1px solid var(--color-exception-border);
   font-size: 0.82rem;
   font-weight: 700;
   text-transform: capitalize;
@@ -46,7 +48,7 @@
   height: 8px;
   overflow: hidden;
   border-radius: 999px;
-  background: #eadbd3;
+  background: var(--color-background);
 }
 
 .conditions-panel__area-fill {
@@ -65,14 +67,22 @@
 .conditions-panel__zones {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
-  margin-top: 0.8rem;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
 }
 
 .conditions-panel__zone {
-  padding: 0.25rem 0.5rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: 999px;
-  background: #f5eee9;
+  background: var(--color-background);
   color: var(--color-text-muted);
   font-size: 0.8rem;
+}
+
+.conditions-panel--bento {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 0;
 }

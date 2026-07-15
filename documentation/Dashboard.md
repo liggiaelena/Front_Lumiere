@@ -22,7 +22,7 @@
 
 ## 二、 Bento Grid 卡片後端資料整合分析
 
-SkinAnalysisDashboard 採用 Bento Grid 佈局，核心由 7 個卡片/區塊組成。以下分析各區塊對應的檔案、呼叫的後端 API 資料欄位，以及資料空值/缺失時的降級防禦邏輯。
+SkinAnalysisDashboard 採用 Bento Grid 佈局，核心由 8 個卡片/區塊組成。以下分析各區塊對應的檔案、呼叫的後端 API 資料欄位，以及資料空值/缺失時的降級防禦邏輯。
 
 ### Bento Grid 卡片概覽表
 
@@ -30,11 +30,12 @@ SkinAnalysisDashboard 採用 Bento Grid 佈局，核心由 7 個卡片/區塊組
 | :--- | :--- | :--- | :--- | :--- |
 | **1. 臉部分區分析**<br>(Main Visual Card) | [MainVisualCard.jsx](file:///l:/Lumiere/Front_Lumiere/src/components/SkinAnalysisDashboard/MainVisualCard.jsx) | `imageUrl` (原始上傳圖片 Blob)<br>`condition_overlay` (影像分割遮罩與色彩圖例) | ❌ 否 | 1. 若 `imageUrl` 為空，顯示「照片無法顯示」提示文字。<br>2. 若無 `condition_overlay` 影像，則自動隱藏分段控制鈕與熱圖遮罩，僅展示 Zones 分區互動功能。 |
 | **2. 膚色與色調**<br>(Skin Tone Card) | [SkinToneCard.jsx](file:///l:/Lumiere/Front_Lumiere/src/components/SkinAnalysisDashboard/SkinToneCard.jsx) | `tom_geral_hex`<br>`tom_geral_fitzpatrick`<br>`subtom_predominante`<br>`skin_tone`<br>`regioes` | ⚠️ 有限制<br>(Fallback 色碼 `#c68b6e` 寫死於代碼內) | 1. 膚色 swatch 缺失時 fallback 為 `#c68b6e`。<br>2. Fitzpatrick 評級不存在時隱藏徽章。<br>3. 區域色票會自動過濾無 `tom_hex` 的分區。<br>4. BiSeNet 純淨膚色 `skin_tone` 為空時，隱藏該區塊。 |
-| **3. 分區詳情卡片**<br>(Region Detail Card) | [RegionDetailCard.jsx](file:///l:/Lumiere/Front_Lumiere/src/components/SkinAnalysisDashboard/RegionDetailCard.jsx) | `regioes[selectedRegion]`：<br>- `tom_hex`<br>- `tom_fitzpatrick`<br>- `oleosidade`<br>- `uniformidade`<br>- `imperfeicoes`<br>- `notas`<br>`conditions` (來自 `segformer_condition_map`) | ⚠️ 部分<br>(區域圖為 "coming soon" 預留位置；膚況標籤使用硬編碼 RGBA 樣式) | 1. 若未選擇任何區域（`selectedRegion` 為空），顯示導引提示「點擊上方照片分區查看詳細分析」。<br>2. 瑕疵列表為空時顯示「✓ 未偵測到瑕疵」。<br>3. `conditions` 為空時不渲染膚況標籤。<br>4. 數值（如 `uniformidade`）缺失時，進度條長度降級為 `0%`。 |
+| **3. 分區詳情卡片**<br>(Region Detail Card) | [RegionDetailCard.jsx](file:///l:/Lumiere/Front_Lumiere/src/components/SkinAnalysisDashboard/RegionDetailCard.jsx) | `regioes[selectedRegion]`：<br>- `tom_hex`<br>- `tom_fitzpatrick`<br>- `oleosidade`<br>- `uniformidade`<br>- `imperfeicoes`<br>- `notas`<br>`conditions` (來自 `segformer_condition_map`) | ⚠️ 部分<br>(區域圖為 "coming soon" 預留位置；膚況標籤使用設計系統 exception 警告樣式) | 1. 若未選擇任何區域（`selectedRegion` 為空），顯示導引提示「點擊上方照片分區查看詳細分析」。<br>2. 瑕疵列表為空時顯示「✓ 未偵測到瑕疵」。<br>3. `conditions` 為空時不渲染膚況標籤。<br>4. 數值（如 `uniformidade`）缺失時，進度條長度降級為 `0%`。 |
 | **4. 敏感肌模式**<br>(Sensitive Skin Card) | [SensitiveSkinCard.jsx](file:///l:/Lumiere/Front_Lumiere/src/components/SkinAnalysisDashboard/SensitiveSkinCard.jsx) | **無** (純前端互動 Switch 元件) | ❌ 否 | 無後端依賴。狀態為本機 state，預設為 `false`。 |
-| **5. 瑕疵偵測清單**<br>(Texture & Spots Card) | [TextureSpotsCard.jsx](file:///l:/Lumiere/Front_Lumiere/src/components/SkinAnalysisDashboard/TextureSpotsCard.jsx) | `imperfeicoes` (陣列) | ❌ 否<br>(但存在硬編碼顏色) | 1. `imperfeicoes` 為空或非陣列時，顯示「✓ 未偵測到瑕疵」。<br>2. 單筆資料屬性缺失時，以降級字串顯示。 |
+| **5. 瑕疵偵測清單**<br>(Texture & Spots Card) | [TextureSpotsCard.jsx](file:///l:/Lumiere/Front_Lumiere/src/components/SkinAnalysisDashboard/TextureSpotsCard.jsx) | `imperfeicoes` (陣列) | ❌ 否 | 1. `imperfeicoes` 為空或非陣列時，顯示「✓ 未偵測到瑕疵」。<br>2. 單筆資料屬性缺失時，以降級字串顯示。 |
 | **6. 均勻度雷達圖**<br>(Uniformity Radar) | [UniformityRadar.jsx](file:///l:/Lumiere/Front_Lumiere/src/components/UniformityRadar/UniformityRadar.jsx) | `regioes[key].uniformidade` | ❌ 否 | 1. 過濾未包含在 `regioes` 中的分區。<br>2. 均勻度數值缺失時預設為 `0`。<br>3. 若有效資料筆數小於 3 筆，則雷達圖元件**直接返回 null**，在 Bento Grid 中會呈現空白。 |
 | **7. 推薦產品簡介**<br>(Recommendations Card) | [RecommendationsCard.jsx](file:///l:/Lumiere/Front_Lumiere/src/components/SkinAnalysisDashboard/RecommendationsCard.jsx) | `recommendations`<br>`condition_map` (例如 `melasma`, `vitiligo`, `wine_stain`) | 🟢 已優化<br>(已將原本寫死的 `#c68b6e` 替換為 `var(--color-exception-text)`) | 1. 若產品清單為空，整個卡片**直接返回 null** 不顯示。<br>2. 點擊按鈕平滑滾動至下方的詳細推薦區。<br>3. 產品色票 `shade_hex` 為空時降級顯示 `var(--color-exception-text)` 以警示數據缺失。 |
+| **8. 膚況指標卡片**<br>(Conditions Card) | [ConditionsPanel.jsx](file:///l:/Lumiere/Front_Lumiere/src/components/ConditionsPanel/ConditionsPanel.jsx) | `segformer_condition_map` (例如 `melasma`, `vitiligo`, `wine_stain`) | ❌ 否 | 1. 若無任何被偵測之異常膚況（`detected` 為空），整張卡片**自動隱藏**。<br>2. 面積比例與波及分區資料缺失時安全降級。 |
 
 ---
 
