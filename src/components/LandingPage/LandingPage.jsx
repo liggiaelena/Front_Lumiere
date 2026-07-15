@@ -15,48 +15,53 @@ export default function LandingPage({ onContinue }) {
   return (
     <section className="landing-page">
       <div className="landing-page__hero">
-        <div className="landing-page__eyebrow">AI-powered cosmetic guidance</div>
+        <div className="landing-page__eyebrow">
+          {t.landing?.eyebrow ?? 'AI-powered cosmetic guidance'}
+        </div>
 
         <h2 className="landing-page__title">
-          Understand your skin tone before choosing your makeup.
+          {t.landing?.title ?? 'Understand your skin tone before choosing your makeup.'}
         </h2>
 
         <p className="landing-page__description">
-          Lumière analyzes facial regions, estimates skin tone, highlights visible skin indicators,
-          and recommends makeup products using a privacy-conscious academic prototype workflow.
+          {t.landing?.description ??
+            'Lumière analyzes facial regions, estimates skin tone, highlights visible skin indicators, and recommends makeup products using a privacy-conscious academic prototype workflow.'}
         </p>
 
         <div className="landing-page__steps">
           <div className="landing-page__step">
             <span>1</span>
-            <p>Upload or capture a face photo.</p>
+            <p>{t.landing?.step1 ?? 'Upload or capture a face photo.'}</p>
           </div>
           <div className="landing-page__step">
             <span>2</span>
-            <p>Review tone, region, and condition indicators.</p>
+            <p>{t.landing?.step2 ?? 'Review tone, region, and condition indicators.'}</p>
           </div>
           <div className="landing-page__step">
             <span>3</span>
-            <p>Get cosmetic recommendations with clear limitations.</p>
+            <p>{t.landing?.step3 ?? 'Get cosmetic recommendations with clear limitations.'}</p>
           </div>
         </div>
 
         <div className="landing-page__trust">
-          <p>Non-diagnostic</p>
-          <p>Photo processed for analysis only</p>
-          <p>Built for educational prototype use</p>
+          <p>{t.landing?.nonDiagnostic ?? 'Non-diagnostic'}</p>
+          <p>{t.landing?.privacyNotice ?? 'Photo processed for analysis only'}</p>
+          <p>{t.landing?.educationalUse ?? 'Built for educational prototype use'}</p>
         </div>
       </div>
 
       <div className="landing-page__card">
         <div className="landing-page__card-header">
-          <h3>Welcome back</h3>
-          <p>Sign in to continue, or use guest mode for a quick analysis.</p>
+          <h3>{t.landing?.welcomeBack ?? 'Welcome back'}</h3>
+          <p>
+            {t.landing?.signInSubtitle ??
+              'Sign in to continue, or use guest mode for a quick analysis.'}
+          </p>
         </div>
 
         <form className="landing-page__form" onSubmit={handleSubmit}>
           <label>
-            Email
+            {t.landing?.emailLabel ?? 'Email'}
             <input
               type="email"
               placeholder="you@example.com"
@@ -66,17 +71,17 @@ export default function LandingPage({ onContinue }) {
           </label>
 
           <label>
-            Password
+            {t.landing?.passwordLabel ?? 'Password'}
             <input
               type="password"
-              placeholder="Enter your password"
+              placeholder="••••••••"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             />
           </label>
 
           <button className="landing-page__btn landing-page__btn--primary" type="submit">
-            Sign in
+            {t.landing?.signInBtn ?? 'Sign in'}
           </button>
         </form>
 
@@ -85,11 +90,12 @@ export default function LandingPage({ onContinue }) {
           type="button"
           onClick={onContinue}
         >
-          Continue as guest
+          {t.landing?.guestBtn ?? 'Continue as guest'}
         </button>
 
         <p className="landing-page__note">
-          Login is prepared for the user-profile workflow. Authentication can be connected when the backend is ready.
+          {t.landing?.authNotice ??
+            'Login is prepared for the user-profile workflow. Authentication can be connected when the backend is ready.'}
         </p>
       </div>
     </section>

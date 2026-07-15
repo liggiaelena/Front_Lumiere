@@ -175,6 +175,24 @@ export const translations = {
       "permissionDenied": "Camera permission denied. Check your browser settings.",
       "notFound": "No camera found on this device.",
       "error": "Could not access the camera. Please try again."
+    },
+    "landing": {
+      "eyebrow": "AI-powered cosmetic guidance",
+      "title": "Understand your skin tone before choosing your makeup.",
+      "description": "Lumière analyzes facial regions, estimates skin tone, highlights visible skin indicators, and recommends makeup products using a privacy-conscious academic prototype workflow.",
+      "step1": "Upload or capture a face photo.",
+      "step2": "Review tone, region, and condition indicators.",
+      "step3": "Get cosmetic recommendations with clear limitations.",
+      "nonDiagnostic": "Non-diagnostic",
+      "privacyNotice": "Photo processed for analysis only",
+      "educationalUse": "Built for educational prototype use",
+      "welcomeBack": "Welcome back",
+      "signInSubtitle": "Sign in to continue, or use guest mode for a quick analysis.",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "signInBtn": "Sign in",
+      "guestBtn": "Continue as guest",
+      "authNotice": "Login is prepared for the user-profile workflow. Authentication can be connected when the backend is ready."
     }
   },
   "pt": {
@@ -353,6 +371,24 @@ export const translations = {
       "permissionDenied": "Permissão de câmera negada. Verifique as configurações do navegador.",
       "notFound": "Nenhuma câmera encontrada neste dispositivo.",
       "error": "Não foi possível acessar a câmera. Tente novamente."
+    },
+    "landing": {
+      "eyebrow": "Orientação cosmética por IA",
+      "title": "Entenda o seu tom de pele antes de escolher a maquilhagem.",
+      "description": "Lumière analisa as regiões faciais, estima o tom da pele, destaca indicadores visíveis e recomenda produtos cosméticos usando um protótipo académico centrado na privacidade.",
+      "step1": "Envie ou tire uma foto do rosto.",
+      "step2": "Reveja os indicadores de tom, região e condições da pele.",
+      "step3": "Obtenha recomendações cosméticas com limitações claras.",
+      "nonDiagnostic": "Não diagnóstico",
+      "privacyNotice": "Foto processada apenas para análise",
+      "educationalUse": "Desenvolvido para fins de protótipo educacional",
+      "welcomeBack": "Bem-vindo de volta",
+      "signInSubtitle": "Inicie sessão para continuar, ou utilize o modo de convidado para uma análise rápida.",
+      "emailLabel": "E-mail",
+      "passwordLabel": "Palavra-passe",
+      "signInBtn": "Iniciar sessão",
+      "guestBtn": "Continuar como convidado",
+      "authNotice": "O login está preparado para o fluxo de perfis de utilizador. A autenticação poderá ser ligada quando o servidor estiver pronto."
     }
   },
   "fr": {
@@ -531,6 +567,24 @@ export const translations = {
       "permissionDenied": "Permission de caméra refusée. Veuillez vérifier les paramètres de votre navigateur.",
       "notFound": "Aucune caméra trouvée sur cet appareil.",
       "error": "Impossible d'accéder à la caméra. Veuillez réessayer."
+    },
+    "landing": {
+      "eyebrow": "Conseil cosmétique propulsé par l'IA",
+      "title": "Comprenez votre teint de peau avant de choisir votre maquillage.",
+      "description": "Lumière analyse les zones du visage, évalue le teint de la peau, met en évidence les indicateurs cutanés et recommande des produits de maquillage via un prototype académique respectueux de la vie privée.",
+      "step1": "Téléchargez ou capturez une photo de votre visage.",
+      "step2": "Examinez les indicateurs de teint, de zone et d'état de la peau.",
+      "step3": "Obtenez des recommandations de produits avec des limites claires.",
+      "nonDiagnostic": "Non diagnostique",
+      "privacyNotice": "Photo traitée uniquement pour l'analyse",
+      "educationalUse": "Conçu comme un prototype à but éducatif",
+      "welcomeBack": "Bon retour",
+      "signInSubtitle": "Connectez-vous pour continuer, ou utilisez le mode invité pour une analyse rapide.",
+      "emailLabel": "E-mail",
+      "passwordLabel": "Mot de passe",
+      "signInBtn": "Se connecter",
+      "guestBtn": "Continuer en tant qu'invité",
+      "authNotice": "La connexion est préparée pour le flux de profils d'utilisateurs. L'authentification pourra être connectée lorsque le backend sera prêt."
     }
   },
   "zh": {
@@ -709,6 +763,24 @@ export const translations = {
       "permissionDenied": "相機權限被拒絕。請檢查瀏覽器設定。",
       "notFound": "此裝置未找到相機。",
       "error": "無法存取相機。請再試一次。"
+    },
+    "landing": {
+      "eyebrow": "AI 智能美妆引导",
+      "title": "在选择美妆前，深入了解您的肤色与底色。",
+      "description": "Lumière 能为您分析面部区域、评估 Fitzpatrick 肤色、检测荒谬的肌肤指标，并基于重视隐私的学术原型工作流为您推荐合适的美妆产品。",
+      "step1": "上传或拍摄一张面部照片。",
+      "step2": "检视您的肤色、分区细节与异常肤况指标。",
+      "step3": "在清晰的合规与免责框架下，获取个性化化妆品推荐。",
+      "nonDiagnostic": "非医疗诊断",
+      "privacyNotice": "照片仅供实时分析，绝不保留或共享",
+      "educationalUse": "专为学术研究与教育原型设计",
+      "welcomeBack": "欢迎回来",
+      "signInSubtitle": "登录以继续，或使用访客模式进行快速分析。",
+      "emailLabel": "电子邮件",
+      "passwordLabel": "密码",
+      "signInBtn": "登录",
+      "guestBtn": "以客身份继续",
+      "authNotice": "登录功能已为用户档案工作流预留。当后端服务就绪后即可连接验证。"
     }
   },
   "tw": {
@@ -887,6 +959,24 @@ export const translations = {
       "permissionDenied": "相機權限被拒絕。請檢查瀏覽器設定。",
       "notFound": "此裝置未找到相機。",
       "error": "無法存取相機。請再試一次。"
+    },
+    "landing": {
+      "eyebrow": "AI 智慧美妝引導",
+      "title": "在選擇美妝前，深入了解您的膚色與底色。",
+      "description": "Lumière 能為您分析臉部區域、評估 Fitzpatrick 膚色、偵測顯著的肌膚指標，並基於重視隱私的學術原型工作流為您推薦合適的美妝產品。",
+      "step1": "上傳或拍攝一張臉部照片。",
+      "step2": "檢視您的膚色、分區細節與異常膚況指標。",
+      "step3": "在清晰的合規與免責框架下，獲取個人化化妝品推薦。",
+      "nonDiagnostic": "非醫療診斷",
+      "privacyNotice": "照片僅供實時分析，絕不保留或共享",
+      "educationalUse": "專為學術研究與教育原型設計",
+      "welcomeBack": "歡迎回來",
+      "signInSubtitle": "登入以繼續，或使用訪客模式進行快速分析。",
+      "emailLabel": "電子郵件",
+      "passwordLabel": "密碼",
+      "signInBtn": "登入",
+      "guestBtn": "以訪客身分繼續",
+      "authNotice": "登入功能已為用戶檔案工作流預留。當後端服務就緒後即可連接驗證。"
     }
   },
   "tr": {
@@ -1065,6 +1155,24 @@ export const translations = {
       "permissionDenied": "Kamera izni reddedildi. Tarayıcı ayarlarınızı kontrol edin.",
       "notFound": "Bu cihazda kamera bulunamadı.",
       "error": "Kameraya erişilemiyor. Lütfen tekrar deneyin."
+    },
+    "landing": {
+      "eyebrow": "Yapay zeka destekli kozmetik rehberliği",
+      "title": "Makyajınızı seçmeden önce cilt tonunuzu ve alt tonunuzu anlayın.",
+      "description": "Lumière, yüz bölgelerini analiz eder, cilt tonunu tahmin eder, belirgin cilt göstergelerini vurgular ve gizlilik bilincine sahip akademik bir prototip iş akışı kullanarak makyaj ürünleri önerir.",
+      "step1": "Bir yüz fotoğrafı yükleyin veya çekin.",
+      "step2": "Cilt tonu, bölge ve cilt durumu göstergelerini inceleyin.",
+      "step3": "Net sınırlar ve yasal sorumluluk reddi çerçevesinde kozmetik önerileri alın.",
+      "nonDiagnostic": "Teşhis amaçlı değildir",
+      "privacyNotice": "Fotoğraf yalnızca analiz için işlenir",
+      "educationalUse": "Eğitim prototipi kullanımı için geliştirilmiştir",
+      "welcomeBack": "Tekrar hoş geldiniz",
+      "signInSubtitle": "Devam etmek için giriş yapın veya hızlı analiz için misafir modunu kullanın.",
+      "emailLabel": "E-posta",
+      "passwordLabel": "Şifre",
+      "signInBtn": "Giriş yap",
+      "guestBtn": "Misafir olarak devam et",
+      "authNotice": "Giriş işlemi kullanıcı profili iş akışı için hazırlanmıştır. Arka uç hazır olduğunda kimlik doğrulama bağlanabilir."
     }
   }
 }
