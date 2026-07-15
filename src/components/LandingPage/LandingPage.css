@@ -14,8 +14,8 @@
 
 .landing-page__eyebrow {
   width: fit-content;
-  padding: 0.35rem 0.75rem;
-  border: 1px solid rgba(140, 98, 57, 0.25);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid rgba(var(--color-primary-rgb), 0.25);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.65);
   color: var(--color-primary);
@@ -42,16 +42,16 @@
 
 .landing-page__steps {
   display: grid;
-  gap: 0.8rem;
+  gap: var(--spacing-sm);
   max-width: 620px;
 }
 
 .landing-page__step {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  padding: 0.85rem 1rem;
-  border: 1px solid rgba(140, 98, 57, 0.18);
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid rgba(var(--color-primary-rgb), 0.18);
   border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.72);
   box-shadow: var(--shadow-sm);
@@ -65,7 +65,7 @@
   justify-content: center;
   border-radius: 50%;
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-surface);
   font-weight: 800;
   flex-shrink: 0;
 }
@@ -78,35 +78,35 @@
 .landing-page__trust {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: var(--spacing-sm);
 }
 
 .landing-page__trust p {
-  padding: 0.4rem 0.65rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: 999px;
-  background: #fff;
+  background: var(--color-surface);
   color: var(--color-primary);
-  border: 1px solid rgba(140, 98, 57, 0.18);
+  border: 1px solid rgba(var(--color-primary-rgb), 0.18);
   font-size: 0.78rem;
   font-weight: 700;
 }
 
 .landing-page__card {
-  padding: 2rem;
-  border-radius: 28px;
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-xl);
   background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(140, 98, 57, 0.22);
-  box-shadow: 0 24px 70px rgba(80, 55, 35, 0.16);
+  border: 1px solid rgba(var(--color-primary-rgb), 0.22);
+  box-shadow: 0 24px 70px rgba(var(--color-shadow-rgb), 0.16);
 }
 
 .landing-page__card-header {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--spacing-lg);
 }
 
 .landing-page__card-header h3 {
   color: var(--color-primary);
   font-size: 1.6rem;
-  margin-bottom: 0.35rem;
+  margin-bottom: var(--spacing-xs);
 }
 
 .landing-page__card-header p {
@@ -116,12 +116,12 @@
 
 .landing-page__form {
   display: grid;
-  gap: 1rem;
+  gap: var(--spacing-md);
 }
 
 .landing-page__form label {
   display: grid;
-  gap: 0.4rem;
+  gap: var(--spacing-xs);
   color: var(--color-primary);
   font-size: 0.85rem;
   font-weight: 700;
@@ -129,16 +129,16 @@
 
 .landing-page__form input {
   width: 100%;
-  padding: 0.85rem 0.95rem;
-  border: 1px solid rgba(140, 98, 57, 0.28);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid rgba(var(--color-primary-rgb), 0.28);
   border-radius: var(--radius-sm);
-  background: #fff;
+  background: var(--color-surface);
   color: var(--color-text);
   font: inherit;
 }
 
 .landing-page__form input:focus {
-  outline: 2px solid rgba(212, 163, 115, 0.45);
+  outline: 2px solid rgba(var(--color-accent-rgb), 0.45);
   border-color: var(--color-accent);
 }
 
@@ -159,9 +159,9 @@
 }
 
 .landing-page__btn--primary {
-  margin-top: 0.3rem;
+  margin-top: var(--spacing-xs);
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-surface);
 }
 
 .landing-page__btn--primary:hover {
@@ -169,7 +169,7 @@
 }
 
 .landing-page__btn--secondary {
-  margin-top: 0.8rem;
+  margin-top: var(--spacing-sm);
   background: transparent;
   color: var(--color-accent);
 }
@@ -179,7 +179,7 @@
 }
 
 .landing-page__note {
-  margin-top: 1rem;
+  margin-top: var(--spacing-md);
   color: var(--color-muted-text);
   font-size: 0.76rem;
   line-height: 1.55;

@@ -11,6 +11,11 @@
   --color-surface: #FFFFFF;
   /* Pure White - For isolating cards/modals against background */
 
+  /* RGB variants for opacity manipulation */
+  --color-primary-rgb: 140, 98, 57;
+  --color-accent-rgb: 212, 163, 115;
+  --color-shadow-rgb: 80, 55, 35;
+
   /* 2. Typography & Layout Borders */
   --color-text: #2D2D2D;
   /* Dark Charcoal - Main paragraph and text color */
@@ -43,6 +48,7 @@
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 20px;
+  --radius-xl: 28px;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.10);
   --font-sans: 'Noto Sans', 'Noto Sans TC', 'Noto Sans SC', system-ui, sans-serif;

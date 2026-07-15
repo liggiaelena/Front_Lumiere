@@ -63,9 +63,10 @@
 | 組件名稱 | 關聯 CSS 檔案 | 設計系統整合項目 | 備註與規範 |
 | :--- | :--- | :--- | :--- |
 | **全域主頁** | [App.css](file:///l:/Lumiere/Front_Lumiere/src/App.css) | 定義 `:root` 設計權杖，統一全域主頁字體與背景。 | 核心設計系統基底。 |
+| **登入首頁** | [LandingPage.css](file:///l:/Lumiere/Front_Lumiere/src/components/LandingPage/LandingPage.css) | 使用全域色彩與間距 Tokens，利用新增之 RGB 變數支持半透明與高動態陰影。 | 100% 符合設計系統。 |
 | **人臉掃描動畫** | [FaceScanningAnimation.css](file:///l:/Lumiere/Front_Lumiere/src/components/FaceScanningAnimation/FaceScanningAnimation.css) | 移除所有舊版紫色與亮粉紅 fallback。將掃描框發光效果更新為琥珀金變體，背景陰影收攏為栗棕色調。 | 已徹底消除歷史風格遺毒。 |
 | **膚質分析面板** | [ConditionsPanel.css](file:///l:/Lumiere/Front_Lumiere/src/components/ConditionsPanel/ConditionsPanel.css) | 清除所有舊泥橘色 fallback。條目背景統一為 `var(--color-surface)`，邊框使用 `var(--color-accent-light)`。 | 視覺色差已修正。 |
-| **分析結果** | [AnalysisResult.css](file:///l:/Lumiere/Front_Lumiere/src/components/AnalysisResult/AnalysisResult.css) | 將硬編碼的醫療警告黃色背景、文字、邊框完全替換為統一的 warning 權杖。Modal 遮罩使用 `var(--color-overlay)`。 | 已完美支持全域警示系統。 |
+| **Bento 看板結果** | [SkinAnalysisDashboard.css](file:///l:/Lumiere/Front_Lumiere/src/components/SkinAnalysisDashboard/SkinAnalysisDashboard.css) | 主看板外觀與子卡片全部收攏於設計系統內，採用 overlay 權杖。 | 主架構已完成重構。 |
 | **產品推薦** | [Recommendations.css](file:///l:/Lumiere/Front_Lumiere/src/components/Recommendations/Recommendations.css) | 將硬編碼的 SPF 警告旗幟色彩完全替換為警告狀態 Tokens (`var(--color-warning-*)`)。 | 宣傳卡片樣式已收攏。 |
 | **上傳區域** | [UploadZone.css](file:///l:/Lumiere/Front_Lumiere/src/components/UploadZone/UploadZone.css) | 主按鈕 hover 背景色替換為 `var(--color-accent-hover)`。 | 按鈕行為標準化。 |
 | **照片預覽** | [FacePreview.css](file:///l:/Lumiere/Front_Lumiere/src/components/FacePreview/FacePreview.css) | 主按鈕 hover 替換為 `var(--color-accent-hover)`。 | 按鈕行為標準化。 |
@@ -74,6 +75,7 @@
 | **均勻度雷達圖** | [UniformityRadar.css](file:///l:/Lumiere/Front_Lumiere/src/components/UniformityRadar/UniformityRadar.css) | 色彩全部使用全域 Tokens。 | 整合良好。 |
 | **膚色對比** | [ToneComparison.css](file:///l:/Lumiere/Front_Lumiere/src/components/ToneComparison/ToneComparison.css) | 進度條與狀態色彩完全符合 Tokens 系統。 | 整合良好。 |
 | **分區卡片** | [RegionCard.css](file:///l:/Lumiere/Front_Lumiere/src/components/RegionCard/RegionCard.css) | 進度條、狀態色彩全部引用全域 Tokens。 | 整合良好。 |
+| **[已廢棄] 舊分析結果** | [AnalysisResult.css](file:///l:/Lumiere/Front_Lumiere/src/components/AnalysisResult/AnalysisResult.css) | 將警告黃色完全替換為 warning 權杖。現為廢棄元件。 | 已由 Bento 網格看板取代。 |
 
 ---
 
