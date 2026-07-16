@@ -90,6 +90,9 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
     medical_alert,
     recommendations_blocked,
     condition_overlay,
+    face_detection,
+    face_image,
+    face_regions,
   } = result ?? {}
 
   const safeRecommendations = Array.isArray(recommendations) ? recommendations : []
@@ -173,10 +176,12 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
 
             {/* ── Col 1, Row 1-2: Main Visual Card ── */}
             <MainVisualCard
-              imageUrl={imageUrl}
+              imageUrl={face_image || imageUrl}
               selectedRegion={selectedRegion}
               onRegionSelect={setSelectedRegion}
               conditionOverlay={condition_overlay}
+              faceDetection={face_detection}
+              faceRegions={face_regions}
             />
 
             {/* ── Col 1, Row 3: Overall Conditions Bento Card ── */}

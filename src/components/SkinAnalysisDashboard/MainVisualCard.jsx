@@ -3,11 +3,11 @@ import { useLanguage } from '../../i18n/LanguageContext.jsx'
 
 /* Zone hotspot configuration */
 const ZONE_CONFIG = [
-  { key: 'testa',      cssClass: 'zone-hotspot--forehead',    labelKey: 'testa' },
-  { key: 'bochecha_e', cssClass: 'zone-hotspot--left-cheek',  labelKey: 'bochecha_e' },
-  { key: 'bochecha_d', cssClass: 'zone-hotspot--right-cheek', labelKey: 'bochecha_d' },
-  { key: 'nariz',      cssClass: 'zone-hotspot--nose',         labelKey: 'nariz' },
-  { key: 'queixo',     cssClass: 'zone-hotspot--chin',         labelKey: 'queixo' },
+  { key: 'testa',      cssClass: 'zone-hotspot--forehead',    box: [20, 5, 60, 25] },
+  { key: 'bochecha_e', cssClass: 'zone-hotspot--left-cheek',  box: [4, 40, 40, 30] },
+  { key: 'bochecha_d', cssClass: 'zone-hotspot--right-cheek', box: [56, 40, 40, 30] },
+  { key: 'nariz',      cssClass: 'zone-hotspot--nose',        box: [36, 34, 28, 38] },
+  { key: 'queixo',     cssClass: 'zone-hotspot--chin',        box: [25, 72, 50, 22] },
 ]
 
 const CARD_LABELS = {
@@ -17,7 +17,7 @@ const CARD_LABELS = {
   noPhoto:     { en: 'Photo unavailable', tw: '照片無法顯示', zh: '照片无法显示', pt: 'Foto indisponível', fr: 'Photo indisponible', tr: 'Fotoğraf mevcut değil' },
 }
 
-export default function MainVisualCard({ imageUrl, selectedRegion, onRegionSelect, conditionOverlay }) {
+export default function MainVisualCard({ imageUrl, selectedRegion, onRegionSelect, conditionOverlay, faceDetection, faceRegions }) {
   const { lang, t } = useLanguage()
   const [viewMode, setViewMode] = useState('zones') // 'zones' or 'heatmap'
   const rl = (map) => map[lang] ?? map.en
@@ -29,6 +29,51 @@ export default function MainVisualCard({ imageUrl, selectedRegion, onRegionSelec
   }
 
   const selectedLabel = selectedRegion ? (t.regions?.[selectedRegion] ?? selectedRegion) : null
+  const faceBox = faceDetection?.bbox_percent
+  const keypoints = faceDetection?.keypoints
+  const foreheadStyle = () => {
+    if (!Array.isArray(keypoints) || keypoints.length < 2) return null
+    const eyeA = keypoints[0]
+    const eyeB = keypoints[1]
+    const eyeDistance = Math.hypot(
+      eyeB.x_percent - eyeA.x_percent,
+      eyeB.y_percent - eyeA.y_percent,
+    )
+    if (!Number.isFinite(eyeDistance) || eyeDistance <= 0) return null
+
+    const eyeCenterX = (eyeA.x_percent + eyeB.x_percent) / 2
+    const eyeCenterY = (eyeA.y_percent + eyeB.y_percent) / 2
+    const width = eyeDistance * 1.7
+    const height = eyeDistance * 0.58
+    return {
+      left: `${Math.max(0, eyeCenterX - width / 2)}%`,
+      top: `${Math.max(0, eyeCenterY - eyeDistance * 0.78)}%`,
+      width: `${Math.min(width, 100)}%`,
+      height: `${Math.min(height, 100)}%`,
+      right: 'auto',
+    }
+  }
+  const zoneStyle = (key, [x, y, width, height]) => {
+    const parsedBox = faceRegions?.[key]?.bbox_percent
+    if (parsedBox) return {
+      left: `${parsedBox.x}%`,
+      top: `${parsedBox.y}%`,
+      width: `${parsedBox.width}%`,
+      height: `${parsedBox.height}%`,
+      right: 'auto',
+    }
+    if (key === 'testa') {
+      const landmarkStyle = foreheadStyle()
+      if (landmarkStyle) return landmarkStyle
+    }
+    return faceBox ? {
+    left: `${faceBox.x + faceBox.width * x / 100}%`,
+    top: `${faceBox.y + faceBox.height * y / 100}%`,
+    width: `${faceBox.width * width / 100}%`,
+    height: `${faceBox.height * height / 100}%`,
+    right: 'auto',
+    } : undefined
+  }
 
   return (
     <article className="bento-card grid-area--main-visual" aria-label="Face zone analysis card">
@@ -45,7 +90,7 @@ export default function MainVisualCard({ imageUrl, selectedRegion, onRegionSelec
             <img
               className="main-visual-card__photo"
               src={imageUrl}
-              alt="Uploaded face for analysis"
+              alt="Detected and enlarged face for analysis"
               draggable={false}
             />
 
@@ -60,12 +105,13 @@ export default function MainVisualCard({ imageUrl, selectedRegion, onRegionSelec
             )}
 
             {/* Clickable zone hotspots overlaid on photo — only active in Zones mode */}
-            {viewMode === 'zones' && ZONE_CONFIG.map(({ key, cssClass }) => (
+            {viewMode === 'zones' && ZONE_CONFIG.map(({ key, cssClass, box }) => (
               <button
                 key={key}
                 type="button"
                 id={`zone-hotspot-${key}`}
                 className={`zone-hotspot ${cssClass}${selectedRegion === key ? ' selected' : ''}`}
+                style={zoneStyle(key, box)}
                 onClick={() => handleZoneClick(key)}
                 aria-pressed={selectedRegion === key}
                 aria-label={t.regions?.[key] ?? key}
