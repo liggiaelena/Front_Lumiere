@@ -1,0 +1,1 @@
+Please strictly adhere to the AI development rules in `documentation/rules/AI_RULES.md` and design tokens in `documentation/Design System.md` for all tasks.
