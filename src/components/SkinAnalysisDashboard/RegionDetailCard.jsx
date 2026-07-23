@@ -36,7 +36,7 @@ const CARD_LABELS = {
 }
 
 export default function RegionDetailCard({ selectedRegion, regioes, conditions = [] }) {
-  const { lang, t } = useLanguage()
+  const { lang, t, translateNote } = useLanguage()
   const rl = (map) => map[lang] ?? map.en
 
   const regionData = selectedRegion ? regioes?.[selectedRegion] : null
@@ -176,7 +176,7 @@ export default function RegionDetailCard({ selectedRegion, regioes, conditions =
           {/* Notes */}
           {regionData.notas && (
             <p className="region-detail__notes">
-              {t.notes?.[regionData.notas] ?? regionData.notas}
+              {translateNote(regionData.notas)}
             </p>
           )}
         </div>

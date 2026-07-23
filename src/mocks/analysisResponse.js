@@ -39,7 +39,14 @@ export const mockAnalysisResponse = {
       oleosidade: 'alta',
       imperfeicoes: ['poro_dilatado', 'brilho_excessivo'],
       uniformidade: 6.5,
-      notas: 'Area with oily tendency and visible pores',
+      notas: {
+        en: 'Area with oily tendency and visible pores',
+        tw: '局部偏油且毛孔較為明顯',
+        zh: '局部偏油且毛孔较为明显',
+        pt: 'Área com tendência oleosa e poros visíveis',
+        fr: 'Zone à tendance grasse avec pores visibles',
+        tr: 'Yağlanma eğilimi olan ve gözeneklerin göründüğü bölge'
+      },
     },
     bochecha_e: {
       tom_hex: '#c99070',
@@ -48,7 +55,14 @@ export const mockAnalysisResponse = {
       oleosidade: 'normal',
       imperfeicoes: ['mancha_solar'],
       uniformidade: 7.8,
-      notas: 'Even tone with a small sun spot',
+      notas: {
+        en: 'Even tone with a small sun spot',
+        tw: '膚色均勻，但有一處輕微曬斑',
+        zh: '肤色均匀，但有一处轻微晒斑',
+        pt: 'Tom uniforme com uma pequena mancha solar',
+        fr: 'Teint uniforme avec une petite tache solaire',
+        tr: 'Hafif güneş lekeli eşit tonlu bölge'
+      },
     },
     bochecha_d: {
       tom_hex: '#cb9272',
@@ -57,7 +71,14 @@ export const mockAnalysisResponse = {
       oleosidade: 'normal',
       imperfeicoes: [],
       uniformidade: 8.2,
-      notas: 'Well-balanced and uniform region',
+      notas: {
+        en: 'Well-balanced and uniform region',
+        tw: '膚質平衡良好且均勻的區域',
+        zh: '肤质平衡良好且均匀的区域',
+        pt: 'Região bem equilibrada e uniforme',
+        fr: 'Région équilibrée et uniforme',
+        tr: 'Dengeli ve eşit dağılımlı bölge'
+      },
     },
     nariz: {
       tom_hex: '#bf7f62',
@@ -66,7 +87,14 @@ export const mockAnalysisResponse = {
       oleosidade: 'muito_alta',
       imperfeicoes: ['poro_dilatado', 'cravos', 'brilho_excessivo'],
       uniformidade: 5.1,
-      notas: 'T-zone with high oiliness and visible blackheads',
+      notas: {
+        en: 'T-zone with high oiliness and visible blackheads',
+        tw: 'T字部位油脂分泌旺盛且有黑頭粉刺',
+        zh: 'T字部位油脂分泌旺盛且有黑头粉刺',
+        pt: 'Zona T com alta oleosidade e cravos visíveis',
+        fr: 'Zone T avec excès de sébum et points noirs visibles',
+        tr: 'Yüksek yağlanma ve görünür siyah noktaların olduğu T bölgesi'
+      },
     },
     queixo: {
       tom_hex: '#c68a6d',
@@ -75,7 +103,14 @@ export const mockAnalysisResponse = {
       oleosidade: 'normal',
       imperfeicoes: ['acne_leve'],
       uniformidade: 7.0,
-      notas: 'Mild acne in the chin area',
+      notas: {
+        en: 'Mild acne in the chin area',
+        tw: '下巴區域有輕微面皰痘痘',
+        zh: '下巴区域有轻微面疱痘痘',
+        pt: 'Acne leve na área do queixo',
+        fr: 'Acné légère au niveau du menton',
+        tr: 'Çene bölgesinde hafif akne'
+      },
     },
   },
   comparacao_tons: {

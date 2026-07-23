@@ -3,7 +3,7 @@ import './RegionCard.css'
 import { useLanguage } from '../../i18n/LanguageContext.jsx'
 
 export default function RegionCard({ regionName, data, conditions = [] }) {
-  const { t } = useLanguage()
+  const { t, translateNote } = useLanguage()
   const { tom_hex, tom_fitzpatrick, oleosidade, imperfeicoes = [], uniformidade, notas } = data
   const uniformPercent = ((uniformidade / 10) * 100).toFixed(0)
   const [animatedWidth, setAnimatedWidth] = useState(0)
@@ -85,7 +85,7 @@ export default function RegionCard({ regionName, data, conditions = [] }) {
       )}
 
 
-      {notas && <p className="region-card__notas">{t.notes?.[notas] ?? notas}</p>}
+      {notas && <p className="region-card__notas">{translateNote(notas)}</p>}
     </div>
   )
 }

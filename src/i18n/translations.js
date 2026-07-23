@@ -64,7 +64,8 @@ export const translations = {
       "Even tone with a small sun spot": "Even tone with a small sun spot",
       "Well-balanced and uniform region": "Well-balanced and uniform region",
       "T-zone with high oiliness and visible blackheads": "T-zone with high oiliness and visible blackheads",
-      "Mild acne in the chin area": "Mild acne in the chin area"
+      "Mild acne in the chin area": "Mild acne in the chin area",
+      "Analysis unavailable for this region.": "Analysis unavailable for this region."
     },
     "medicalAlert": {
       "title": "Not a medical diagnosis",
@@ -260,7 +261,8 @@ export const translations = {
       "Even tone with a small sun spot": "Tom uniforme com uma pequena mancha solar",
       "Well-balanced and uniform region": "Região bem equilibrada e uniforme",
       "T-zone with high oiliness and visible blackheads": "Zona T com alta oleosidade e cravos visíveis",
-      "Mild acne in the chin area": "Acne leve na área do queixo"
+      "Mild acne in the chin area": "Acne leve na área do queixo",
+      "Analysis unavailable for this region.": "Análise indisponível para esta região."
     },
     "medicalAlert": {
       "title": "Não é um diagnóstico médico",
@@ -456,7 +458,8 @@ export const translations = {
       "Even tone with a small sun spot": "Teint uniforme avec une petite tache solaire",
       "Well-balanced and uniform region": "Région équilibrée et uniforme",
       "T-zone with high oiliness and visible blackheads": "Zone T avec excès de sébum et points noirs visibles",
-      "Mild acne in the chin area": "Acné légère au niveau du menton"
+      "Mild acne in the chin area": "Acné légère au niveau du menton",
+      "Analysis unavailable for this region.": "Analyse non disponible pour cette région."
     },
     "medicalAlert": {
       "title": "Pas un diagnostic médical",
@@ -652,7 +655,8 @@ export const translations = {
       "Even tone with a small sun spot": "肤色均匀，但有一处轻微晒斑",
       "Well-balanced and uniform region": "肤质平衡良好且均匀的区域",
       "T-zone with high oiliness and visible blackheads": "T字部位油脂分泌旺盛且有黑头粉刺",
-      "Mild acne in the chin area": "下巴区域有轻微面疱痘痘"
+      "Mild acne in the chin area": "下巴区域有轻微面疱痘痘",
+      "Analysis unavailable for this region.": "该区域暂无分析数据。"
     },
     "medicalAlert": {
       "title": "非醫療診斷",
@@ -848,7 +852,8 @@ export const translations = {
       "Even tone with a small sun spot": "膚色均勻，但有一處輕微曬斑",
       "Well-balanced and uniform region": "膚質平衡良好且均勻的區域",
       "T-zone with high oiliness and visible blackheads": "T字部位油脂分泌旺盛且有黑頭粉刺",
-      "Mild acne in the chin area": "下巴區域有輕微面皰痘痘"
+      "Mild acne in the chin area": "下巴區域有輕微面皰痘痘",
+      "Analysis unavailable for this region.": "該區域暫無分析數據。"
     },
     "medicalAlert": {
       "title": "非醫療診斷",
@@ -1044,7 +1049,8 @@ export const translations = {
       "Even tone with a small sun spot": "Hafif güneş lekeli eşit tonlu bölge",
       "Well-balanced and uniform region": "Dengeli ve eşit dağılımlı bölge",
       "T-zone with high oiliness and visible blackheads": "Yüksek yağlanma ve görünür siyah noktaların olduğu T bölgesi",
-      "Mild acne in the chin area": "Çene bölgesinde hafif akne"
+      "Mild acne in the chin area": "Çene bölgesinde hafif akne",
+      "Analysis unavailable for this region.": "Bu bölge için analiz mevcut değil."
     },
     "medicalAlert": {
       "title": "Tıbbi tanı değildir",
