@@ -19,7 +19,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 2px solid rgba(0, 0, 0, 0.08);
+  border: 2px solid rgba(var(--color-black-rgb), 0.08);
   flex-shrink: 0;
 }
 
@@ -87,9 +87,9 @@
   font-size: 0.7rem;
   padding: 0.2rem 0.5rem;
   border-radius: 99px;
-  background-color: #fff5f5;
+  background-color: var(--color-error-light);
   color: var(--color-error);
-  border: 1px solid #fecdd3;
+  border: 1px solid var(--color-exception-border);
 }
 
 .region-card__no-imperfeicoes {
@@ -115,9 +115,9 @@
 .region-card__condition-tag {
   font-size: 0.7rem;
   padding: 0.2rem 0.5rem;
-  border: 1px solid #f0c99c;
+  border: 1px solid var(--color-warning);
   border-radius: 99px;
-  background-color: #fff8e8;
-  color: #8a5500;
+  background-color: var(--color-warning-light);
+  color: var(--color-warning-text);
   text-transform: capitalize;
 }

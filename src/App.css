@@ -15,6 +15,10 @@
   --color-primary-rgb: 140, 98, 57;
   --color-accent-rgb: 212, 163, 115;
   --color-shadow-rgb: 80, 55, 35;
+  --color-secondary-rgb: 26, 54, 93;
+  --color-success-rgb: 45, 106, 79;
+  --color-error-rgb: 193, 18, 31;
+  --color-warning-rgb: 217, 119, 6;
 
   /* 2. Typography & Layout Borders */
   --color-text: #2D2D2D;
@@ -32,13 +36,32 @@
   --color-error: #C1121F;
   /* Error/Risk Alert Red */
   --color-error-light: #FFF5F5;
-  --color-exception-bg: rgba(255, 0, 0, 0.1);
-  --color-exception-border: rgba(255, 0, 0, 0.3);
+  --color-exception-bg: rgba(var(--color-error-rgb), 0.1);
+  --color-exception-border: rgba(var(--color-error-rgb), 0.3);
   --color-exception-text: #FF0000;
   --color-warning: #D97706;
   --color-warning-light: #FFF4E5;
   --color-warning-text: #3D2300;
   --color-success-light: #F0FDF4;
+
+  /* Clinical/Dermatology Badge Colors */
+  --color-clinical-border: #CFE3E6;
+  --color-clinical-bg-start: #F3F9FA;
+  --color-clinical-bg-end: #E8F2F4;
+  --color-clinical-text: #3E5F66;
+
+  /* Color Corrector Palette */
+  --color-corrector-border: #C8B6D9;
+  --color-corrector-bg-start: #FCF7FF;
+  --color-corrector-bg-end: #F7F9FD;
+  --color-corrector-text: #5B3D75;
+  --color-corrector-muted-text: #5D6470;
+
+  /* Absolute Colors */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-white-rgb: 255, 255, 255;
+  --color-black-rgb: 0, 0, 0;
 
   /* 4. Compatibility Aliases (Backwards Compatibility) */
   --color-bg: var(--color-background);

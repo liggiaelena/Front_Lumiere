@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   z-index: 100;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(var(--color-black-rgb), 0.85);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,7 +54,7 @@
 
 .camera-capture__body {
   position: relative;
-  background-color: #000;
+  background-color: var(--color-black);
   aspect-ratio: 4 / 3;
 }
 
@@ -80,7 +80,7 @@
   right: 0;
   text-align: center;
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(var(--color-white-rgb), 0.8);
   pointer-events: none;
   letter-spacing: 0.03em;
 }
@@ -126,7 +126,7 @@
   position: absolute;
   inset: 4px;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: var(--color-white);
 }
 
 .camera-capture__shutter:hover {

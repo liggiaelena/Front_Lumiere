@@ -157,17 +157,17 @@
 }
 
 .analysis-result__badge--leve {
-  background-color: #f0fdf4;
+  background-color: var(--color-success-light);
   color: var(--color-success);
 }
 
 .analysis-result__badge--moderada {
-  background-color: #fffbeb;
-  color: #92400e;
+  background-color: var(--color-warning-light);
+  color: var(--color-warning-text);
 }
 
 .analysis-result__badge--alta {
-  background-color: #fff5f5;
+  background-color: var(--color-error-light);
   color: var(--color-error);
 }
 
@@ -218,7 +218,7 @@
   padding: 0.75rem 2rem;
   border-radius: var(--radius-sm);
   background-color: var(--color-accent);
-  color: #fff;
+  color: var(--color-white);
   font-size: 0.9rem;
   font-weight: 600;
   border: none;
@@ -228,7 +228,7 @@
 }
 
 .analysis-result__btn-new:hover {
-  background-color: #c49363;
+  background-color: var(--color-accent-hover);
 }
 
 .medical-alert {
@@ -336,11 +336,11 @@
 }
 
 .medical-modal-recommendation {
-  background-color: #fff9e6; /* Soft warm warning callout background */
-  border-left: 3px solid #ffc107;
+  background-color: var(--color-warning-light); /* Soft warm warning callout background */
+  border-left: 3px solid var(--color-warning);
   padding: 8px 12px;
   border-radius: var(--radius-sm);
-  color: #664d03;
+  color: var(--color-warning-text);
   font-weight: 500;
   font-size: 0.84rem;
   margin: 0;
@@ -362,7 +362,7 @@
 }
 
 .medical-modal-confirm-btn:hover {
-  background-color: #c49363;
+  background-color: var(--color-accent-hover);
   transform: translateY(-1px);
 }
 

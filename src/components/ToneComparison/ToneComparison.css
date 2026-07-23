@@ -35,7 +35,7 @@
   width: 36px;
   height: 36px;
   border-radius: var(--radius-sm);
-  border: 1.5px solid rgba(0, 0, 0, 0.08);
+  border: 1.5px solid rgba(var(--color-black-rgb), 0.08);
   flex-shrink: 0;
 }
 
@@ -76,7 +76,7 @@
 }
 
 .tone-comparison__bar-fill--moderado {
-  background-color: #e09c45;
+  background-color: var(--color-warning);
 }
 
 .tone-comparison__bar-fill--alto {
@@ -96,7 +96,7 @@
 }
 
 .tone-comparison__level--moderado {
-  color: #e09c45;
+  color: var(--color-warning);
 }
 
 .tone-comparison__level--alto {

@@ -23,8 +23,10 @@
 
 .upload-zone--error {
   border-color: var(--color-error);
-  background-color: #fff5f5;
+  background-color: var(--color-error-light);
 }
+
+
 
 .upload-zone__icon {
   width: 56px;
@@ -89,7 +91,7 @@
 
 .upload-zone__btn--primary {
   background-color: var(--color-accent);
-  color: #fff;
+  color: var(--color-white);
 }
 
 .upload-zone__btn--primary:hover {

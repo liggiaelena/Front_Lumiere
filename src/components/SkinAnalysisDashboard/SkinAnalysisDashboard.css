@@ -391,7 +391,7 @@
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(212, 163, 115, 0.25);
+  background-color: rgba(var(--color-accent-rgb), 0.25);
   border-radius: 12px 12px 4px 4px;
 }
 
@@ -401,7 +401,7 @@
   height: 42px;
   top: 78px;
   left: 14px;
-  background-color: rgba(140, 98, 57, 0.18);
+  background-color: rgba(var(--color-primary-rgb), 0.18);
   border-radius: 10px 4px 4px 10px;
 }
 
@@ -411,7 +411,7 @@
   height: 42px;
   top: 78px;
   right: 14px;
-  background-color: rgba(140, 98, 57, 0.18);
+  background-color: rgba(var(--color-primary-rgb), 0.18);
   border-radius: 4px 10px 10px 4px;
 }
 
@@ -422,7 +422,7 @@
   top: 80px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(26, 54, 93, 0.15);
+  background-color: rgba(var(--color-secondary-rgb), 0.15);
   border-radius: 4px 4px 8px 8px;
 }
 
@@ -433,16 +433,16 @@
   bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(212, 163, 115, 0.2);
+  background-color: rgba(var(--color-accent-rgb), 0.2);
   border-radius: 4px 4px 14px 14px;
 }
 
 /* Heatmap mode: zones replaced with heat gradient */
-.face-diagram.heatmap-mode .face-zone--forehead { background-color: rgba(193, 18, 31, 0.35); }
-.face-diagram.heatmap-mode .face-zone--left-cheek { background-color: rgba(217, 119, 6, 0.35); }
-.face-diagram.heatmap-mode .face-zone--right-cheek { background-color: rgba(217, 119, 6, 0.3); }
-.face-diagram.heatmap-mode .face-zone--nose { background-color: rgba(193, 18, 31, 0.45); }
-.face-diagram.heatmap-mode .face-zone--chin { background-color: rgba(45, 106, 79, 0.3); }
+.face-diagram.heatmap-mode .face-zone--forehead { background-color: rgba(var(--color-error-rgb), 0.35); }
+.face-diagram.heatmap-mode .face-zone--left-cheek { background-color: rgba(var(--color-warning-rgb), 0.35); }
+.face-diagram.heatmap-mode .face-zone--right-cheek { background-color: rgba(var(--color-warning-rgb), 0.3); }
+.face-diagram.heatmap-mode .face-zone--nose { background-color: rgba(var(--color-error-rgb), 0.45); }
+.face-diagram.heatmap-mode .face-zone--chin { background-color: rgba(var(--color-success-rgb), 0.3); }
 
 .face-diagram__zone-label {
   position: absolute;
@@ -691,7 +691,7 @@
   height: 32px;
   border-radius: 50%;
   border: 2px solid var(--color-surface);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 6px rgba(var(--color-black-rgb), 0.12);
 }
 
 .skin-palette__swatch-label {
@@ -728,7 +728,7 @@
   height: 36px;
   border-radius: 50%;
   border: 2px solid var(--color-surface);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 6px rgba(var(--color-black-rgb), 0.12);
   flex-shrink: 0;
 }
 
@@ -770,7 +770,7 @@
   height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px rgba(var(--color-black-rgb), 0.2);
 }
 
 .multi-zone-item__info {
@@ -925,7 +925,7 @@
   left: 3px;
   transform: translateY(-50%);
   transition: all 0.25s ease;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px rgba(var(--color-black-rgb), 0.2);
 }
 
 .toggle-switch__input:checked + .toggle-switch__slider {
@@ -974,19 +974,19 @@
   border-radius: 99px;
   background-color: var(--color-accent-light);
   color: var(--color-primary);
-  border: 1px solid rgba(140, 98, 57, 0.15);
+  border: 1px solid rgba(var(--color-primary-rgb), 0.15);
 }
 
 .texture-tag--high {
   background-color: var(--color-error-light);
   color: var(--color-error);
-  border-color: rgba(193, 18, 31, 0.2);
+  border-color: rgba(var(--color-error-rgb), 0.2);
 }
 
 .texture-tag--moderate {
   background-color: var(--color-warning-light);
   color: var(--color-warning);
-  border-color: rgba(217, 119, 6, 0.2);
+  border-color: rgba(var(--color-warning-rgb), 0.2);
 }
 
 .texture-spots-card__breakdown {
@@ -1064,7 +1064,7 @@
   border-radius: 50%;
   flex-shrink: 0;
   border: 2px solid var(--color-surface);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 4px rgba(var(--color-black-rgb), 0.15);
 }
 
 .reco-product-item__info {
@@ -1120,14 +1120,14 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 100%);
+  background: linear-gradient(135deg, rgba(var(--color-white-rgb), 0.08) 0%, transparent 100%);
   opacity: 0;
   transition: opacity var(--transition);
 }
 
 .reco-card__cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(140, 98, 57, 0.4);
+  box-shadow: 0 6px 20px rgba(var(--color-primary-rgb), 0.4);
 }
 
 .reco-card__cta:hover::before {
@@ -1136,7 +1136,7 @@
 
 .reco-card__cta:active {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(140, 98, 57, 0.3);
+  box-shadow: 0 2px 8px rgba(var(--color-primary-rgb), 0.3);
 }
 
 .reco-card__spf-warning {
@@ -1159,7 +1159,7 @@
   gap: 4px;
   background-color: var(--color-success-light);
   color: var(--color-success);
-  border: 1px solid rgba(45, 106, 79, 0.2);
+  border: 1px solid rgba(var(--color-success-rgb), 0.2);
   border-radius: 99px;
   font-size: 0.65rem;
   font-weight: 600;
@@ -1177,7 +1177,7 @@
   height: 60px;
   background-color: var(--color-surface);
   border-top: 1px solid var(--color-accent-light);
-  box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+  box-shadow: 0 -4px 16px rgba(var(--color-black-rgb), 0.08);
   z-index: 200;
 }
 
@@ -1354,7 +1354,7 @@
   padding: var(--spacing-xl);
   max-width: 500px;
   width: 100%;
-  box-shadow: 0 10px 30px rgba(140, 98, 57, 0.25);
+  box-shadow: 0 10px 30px rgba(var(--color-primary-rgb), 0.25);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
@@ -1481,13 +1481,13 @@
 .zone-hotspot:hover,
 .zone-hotspot:focus-visible {
   border-color: var(--color-accent);
-  background-color: rgba(212, 163, 115, 0.15);
+  background-color: rgba(var(--color-accent-rgb), 0.15);
   outline: none;
 }
 
 .zone-hotspot.selected {
   border-color: var(--color-primary);
-  background-color: rgba(140, 98, 57, 0.18);
+  background-color: rgba(var(--color-primary-rgb), 0.18);
 }
 
 /* Absolute positions as % of container — matching face proportions */
@@ -1600,7 +1600,7 @@
   height: 12px;
   border-radius: 50%;
   flex-shrink: 0;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px rgba(var(--color-black-rgb), 0.2);
 }
 
 /* Fitzpatrick + Oiliness row */
@@ -1617,7 +1617,7 @@
   border-radius: 99px;
   background-color: var(--color-accent-light);
   color: var(--color-primary);
-  border: 1px solid rgba(140, 98, 57, 0.15);
+  border: 1px solid rgba(var(--color-primary-rgb), 0.15);
 }
 
 /* Uniformity bar */

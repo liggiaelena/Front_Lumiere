@@ -141,7 +141,7 @@
 
 .face-preview__btn--primary {
   background-color: var(--color-accent);
-  color: #fff;
+  color: var(--color-white);
 }
 
 .face-preview__btn--primary:hover {
@@ -179,7 +179,7 @@
   overflow-y: scroll;
   border: 1px solid var(--color-border);
   padding: 12px;
-  background: #FFFFFF;
+  background: var(--color-white);
   border-radius: var(--radius-sm);
   display: flex;
   flex-direction: column;
@@ -247,7 +247,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(61, 47, 32, 0.65);
+  background-color: var(--color-overlay);
   backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
@@ -314,7 +314,7 @@
   overflow-y: scroll;
   border: 1px solid var(--color-border);
   padding: 16px;
-  background: #FFFFFF;
+  background: var(--color-white);
   border-radius: var(--radius-sm);
   display: flex;
   flex-direction: column;
