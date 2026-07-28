@@ -1,15 +1,52 @@
 import { useState } from 'react'
 import './LandingPage.css'
 import { useLanguage } from '../../i18n/LanguageContext.jsx'
+import { login, register } from '../../services/api.js'
 
-export default function LandingPage({ onContinue }) {
+function getErrorMessage(error) {
+  const detail = error.response?.data?.detail
+  if (Array.isArray(detail)) {
+    return detail.map((item) => item.msg).join(' ')
+  }
+  return typeof detail === 'string' ? detail : 'Unable to connect. Please try again.'
+}
+
+export default function LandingPage({ onContinue, onAuthenticated }) {
   const { t } = useLanguage()
+  const [mode, setMode] = useState('login')
+  const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
-    onContinue()
+    setError('')
+    if (mode === 'register' && password !== confirmPassword) {
+      setError(t.landing?.passwordMismatch ?? 'Passwords do not match.')
+      return
+    }
+    setLoading(true)
+    try {
+      const user =
+        mode === 'login'
+          ? await login({ email, password })
+          : await register({ username, email, password })
+      onAuthenticated(user)
+    } catch (requestError) {
+      setError(getErrorMessage(requestError))
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  function switchMode(nextMode) {
+    setMode(nextMode)
+    setError('')
+    setPassword('')
+    setConfirmPassword('')
   }
 
   return (
@@ -52,21 +89,60 @@ export default function LandingPage({ onContinue }) {
 
       <div className="landing-page__card">
         <div className="landing-page__card-header">
-          <h3>{t.landing?.welcomeBack ?? 'Welcome back'}</h3>
+          <div className="landing-page__auth-tabs" role="tablist">
+            <button
+              type="button"
+              className={mode === 'login' ? 'is-active' : ''}
+              onClick={() => switchMode('login')}
+            >
+              {t.landing?.signInBtn ?? 'Sign in'}
+            </button>
+            <button
+              type="button"
+              className={mode === 'register' ? 'is-active' : ''}
+              onClick={() => switchMode('register')}
+            >
+              {t.landing?.signUpBtn ?? 'Sign up'}
+            </button>
+          </div>
+          <h3>
+            {mode === 'login'
+              ? t.landing?.welcomeBack ?? 'Welcome back'
+              : t.landing?.createAccount ?? 'Create your account'}
+          </h3>
           <p>
-            {t.landing?.signInSubtitle ??
-              'Sign in to continue, or use guest mode for a quick analysis.'}
+            {mode === 'login'
+              ? t.landing?.signInSubtitle ??
+                'Sign in to continue, or use guest mode for a quick analysis.'
+              : t.landing?.signUpSubtitle ?? 'Create an account to start your skin analysis.'}
           </p>
         </div>
 
         <form className="landing-page__form" onSubmit={handleSubmit}>
+          {mode === 'register' && (
+            <label>
+              {t.landing?.usernameLabel ?? 'Username'}
+              <input
+                type="text"
+                autoComplete="username"
+                minLength="3"
+                maxLength="50"
+                pattern="[A-Za-z0-9_.-]+"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+                required
+              />
+            </label>
+          )}
           <label>
             {t.landing?.emailLabel ?? 'Email'}
             <input
               type="email"
+              autoComplete="email"
               placeholder="you@example.com"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
+              required
             />
           </label>
 
@@ -74,14 +150,41 @@ export default function LandingPage({ onContinue }) {
             {t.landing?.passwordLabel ?? 'Password'}
             <input
               type="password"
+              autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+              minLength="8"
               placeholder="••••••••"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
+              required
             />
           </label>
 
-          <button className="landing-page__btn landing-page__btn--primary" type="submit">
-            {t.landing?.signInBtn ?? 'Sign in'}
+          {mode === 'register' && (
+            <label>
+              {t.landing?.confirmPasswordLabel ?? 'Confirm password'}
+              <input
+                type="password"
+                autoComplete="new-password"
+                minLength="8"
+                value={confirmPassword}
+                onChange={(event) => setConfirmPassword(event.target.value)}
+                required
+              />
+            </label>
+          )}
+
+          {error && <p className="landing-page__error" role="alert">{error}</p>}
+
+          <button
+            className="landing-page__btn landing-page__btn--primary"
+            type="submit"
+            disabled={loading}
+          >
+            {loading
+              ? t.landing?.submitting ?? 'Please wait…'
+              : mode === 'login'
+                ? t.landing?.signInBtn ?? 'Sign in'
+                : t.landing?.signUpBtn ?? 'Sign up'}
           </button>
         </form>
 
@@ -94,8 +197,8 @@ export default function LandingPage({ onContinue }) {
         </button>
 
         <p className="landing-page__note">
-          {t.landing?.authNotice ??
-            'Login is prepared for the user-profile workflow. Authentication can be connected when the backend is ready.'}
+          {t.landing?.passwordHint ??
+            'Passwords must contain at least 8 characters, including a letter and a number.'}
         </p>
       </div>
     </section>

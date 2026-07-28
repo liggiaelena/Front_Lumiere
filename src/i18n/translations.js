@@ -193,7 +193,15 @@ export const translations = {
       "passwordLabel": "Password",
       "signInBtn": "Sign in",
       "guestBtn": "Continue as guest",
-      "authNotice": "Login is prepared for the user-profile workflow. Authentication can be connected when the backend is ready."
+      "signUpBtn": "Sign up",
+      "createAccount": "Create your account",
+      "signUpSubtitle": "Create an account to start your skin analysis.",
+      "usernameLabel": "Username",
+      "confirmPasswordLabel": "Confirm password",
+      "passwordMismatch": "Passwords do not match.",
+      "passwordHint": "Passwords must contain at least 8 characters, including a letter and a number.",
+      "submitting": "Please wait…",
+      "logoutBtn": "Log out"
     }
   },
   "pt": {
@@ -390,7 +398,15 @@ export const translations = {
       "passwordLabel": "Palavra-passe",
       "signInBtn": "Iniciar sessão",
       "guestBtn": "Continuar como convidado",
-      "authNotice": "O login está preparado para o fluxo de perfis de utilizador. A autenticação poderá ser ligada quando o servidor estiver pronto."
+      "signUpBtn": "Criar conta",
+      "createAccount": "Crie a sua conta",
+      "signUpSubtitle": "Crie uma conta para iniciar a sua análise da pele.",
+      "usernameLabel": "Nome de utilizador",
+      "confirmPasswordLabel": "Confirmar palavra-passe",
+      "passwordMismatch": "As palavras-passe não coincidem.",
+      "passwordHint": "A palavra-passe deve ter pelo menos 8 caracteres, incluindo uma letra e um número.",
+      "submitting": "Aguarde…",
+      "logoutBtn": "Terminar sessão"
     }
   },
   "fr": {
@@ -587,7 +603,15 @@ export const translations = {
       "passwordLabel": "Mot de passe",
       "signInBtn": "Se connecter",
       "guestBtn": "Continuer en tant qu'invité",
-      "authNotice": "La connexion est préparée pour le flux de profils d'utilisateurs. L'authentification pourra être connectée lorsque le backend sera prêt."
+      "signUpBtn": "Créer un compte",
+      "createAccount": "Créez votre compte",
+      "signUpSubtitle": "Créez un compte pour commencer votre analyse de peau.",
+      "usernameLabel": "Nom d'utilisateur",
+      "confirmPasswordLabel": "Confirmer le mot de passe",
+      "passwordMismatch": "Les mots de passe ne correspondent pas.",
+      "passwordHint": "Le mot de passe doit contenir au moins 8 caractères, dont une lettre et un chiffre.",
+      "submitting": "Veuillez patienter…",
+      "logoutBtn": "Se déconnecter"
     }
   },
   "zh": {
@@ -784,7 +808,15 @@ export const translations = {
       "passwordLabel": "密码",
       "signInBtn": "登录",
       "guestBtn": "以客身份继续",
-      "authNotice": "登录功能已为用户档案工作流预留。当后端服务就绪后即可连接验证。"
+      "signUpBtn": "注册",
+      "createAccount": "创建账户",
+      "signUpSubtitle": "创建账户并开始您的肌肤分析。",
+      "usernameLabel": "用户名",
+      "confirmPasswordLabel": "确认密码",
+      "passwordMismatch": "两次输入的密码不一致。",
+      "passwordHint": "密码至少需要 8 个字符，并同时包含字母和数字。",
+      "submitting": "请稍候…",
+      "logoutBtn": "退出登录"
     }
   },
   "tw": {
@@ -981,7 +1013,15 @@ export const translations = {
       "passwordLabel": "密碼",
       "signInBtn": "登入",
       "guestBtn": "以訪客身分繼續",
-      "authNotice": "登入功能已為用戶檔案工作流預留。當後端服務就緒後即可連接驗證。"
+      "signUpBtn": "註冊",
+      "createAccount": "建立帳戶",
+      "signUpSubtitle": "建立帳戶並開始您的肌膚分析。",
+      "usernameLabel": "使用者名稱",
+      "confirmPasswordLabel": "確認密碼",
+      "passwordMismatch": "兩次輸入的密碼不一致。",
+      "passwordHint": "密碼至少需要 8 個字元，並同時包含字母和數字。",
+      "submitting": "請稍候…",
+      "logoutBtn": "登出"
     }
   },
   "tr": {
@@ -1178,7 +1218,15 @@ export const translations = {
       "passwordLabel": "Şifre",
       "signInBtn": "Giriş yap",
       "guestBtn": "Misafir olarak devam et",
-      "authNotice": "Giriş işlemi kullanıcı profili iş akışı için hazırlanmıştır. Arka uç hazır olduğunda kimlik doğrulama bağlanabilir."
+      "signUpBtn": "Kayıt ol",
+      "createAccount": "Hesabınızı oluşturun",
+      "signUpSubtitle": "Cilt analizinize başlamak için bir hesap oluşturun.",
+      "usernameLabel": "Kullanıcı adı",
+      "confirmPasswordLabel": "Şifreyi doğrulayın",
+      "passwordMismatch": "Şifreler eşleşmiyor.",
+      "passwordHint": "Şifre en az 8 karakter olmalı, bir harf ve bir rakam içermelidir.",
+      "submitting": "Lütfen bekleyin…",
+      "logoutBtn": "Çıkış yap"
     }
   }
 }

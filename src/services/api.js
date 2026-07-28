@@ -6,6 +6,44 @@ const api = axios.create({
   timeout: 30000,
 })
 
+const TOKEN_KEY = 'lumiere_access_token'
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem(TOKEN_KEY)
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+})
+
+function saveSession(data) {
+  localStorage.setItem(TOKEN_KEY, data.access_token)
+  return data.user
+}
+
+export function hasSession() {
+  return Boolean(localStorage.getItem(TOKEN_KEY))
+}
+
+export function clearSession() {
+  localStorage.removeItem(TOKEN_KEY)
+}
+
+export async function login({ email, password }) {
+  const response = await api.post('/api/auth/login', { email, password })
+  return saveSession(response.data)
+}
+
+export async function register({ username, email, password }) {
+  const response = await api.post('/api/auth/register', { username, email, password })
+  return saveSession(response.data)
+}
+
+export async function getCurrentUser() {
+  const response = await api.get('/api/auth/me')
+  return response.data
+}
+
 export async function analyzeImage(file, lang = 'en') {
   const formData = new FormData()
   formData.append('file', file)

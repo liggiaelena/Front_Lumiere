@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { LanguageProvider, useLanguage } from './i18n/LanguageContext.jsx'
 import UploadZone from './components/UploadZone/UploadZone.jsx'
@@ -10,6 +10,7 @@ import FaceScanningAnimation from './components/FaceScanningAnimation/FaceScanni
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.jsx'
 import './components/ErrorBoundary/ErrorBoundary.css'
 import { useAnalysis } from './hooks/useAnalysis.js'
+import { clearSession, getCurrentUser, hasSession } from './services/api.js'
 
 const LANGUAGES = [
   { code: 'en', label: 'EN' },
@@ -26,12 +27,34 @@ function AppInner() {
   const [imageFile, setImageFile] = useState(null)
   const [imageUrl, setImageUrl] = useState(null)
   const [showCamera, setShowCamera] = useState(false)
+  const [user, setUser] = useState(null)
 
   const { loading, error, result, analyze, reset } = useAnalysis({ setStep })
 
+  useEffect(() => {
+    if (!hasSession()) return
+    getCurrentUser()
+      .then(setUser)
+      .catch(() => clearSession())
+  }, [])
+
   function handleContinueToUpload() {
-  setStep('upload')
-}
+    setStep('upload')
+  }
+
+  function handleAuthenticated(authenticatedUser) {
+    setUser(authenticatedUser)
+    setStep('upload')
+  }
+
+  function handleLogout() {
+    clearSession()
+    setUser(null)
+    setImageFile(null)
+    setImageUrl(null)
+    reset()
+    setStep('landing')
+  }
 
   function handleImageSelected(file, previewUrl) {
     setImageFile(file)
@@ -83,6 +106,14 @@ function AppInner() {
               </button>
             ))}
           </div>
+          {user && (
+            <div className="app__account">
+              <span>{user.first_name || user.username}</span>
+              <button type="button" onClick={handleLogout}>
+                {t.landing?.logoutBtn ?? 'Log out'}
+              </button>
+            </div>
+          )}
         </div>
       </header>
 
@@ -91,7 +122,10 @@ function AppInner() {
   className={`app__main${step === 'result' ? ' app__main--dashboard' : ''}${step === 'landing' ? ' app__main--landing' : ''}`}
 >
   {step === 'landing' && (
-  <LandingPage onContinue={handleContinueToUpload} />
+  <LandingPage
+    onContinue={handleContinueToUpload}
+    onAuthenticated={handleAuthenticated}
+  />
 )}
   
           {step === 'upload' && (
