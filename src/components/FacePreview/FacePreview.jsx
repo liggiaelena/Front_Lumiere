@@ -7,7 +7,7 @@ export default function FacePreview({ imageUrl, onAnalyze, onChangePhoto }) {
   const [consented, setConsented] = useState(false)
   const [showConsentError, setShowConsentError] = useState(false)
   const [hasReadGdpr, setHasReadGdpr] = useState(false)
-  const [showGdprModal, setShowGdprModal] = useState(true)
+  const [showGdprModal, setShowGdprModal] = useState(false)
   const gdprContainerRef = useRef(null)
 
   const handleGdprScroll = (e) => {

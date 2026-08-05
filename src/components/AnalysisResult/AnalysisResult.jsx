@@ -36,6 +36,7 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
     comparacao_tons,
     imperfeicoes,
     recommendations,
+    recommendations_reliable,
     condition_map: conditionMapFromResult,
     segformer_condition_map: segformerConditionMapFromResult,
     skin_tone,
@@ -237,7 +238,11 @@ export default function AnalysisResult({ result, onNewAnalysis }) {
           <p>{localizedRecommendationsBlocked.message}</p>
         </div>
       ) : (
-        <Recommendations recommendations={safeRecommendations} conditionMap={safeConditionMap} />
+        <Recommendations
+          recommendations={safeRecommendations}
+          conditionMap={safeConditionMap}
+          reliable={recommendations_reliable !== false}
+        />
       )}
 
       <div className="analysis-result__footer">

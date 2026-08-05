@@ -1,7 +1,7 @@
 import './Recommendations.css'
 import { useLanguage } from '../../i18n/LanguageContext.jsx'
 
-export default function Recommendations({ recommendations, conditionMap }) {
+export default function Recommendations({ recommendations, conditionMap, reliable = true }) {
   const { t: translations, lang } = useLanguage()
 
   const safeConditionMap = conditionMap && typeof conditionMap === 'object' ? conditionMap : {}
@@ -16,6 +16,15 @@ export default function Recommendations({ recommendations, conditionMap }) {
     pt: 'Testado: Testado dermatologicamente',
     fr: 'Testé : Testé dermatologiquement',
     tr: 'Test edilmiştir: Dermatolojik olarak test edilmiştir',
+  }
+
+  const NO_RELIABLE_MATCH = {
+    en: 'No shade was close enough to your skin tone — showing the nearest available options instead.',
+    tw: '沒有與您的膚色足夠接近的色號，以下顯示最接近的選項。',
+    zh: '没有与您的肤色足够接近的色号，以下显示最接近的选项。',
+    pt: 'Nenhum tom ficou próximo o suficiente do seu tom de pele — mostrando as opções mais próximas disponíveis.',
+    fr: "Aucune teinte n'était assez proche de votre teint — affichage des options les plus proches disponibles.",
+    tr: 'Ten renginize yeterince yakın bir ton bulunamadı — bunun yerine en yakın seçenekler gösteriliyor.',
   }
 
   const t = (key, fallback = '') => {
@@ -37,6 +46,9 @@ export default function Recommendations({ recommendations, conditionMap }) {
     <section className="recommendations" data-condition-map={JSON.stringify(safeConditionMap)}>
       {showSpfWarning && (
         <div className="spf-warning-banner">{t('recommendations.banner.spfWarning')}</div>
+      )}
+      {!reliable && (
+        <div className="spf-warning-banner">{NO_RELIABLE_MATCH[lang] || NO_RELIABLE_MATCH.en}</div>
       )}
 
       <h3 className="recommendations__title">{t('result.foundationTitle', 'Foundation Matches')}</h3>
