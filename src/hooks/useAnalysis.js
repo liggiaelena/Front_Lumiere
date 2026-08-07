@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { analyzeImage } from '../services/api.js'
 import { useLanguage } from '../i18n/LanguageContext.jsx'
 
-export function useAnalysis({ setStep }) {
+export function useAnalysis({ setStep, onAnalysisComplete }) {
   const { t, lang } = useLanguage()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -16,6 +16,7 @@ export function useAnalysis({ setStep }) {
     try {
       const data = await analyzeImage(file, lang)
       setResult(data)
+      onAnalysisComplete?.(data)
       setStep('result')
     } catch (err) {
       const message =
@@ -38,5 +39,11 @@ export function useAnalysis({ setStep }) {
     setResult(null)
   }
 
-  return { loading, error, result, analyze, reset }
+  function showResult(data) {
+    setError(null)
+    setResult(data)
+    setStep('result')
+  }
+
+  return { loading, error, result, analyze, reset, showResult }
 }

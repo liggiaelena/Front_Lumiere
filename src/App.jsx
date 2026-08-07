@@ -8,9 +8,10 @@ import FacePreview from './components/FacePreview/FacePreview.jsx'
 import SkinAnalysisDashboard from './components/SkinAnalysisDashboard/SkinAnalysisDashboard.jsx'
 import FaceScanningAnimation from './components/FaceScanningAnimation/FaceScanningAnimation.jsx'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.jsx'
+import AnalysisHistory from './components/AnalysisHistory/AnalysisHistory.jsx'
 import './components/ErrorBoundary/ErrorBoundary.css'
 import { useAnalysis } from './hooks/useAnalysis.js'
-import { clearSession, getCurrentUser, hasSession } from './services/api.js'
+import { clearSession, getAnalysis, getCurrentUser, hasSession } from './services/api.js'
 
 const LANGUAGES = [
   { code: 'en', label: 'EN' },
@@ -21,30 +22,103 @@ const LANGUAGES = [
   { code: 'tr', label: 'TR' },
 ]
 
+function routeFromPathname(pathname) {
+  if (pathname === '/upload') return { step: 'upload' }
+  if (pathname === '/history') return { step: 'history' }
+  const detailMatch = pathname.match(/^\/analyze\/([^/]+)$/)
+  if (detailMatch) {
+    return { step: 'loading-result', analysisId: decodeURIComponent(detailMatch[1]) }
+  }
+  return { step: 'landing' }
+}
+
 function AppInner() {
   const { lang, setLang, t } = useLanguage()
-  const [step, setStep] = useState('landing')
+  const [step, setStep] = useState(() => routeFromPathname(window.location.pathname).step)
   const [imageFile, setImageFile] = useState(null)
   const [imageUrl, setImageUrl] = useState(null)
   const [showCamera, setShowCamera] = useState(false)
   const [user, setUser] = useState(null)
 
-  const { loading, error, result, analyze, reset } = useAnalysis({ setStep })
+  const { loading, error, result, analyze, reset, showResult } = useAnalysis({
+    setStep,
+    onAnalysisComplete: (data) => {
+      window.history.pushState({}, '', `/analyze/${encodeURIComponent(data.id)}`)
+    },
+  })
 
   useEffect(() => {
-    if (!hasSession()) return
-    getCurrentUser()
-      .then(setUser)
-      .catch(() => clearSession())
+    let active = true
+
+    async function restoreRoute() {
+      const route = routeFromPathname(window.location.pathname)
+      const protectedRoute = route.step === 'history' || route.step === 'loading-result'
+
+      if (!hasSession()) {
+        if (protectedRoute) {
+          window.history.replaceState({}, '', '/')
+          setStep('landing')
+        } else {
+          setStep(route.step)
+        }
+        return
+      }
+
+      let currentUser
+      try {
+        currentUser = await getCurrentUser()
+      } catch {
+        if (!active) return
+        clearSession()
+        setUser(null)
+        window.history.replaceState({}, '', '/')
+        setStep('landing')
+        return
+      }
+
+      if (!active) return
+      setUser(currentUser)
+
+      if (route.step === 'landing') {
+        window.history.replaceState({}, '', '/upload')
+        setStep('upload')
+      } else if (route.step === 'loading-result') {
+        setStep('loading-result')
+        try {
+          const analysis = await getAnalysis(route.analysisId)
+          if (active) showResult(analysis)
+        } catch {
+          if (!active) return
+          window.history.replaceState({}, '', '/history')
+          setStep('history')
+        }
+      } else {
+        setStep(route.step)
+      }
+    }
+
+    const handlePopState = () => restoreRoute()
+    window.addEventListener('popstate', handlePopState)
+    restoreRoute()
+
+    return () => {
+      active = false
+      window.removeEventListener('popstate', handlePopState)
+    }
   }, [])
 
+  function navigateTo(nextStep, pathname, { replace = false } = {}) {
+    window.history[replace ? 'replaceState' : 'pushState']({}, '', pathname)
+    setStep(nextStep)
+  }
+
   function handleContinueToUpload() {
-    setStep('upload')
+    navigateTo('upload', '/upload')
   }
 
   function handleAuthenticated(authenticatedUser) {
     setUser(authenticatedUser)
-    setStep('upload')
+    navigateTo('upload', '/upload')
   }
 
   function handleLogout() {
@@ -53,7 +127,7 @@ function AppInner() {
     setImageFile(null)
     setImageUrl(null)
     reset()
-    setStep('landing')
+    navigateTo('landing', '/', { replace: true })
   }
 
   function handleImageSelected(file, previewUrl) {
@@ -71,17 +145,26 @@ function AppInner() {
   }
 
   function handleRetry() {
-    setStep('upload')
+    navigateTo('upload', '/upload')
     setImageFile(null)
     setImageUrl(null)
     reset()
   }
 
   function handleNewAnalysis() {
-    setStep('upload')
+    navigateTo('upload', '/upload')
     setImageFile(null)
     setImageUrl(null)
     reset()
+  }
+
+  function handleOpenHistory() {
+    navigateTo('history', '/history')
+  }
+
+  function handleSelectHistory(analysis) {
+    window.history.pushState({}, '', `/analyze/${encodeURIComponent(analysis.id)}`)
+    showResult(analysis)
   }
 
   return (
@@ -109,6 +192,9 @@ function AppInner() {
           {user && (
             <div className="app__account">
               <span>{user.first_name || user.username}</span>
+              <button type="button" onClick={handleOpenHistory}>
+                {t.landing?.historyBtn ?? 'History'}
+              </button>
               <button type="button" onClick={handleLogout}>
                 {t.landing?.logoutBtn ?? 'Log out'}
               </button>
@@ -141,6 +227,17 @@ function AppInner() {
             onAnalyze={() => analyze(imageFile)}
             onChangePhoto={handleRetry}
           />
+        )}
+
+        {step === 'history' && user && (
+          <AnalysisHistory
+            onSelect={handleSelectHistory}
+            onNewAnalysis={handleNewAnalysis}
+          />
+        )}
+
+        {step === 'loading-result' && (
+          <div className="app__loading" role="status" aria-live="polite">…</div>
         )}
 
         {step === 'analyzing' && imageUrl && (

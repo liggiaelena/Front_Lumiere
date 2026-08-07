@@ -56,3 +56,13 @@ export async function analyzeImage(file, lang = 'en') {
 
   return response.data
 }
+
+export async function getHistory() {
+  const response = await api.get('/api/analyze')
+  return response.data.items
+}
+
+export async function getAnalysis(analysisId) {
+  const response = await api.get(`/api/analyze/${encodeURIComponent(analysisId)}`)
+  return response.data
+}
