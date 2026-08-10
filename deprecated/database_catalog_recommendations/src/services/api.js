@@ -3,8 +3,7 @@ const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8001'
 
 const api = axios.create({
   baseURL: BASE_URL,
-  // Photo analysis and live GPT web search can both exceed 30 seconds.
-  timeout: 120000,
+  timeout: 30000,
 })
 
 const TOKEN_KEY = 'lumiere_access_token'
@@ -58,23 +57,13 @@ export async function analyzeImage(file, lang = 'en') {
   return response.data
 }
 
-export async function getHistory() {
-  const response = await api.get('/api/analyze')
-  return response.data.items
-}
-
-export async function getAnalysis(analysisId) {
-  const response = await api.get(`/api/analyze/${encodeURIComponent(analysisId)}`)
-  return response.data
-}
-
 export async function getCatalogAllergens() {
   const response = await api.get('/api/products/allergens')
   return Array.isArray(response.data?.allergens) ? response.data.allergens : []
 }
 
 export async function refreshRecommendations(analysisId, excludedAllergens = []) {
-  const response = await api.get(`/api/analyze/${encodeURIComponent(analysisId)}/recommendations`, {
+  const response = await api.get(`/api/analyze/${analysisId}/recommendations`, {
     params: { excluded_allergens: excludedAllergens.join(',') },
   })
   return response.data

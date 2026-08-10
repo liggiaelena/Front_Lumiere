@@ -1,201 +1,26 @@
-.recommendations {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
-  box-shadow: var(--shadow-sm);
-}
-
-.recommendations__title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--color-primary);
-  margin-bottom: 0.25rem;
-}
-
-.recommendations__subtitle {
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-  margin-bottom: 0.25rem;
-}
-
-.recommendations__disclaimer {
-  font-size: 11px;
-  font-weight: normal;
-  color: var(--color-muted-text);
-  margin-bottom: 1.25rem;
-  line-height: 1.4;
-}
-
-.spf-warning-banner {
-  display: flex;
-  align-items: center;
-  padding: 0.8rem 0.95rem;
-  margin-bottom: 1rem;
-  border: 1px solid var(--color-warning);
-  border-radius: 0.9rem;
-  background: var(--color-warning-light);
-  color: var(--color-warning-text);
-  font-size: 0.86rem;
-  font-weight: 600;
-  line-height: 1.5;
-  box-shadow: 0 6px 18px rgba(var(--color-warning-rgb), 0.08);
-}
-
-.dermatology-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.18rem 0.45rem;
-  border: 1px solid var(--color-clinical-border);
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--color-clinical-bg-start) 0%, var(--color-clinical-bg-end) 100%);
-  color: var(--color-clinical-text);
-  font-size: 0.67rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  line-height: 1.2;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.recommendations__badges-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  align-items: center;
-  margin-top: 0.15rem;
-  margin-bottom: 0.25rem;
-}
-
-.color-corrector-step {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding: 0.95rem 1rem;
-  border: 1px dashed var(--color-corrector-border);
-  border-radius: 0.9rem;
-  background: linear-gradient(135deg, var(--color-corrector-bg-start) 0%, var(--color-corrector-bg-end) 100%);
-  box-shadow: inset 0 1px 0 rgba(var(--color-white-rgb), 0.7);
-}
-
-.color-corrector-step h3 {
-  margin: 0;
-  font-size: 0.92rem;
-  font-weight: 700;
-  color: var(--color-corrector-text);
-}
-
-.color-corrector-step p {
-  margin: 0;
-  font-size: 0.8rem;
-  line-height: 1.5;
-  color: var(--color-corrector-muted-text);
-}
-
-.recommendations__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.875rem;
-}
-
-@media (min-width: 480px) {
-  .recommendations__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 720px) {
-  .recommendations__grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.recommendations__card {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  transition: border-color var(--transition);
-}
-
-.recommendations__card:hover {
-  border-color: var(--color-accent);
-}
-
-.recommendations__card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-
-.recommendations__brand {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--color-primary); /* WCAG AA Contrast Improvement */
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.recommendations__undertone-badge {
-  font-size: 0.65rem;
-  padding: 0.15rem 0.45rem;
-  border-radius: 99px;
-  background-color: var(--color-accent-light);
-  color: var(--color-primary); /* WCAG AA Contrast Improvement */
-  font-weight: 500;
-}
-
-.recommendations__shade-row {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.recommendations__shade-dot {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1px solid var(--color-primary); /* Contrast Boundary Ring */
-  flex-shrink: 0;
-}
-
-.recommendations__shade-name {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--color-primary);
-}
-
-.recommendations__shade-code {
-  font-size: 0.75rem;
-  color: var(--color-text); /* WCAG AA Contrast Improvement */
-}
-
-.recommendations__card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 0.5rem;
-}
-
-.recommendations__price {
-  font-size: 0.75rem;
-  color: var(--color-text); /* WCAG AA Contrast Improvement */
-}
-
-.recommendations__link {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--color-primary); /* WCAG AA Contrast Improvement */
-  text-decoration: none;
-  transition: opacity var(--transition);
-}
-
-.recommendations__link:hover {
-  opacity: 0.75;
-}
+.live-recommendations { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 18px; padding: 1.5rem; box-shadow: var(--shadow-sm); }
+.live-recommendations--state { min-height: 150px; display: grid; place-content: center; text-align: center; color: var(--color-text-muted); gap: .5rem; }
+.live-recommendations__header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
+.live-recommendations__header h2 { margin: .2rem 0; color: var(--color-primary); font-size: 1.25rem; }
+.live-recommendations__header p { margin: 0; color: var(--color-text-muted); font-size: .83rem; }
+.live-recommendations__eyebrow { color: #16845b !important; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .68rem !important; }
+.live-recommendations__meta { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .35rem; }
+.live-recommendations__meta span { border: 1px solid #bde5d2; background: #effbf5; color: #146b4b; border-radius: 999px; padding: .25rem .55rem; font-size: .68rem; font-weight: 700; }
+.live-recommendations__summary { padding: .75rem .9rem; background: var(--color-accent-light); border-radius: 10px; font-size: .78rem; line-height: 1.5; color: var(--color-primary); }
+.live-recommendations__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1rem; }
+.live-product { border: 1px solid var(--color-border); border-radius: 14px; padding: 1rem; display: flex; flex-direction: column; gap: .75rem; background: var(--color-surface); }
+.live-product:hover { border-color: var(--color-accent); box-shadow: 0 8px 24px rgba(45, 34, 28, .07); }
+.live-product__topline { display: flex; justify-content: space-between; gap: .5rem; align-items: center; }
+.live-product__brand { font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--color-primary); }
+.live-product__price { font-size: .75rem; font-weight: 700; }
+.live-product h3 { font-size: .95rem; margin: 0; color: var(--color-primary); }
+.live-product__shade { display: flex; align-items: center; gap: .65rem; }
+.live-product__swatch { width: 38px; height: 38px; border-radius: 50%; border: 2px solid white; outline: 1px solid var(--color-border); flex: 0 0 auto; }
+.live-product__shade div { display: flex; flex-direction: column; gap: .15rem; }
+.live-product__shade strong { font-size: .87rem; }.live-product__shade small { color: var(--color-text-muted); }
+.live-product__evidence { background: #faf8f5; padding: .65rem; border-radius: 8px; font-size: .75rem; line-height: 1.45; }.live-product__evidence p { margin: .2rem 0 0; }
+.live-product details, .live-product__allergens { font-size: .72rem; line-height: 1.45; color: var(--color-text-muted); }.live-product details p { max-height: 110px; overflow: auto; }
+.live-product__sources { display: flex; align-items: center; gap: .35rem; font-size: .72rem; }.live-product__sources a { width: 23px; height: 23px; display: grid; place-items: center; border-radius: 50%; background: var(--color-accent-light); color: var(--color-primary); text-decoration: none; font-weight: 700; }
+.live-product__shop { margin-top: auto; text-align: center; padding: .65rem; border-radius: 9px; background: var(--color-primary); color: white; text-decoration: none; font-size: .78rem; font-weight: 700; }
+.live-recommendations__disclaimer { margin: 1rem 0 0; font-size: .7rem; line-height: 1.5; color: var(--color-text-muted); }
+@media (max-width: 640px) { .live-recommendations__header { flex-direction: column; }.live-recommendations__meta { justify-content: flex-start; } }

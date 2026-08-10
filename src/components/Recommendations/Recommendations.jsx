@@ -1,115 +1,85 @@
 import './Recommendations.css'
 import { useLanguage } from '../../i18n/LanguageContext.jsx'
 
-export default function Recommendations({ recommendations, conditionMap, reliable = true }) {
-  const { t: translations, lang } = useLanguage()
+const COPY = {
+  en: {
+    title: 'Live product recommendations',
+    subtitle: 'GPT searched current brand and retailer pages for your measured skin tone.',
+    live: 'Live web search', sources: 'Sources', ingredients: 'Ingredients checked',
+    allergens: 'Reported allergens', reason: 'Why it matches', shop: 'Open product page',
+    unavailable: 'Live recommendations are unavailable right now.',
+    pending: 'Searching current product pages…', empty: 'No verifiable products were found.',
+    disclaimer: 'Prices, availability and ingredients can change. Confirm them on the linked product page before purchase.',
+  },
+  zh: {
+    title: '实时联网产品推荐', subtitle: 'GPT 已根据测得的肤色搜索当前品牌和零售商网页。',
+    live: '实时网络搜索', sources: '验证来源', ingredients: '已检查成分', allergens: '标示过敏原',
+    reason: '推荐理由', shop: '打开商品原网页', unavailable: '实时推荐目前不可用。',
+    pending: '正在搜索最新商品页面…', empty: '没有找到可验证的商品。',
+    disclaimer: '价格、库存和成分可能变化，购买前请在商品原网页再次确认。',
+  },
+}
 
-  const safeConditionMap = conditionMap && typeof conditionMap === 'object' ? conditionMap : {}
-  const showSpfWarning = safeConditionMap?.melasma === true
-  const showDermatologyBadge = safeConditionMap?.vitiligo === true || safeConditionMap?.wine_stain === true
-  const showColorCorrectorStep = safeConditionMap?.wine_stain === true || safeConditionMap?.melasma === true
+function validUrl(value) {
+  return typeof value === 'string' && /^https?:\/\//i.test(value)
+}
 
-  const FOOTNOTES = {
-    en: 'Tested: Dermatologically tested',
-    tw: '經測試：經臨床皮膚科測試',
-    zh: '经测试：经临床皮肤科测试',
-    pt: 'Testado: Testado dermatologicamente',
-    fr: 'Testé : Testé dermatologiquement',
-    tr: 'Test edilmiştir: Dermatolojik olarak test edilmiştir',
+export default function Recommendations({
+  recommendations = [], status = 'ready', error = '', searchSummary = '', model = '',
+}) {
+  const { lang } = useLanguage()
+  const c = COPY[lang] || COPY.en
+  const safe = Array.isArray(recommendations) ? recommendations : []
+
+  if (status === 'pending') return <section className="live-recommendations live-recommendations--state">{c.pending}</section>
+  if (status === 'unavailable') {
+    return <section className="live-recommendations live-recommendations--state"><strong>{c.unavailable}</strong>{error && <p>{error}</p>}</section>
   }
-
-  const NO_RELIABLE_MATCH = {
-    en: 'No shade was close enough to your skin tone — showing the nearest available options instead.',
-    tw: '沒有與您的膚色足夠接近的色號，以下顯示最接近的選項。',
-    zh: '没有与您的肤色足够接近的色号，以下显示最接近的选项。',
-    pt: 'Nenhum tom ficou próximo o suficiente do seu tom de pele — mostrando as opções mais próximas disponíveis.',
-    fr: "Aucune teinte n'était assez proche de votre teint — affichage des options les plus proches disponibles.",
-    tr: 'Ten renginize yeterince yakın bir ton bulunamadı — bunun yerine en yakın seçenekler gösteriliyor.',
-  }
-
-  const t = (key, fallback = '') => {
-    const value = String(key)
-      .split('.')
-      .reduce((acc, part) => {
-        if (acc && typeof acc === 'object' && part in acc) {
-          return acc[part]
-        }
-        return undefined
-      }, translations && typeof translations === 'object' ? translations : {})
-
-    return typeof value === 'string' ? value : fallback
-  }
-
-  if (!recommendations || recommendations.length === 0) return null
+  if (safe.length === 0) return <section className="live-recommendations live-recommendations--state">{c.empty}</section>
 
   return (
-    <section className="recommendations" data-condition-map={JSON.stringify(safeConditionMap)}>
-      {showSpfWarning && (
-        <div className="spf-warning-banner">{t('recommendations.banner.spfWarning')}</div>
-      )}
-      {!reliable && (
-        <div className="spf-warning-banner">{NO_RELIABLE_MATCH[lang] || NO_RELIABLE_MATCH.en}</div>
-      )}
-
-      <h3 className="recommendations__title">{t('result.foundationTitle', 'Foundation Matches')}</h3>
-      <p className="recommendations__subtitle">{t('result.foundationSubtitle', 'Shades selected for your skin tone and undertone')}</p>
-      <p className="recommendations__disclaimer">{FOOTNOTES[lang] || FOOTNOTES.en}</p>
-
-      <div className="recommendations__grid">
-        {recommendations.reduce((acc, rec, index) => {
-          const category = typeof rec?.category === 'string' ? rec.category : ''
-          const shouldInsertStep = showColorCorrectorStep && category === 'foundation' && !acc.hasShownFoundationStep
-
-          if (shouldInsertStep) {
-            acc.hasShownFoundationStep = true
-            acc.elements.push(
-              <div key={`step-${index}`} className="color-corrector-step">
-                <h3>{t('recommendations.step.colorCorrectorTitle', 'Step 1: Color Correction')}</h3>
-                <p>{t('recommendations.step.colorCorrectorDesc', 'Apply a color corrector before your foundation to neutralize hyperpigmentation or redness.')}</p>
+    <section className="live-recommendations">
+      <header className="live-recommendations__header">
+        <div>
+          <p className="live-recommendations__eyebrow">● {c.live}</p>
+          <h2>{c.title}</h2>
+          <p>{c.subtitle}</p>
+        </div>
+        <div className="live-recommendations__meta">
+          <span>{safe.length} results</span>
+          {model && <span>{model}</span>}
+        </div>
+      </header>
+      {searchSummary && <p className="live-recommendations__summary">{searchSummary}</p>}
+      <div className="live-recommendations__grid">
+        {safe.map((rec, index) => {
+          const productUrl = validUrl(rec?.product_url) ? rec.product_url : rec?.where_to_buy
+          const sources = Array.isArray(rec?.source_urls) ? rec.source_urls.filter(validUrl) : []
+          return (
+            <article className="live-product" key={`${rec?.brand}-${rec?.shade_code}-${index}`}>
+              <div className="live-product__topline">
+                <span className="live-product__brand">{rec?.brand}</span>
+                <span className="live-product__price">{rec?.price_range || 'Price unavailable'}</span>
               </div>
-            )
-          }
-
-          acc.elements.push(
-            <div key={rec?.id ?? index} className="recommendations__card">
-              <div className="recommendations__card-header">
-                <span className="recommendations__brand">{rec?.brand ?? ''}</span>
+              <h3>{rec?.product_name}</h3>
+              <div className="live-product__shade">
+                <span className="live-product__swatch" style={{ backgroundColor: rec?.shade_hex || '#c68b6e' }} />
+                <div><strong>{rec?.shade_name}</strong><small>{[rec?.shade_code, rec?.undertone].filter(Boolean).join(' · ')}</small></div>
               </div>
-              <div className="recommendations__badges-row">
-                {showDermatologyBadge && (
-                  <span className="dermatology-badge">{t('recommendations.badge.dermatologicallyTested', 'Dermatologically Tested')}</span>
-                )}
-                <span className="recommendations__undertone-badge">
-                  {translations?.undertoneShort?.[rec?.undertone] ?? rec?.undertone ?? ''}
-                </span>
-              </div>
-              <div className="recommendations__shade-row">
-                <div className="swatch-isolation-wrapper">
-                  <div
-                    className="recommendations__shade-dot"
-                    style={{ backgroundColor: rec?.shade_hex ?? 'var(--color-exception-text)' }}
-                    title={rec?.shade_hex ?? ''}
-                  />
-                </div>
-                <p className="recommendations__shade-name">{rec?.shade_name ?? ''}</p>
-              </div>
-              <div className="recommendations__card-footer">
-                <span className="recommendations__price">{rec?.price_range ?? ''}</span>
-                <a
-                  className="recommendations__link"
-                  href={rec?.where_to_buy ?? '#'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {t('result.findIt', 'Find it →')}
-                </a>
-              </div>
-            </div>
+              {rec?.recommendation_reason && <div className="live-product__evidence"><strong>{c.reason}</strong><p>{rec.recommendation_reason}</p></div>}
+              {Array.isArray(rec?.ingredients) && rec.ingredients.length > 0 && (
+                <details><summary>{c.ingredients} ({rec.ingredients.length})</summary><p>{rec.ingredients.join(', ')}</p></details>
+              )}
+              {Array.isArray(rec?.allergens) && rec.allergens.length > 0 && (
+                <p className="live-product__allergens"><strong>{c.allergens}:</strong> {rec.allergens.join(', ')}</p>
+              )}
+              {sources.length > 0 && <div className="live-product__sources"><strong>{c.sources}:</strong>{sources.map((url, i) => <a key={url} href={url} target="_blank" rel="noopener noreferrer">{i + 1}</a>)}</div>}
+              {validUrl(productUrl) && <a className="live-product__shop" href={productUrl} target="_blank" rel="noopener noreferrer">{c.shop} ↗</a>}
+            </article>
           )
-
-          return acc
-        }, { elements: [], hasShownFoundationStep: false }).elements}
+        })}
       </div>
+      <p className="live-recommendations__disclaimer">{c.disclaimer}</p>
     </section>
   )
 }

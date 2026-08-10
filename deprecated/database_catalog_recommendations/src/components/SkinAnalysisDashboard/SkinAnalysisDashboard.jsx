@@ -80,9 +80,6 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
   const [selectedAllergens, setSelectedAllergens] = useState([])
   const [recommendationLoading, setRecommendationLoading] = useState(false)
   const [recommendationError, setRecommendationError] = useState('')
-  const [recommendationStatus, setRecommendationStatus] = useState(result?.recommendations_status || 'ready')
-  const [recommendationSummary, setRecommendationSummary] = useState(result?.recommendations_search_summary || '')
-  const [recommendationModel, setRecommendationModel] = useState(result?.recommendations_model || '')
   const [currentRecommendations, setCurrentRecommendations] = useState(
     Array.isArray(result?.recommendations) ? result.recommendations : []
   )
@@ -101,10 +98,6 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
     skin_tone,
     medical_alert,
     recommendations_blocked,
-    recommendations_status,
-    recommendations_error,
-    recommendations_search_summary,
-    recommendations_model,
     condition_overlay,
     face_detection,
     face_image,
@@ -115,11 +108,7 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
 
   useEffect(() => {
     setCurrentRecommendations(Array.isArray(recommendations) ? recommendations : [])
-    setRecommendationStatus(recommendations_status || 'ready')
-    setRecommendationError(recommendations_error || '')
-    setRecommendationSummary(recommendations_search_summary || '')
-    setRecommendationModel(recommendations_model || '')
-  }, [recommendations, recommendations_status, recommendations_error, recommendations_search_summary, recommendations_model])
+  }, [recommendations])
 
   useEffect(() => {
     let active = true
@@ -135,18 +124,12 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
       return
     }
     setRecommendationLoading(true)
-    setRecommendationStatus('loading')
     setRecommendationError('')
     try {
       const response = await refreshRecommendations(result.id, excluded)
       setCurrentRecommendations(Array.isArray(response?.recommendations) ? response.recommendations : [])
-      setRecommendationStatus(response?.recommendations_status || 'ready')
-      setRecommendationError(response?.recommendations_error || '')
-      setRecommendationSummary(response?.recommendations_search_summary || '')
-      setRecommendationModel(response?.recommendations_model || '')
-    } catch (error) {
-      setRecommendationStatus('unavailable')
-      setRecommendationError(error?.response?.data?.detail || 'Unable to update live recommendations.')
+    } catch {
+      setRecommendationError('Unable to update recommendations.')
     } finally {
       setRecommendationLoading(false)
     }
@@ -165,6 +148,7 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
       ? [...new Set([...selectedAllergens, allergen])]
       : selectedAllergens.filter((value) => value !== allergen)
     setSelectedAllergens(next)
+    updateRecommendations(next)
   }
   const safeSegformerMap = (segformerMapFromResult && typeof segformerMapFromResult === 'object')
     ? segformerMapFromResult : {}
@@ -293,7 +277,6 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
               error={recommendationError}
               onEnabledChange={handleSensitiveModeChange}
               onAllergenChange={handleAllergenChange}
-              onApply={() => updateRecommendations(selectedAllergens)}
             />
 
             {/* ── Col 3, Row 1: Texture & Spots ── */}
@@ -309,8 +292,7 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
             {/* ── Col 3, Row 3: Recommendations ── */}
             <RecommendationsCard
               recommendations={safeRecommendations}
-              status={recommendationStatus}
-              error={recommendationError}
+              conditionMap={safeConditionMap}
               onViewAll={() => setActiveSection('recommendations')}
             />
           </main>
@@ -363,10 +345,7 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
                   ) : (
                     <Recommendations
                       recommendations={safeRecommendations}
-                      status={recommendationStatus}
-                      error={recommendationError}
-                      searchSummary={recommendationSummary}
-                      model={recommendationModel}
+                      conditionMap={safeConditionMap}
                     />
                   )}
                 </div>

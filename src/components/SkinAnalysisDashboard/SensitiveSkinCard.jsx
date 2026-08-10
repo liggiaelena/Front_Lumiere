@@ -1,56 +1,31 @@
-/**
- * SensitiveSkinCard.jsx
- * Lumière — Middle column, Row 3.
- * Toggle switch component for "Sensitive Skin Mode" preference.
- * Purely UI state; no API impact.
- */
-import { useState } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext.jsx'
 
-const CARD_LABELS = {
-  label:  { en: 'Sensitive Skin Mode', tw: '敏感肌模式', zh: '敏感肌模式', pt: 'Modo Pele Sensível', fr: 'Mode Peau Sensible', tr: 'Hassas Cilt Modu' },
-  desc:   { en: 'Filter recommendations for sensitive & reactive skin.', tw: '篩選適合敏感及易過敏肌膚的推薦產品。', zh: '筛选适合敏感及易过敏肌肤的推荐产品。', pt: 'Filtra recomendações para pele sensível.', fr: 'Filtre les recommandations pour peau sensible.', tr: 'Hassas cilt için önerileri filtreler.' },
-  active: { en: 'Active', tw: '已啟用', zh: '已启用', pt: 'Ativo', fr: 'Actif', tr: 'Aktif' },
-  off:    { en: 'Off', tw: '關閉', zh: '关闭', pt: 'Desativo', fr: 'Désactivé', tr: 'Kapalı' },
+const COPY = {
+  en: { label: 'Allergen exclusions', desc: 'GPT will reject products with selected ingredients or insufficient ingredient evidence.', on: 'Active', off: 'Off', empty: 'No exclusion options available.', apply: 'Search again with filters', updating: 'Searching current sources…' },
+  zh: { label: '过敏原排除', desc: 'GPT 会排除含所选成分或缺少可靠成分证据的商品。', on: '已启用', off: '关闭', empty: '没有可选的排除项。', apply: '应用筛选并重新搜索', updating: '正在搜索当前来源…' },
 }
 
-export default function SensitiveSkinCard() {
+export default function SensitiveSkinCard({ enabled, allergens = [], selectedAllergens = [], loading = false, error = '', onEnabledChange, onAllergenChange, onApply }) {
   const { lang } = useLanguage()
-  const rl = (map) => map[lang] ?? map.en
-
-  const [enabled, setEnabled] = useState(false)
-
+  const c = COPY[lang] || COPY.en
   return (
-    <article className="bento-card grid-area--sensitive-skin" aria-label="Sensitive skin mode card">
+    <article className="bento-card grid-area--sensitive-skin" aria-label={c.label}>
       <div className="bento-card__body">
         <div className="sensitive-skin-card__inner">
-          {/* Icon */}
-          <div className="sensitive-skin-card__icon-area" aria-hidden="true">
-            🌿
-          </div>
-
-          {/* Text */}
-          <div className="sensitive-skin-card__text">
-            <p className="sensitive-skin-card__label">{rl(CARD_LABELS.label)}</p>
-            <p className="sensitive-skin-card__desc">{rl(CARD_LABELS.desc)}</p>
-          </div>
-
-          {/* Toggle switch */}
-          <label
-            className="toggle-switch"
-            htmlFor="sensitive-skin-toggle"
-            aria-label={`${rl(CARD_LABELS.label)}: ${enabled ? rl(CARD_LABELS.active) : rl(CARD_LABELS.off)}`}
-          >
-            <input
-              type="checkbox"
-              id="sensitive-skin-toggle"
-              className="toggle-switch__input"
-              checked={enabled}
-              onChange={(e) => setEnabled(e.target.checked)}
-            />
+          <div className="sensitive-skin-card__icon-area" aria-hidden="true">◉</div>
+          <div className="sensitive-skin-card__text"><p className="sensitive-skin-card__label">{c.label}</p><p className="sensitive-skin-card__desc">{c.desc}</p></div>
+          <label className="toggle-switch" htmlFor="sensitive-skin-toggle" aria-label={`${c.label}: ${enabled ? c.on : c.off}`}>
+            <input type="checkbox" id="sensitive-skin-toggle" className="toggle-switch__input" checked={enabled} onChange={(event) => onEnabledChange?.(event.target.checked)} />
             <span className="toggle-switch__slider" />
           </label>
         </div>
+        {enabled && <div className="sensitive-skin-card__allergens" aria-live="polite">
+          {allergens.length === 0 ? <p className="sensitive-skin-card__status">{c.empty}</p> : allergens.map((allergen) => (
+            <label className="sensitive-skin-card__allergen" key={allergen}><input type="checkbox" checked={selectedAllergens.includes(allergen)} disabled={loading} onChange={(event) => onAllergenChange?.(allergen, event.target.checked)} /><span>{allergen}</span></label>
+          ))}
+          <button type="button" className="reco-card__cta" disabled={loading} onClick={() => onApply?.()}>{loading ? c.updating : c.apply}</button>
+          {error && <p className="sensitive-skin-card__status sensitive-skin-card__status--error">{error}</p>}
+        </div>}
       </div>
     </article>
   )
