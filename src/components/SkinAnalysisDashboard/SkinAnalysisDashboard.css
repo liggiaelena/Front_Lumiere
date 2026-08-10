@@ -967,6 +967,9 @@
   box-shadow: 0 0 0 4px #e8f8f0;
 }
 
+.reco-card__live-source--fallback { color: #71551a; }
+.reco-card__live-source--fallback span { background: #d59b20; box-shadow: 0 0 0 4px #fff3cf; }
+
 .reco-card__state {
   min-height: 4rem;
   display: grid;

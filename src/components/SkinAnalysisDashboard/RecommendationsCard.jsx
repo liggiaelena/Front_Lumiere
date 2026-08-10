@@ -1,11 +1,11 @@
 import { useLanguage } from '../../i18n/LanguageContext.jsx'
 
 const COPY = {
-  en: { title: 'GPT Live Matches', subtitle: 'Searched from current web sources', view: 'View all results', searching: 'Searching the web…', unavailable: 'Live search unavailable', empty: 'No verified matches' },
-  zh: { title: 'GPT 实时推荐', subtitle: '来自当前网络来源', view: '查看全部结果', searching: '正在联网搜索…', unavailable: '实时搜索不可用', empty: '没有可验证的匹配' },
+  en: { title: 'Product Matches', live: 'Plan 1 · Live web sources', fallback: 'Plan 2 · Stored Neon catalogue', view: 'View all results', searching: 'Searching the web…', unavailable: 'Both recommendation plans are unavailable', empty: 'No verified matches' },
+  zh: { title: '产品推荐', live: '方案一 · 实时网络来源', fallback: '方案二 · Neon 备用目录', view: '查看全部结果', searching: '正在联网搜索…', unavailable: '两种推荐方案均不可用', empty: '没有可验证的匹配' },
 }
 
-export default function RecommendationsCard({ recommendations = [], status = 'ready', error = '', onViewAll }) {
+export default function RecommendationsCard({ recommendations = [], status = 'ready', error = '', fallbackUsed = false, onViewAll }) {
   const { lang } = useLanguage()
   const c = COPY[lang] || COPY.en
   const safe = Array.isArray(recommendations) ? recommendations : []
@@ -22,7 +22,7 @@ export default function RecommendationsCard({ recommendations = [], status = 're
         {status === 'ready' && safe.length > 0 && <span className="reco-card__count">{safe.length}</span>}
       </div>
       <div className="bento-card__body">
-        <p className="reco-card__live-source"><span />{c.subtitle}</p>
+        <p className={`reco-card__live-source${fallbackUsed ? ' reco-card__live-source--fallback' : ''}`}><span />{fallbackUsed ? c.fallback : c.live}</p>
         {status === 'pending' || status === 'loading' ? <p className="reco-card__state">{c.searching}</p> : null}
         {status === 'unavailable' ? <p className="reco-card__state reco-card__state--error" title={error}>{c.unavailable}</p> : null}
         {status === 'ready' && safe.length === 0 ? <p className="reco-card__state">{c.empty}</p> : null}

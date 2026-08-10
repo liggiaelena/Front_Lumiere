@@ -10,6 +10,7 @@ const COPY = {
     unavailable: 'Live recommendations are unavailable right now.',
     pending: 'Searching current product pages…', empty: 'No verifiable products were found.',
     disclaimer: 'Prices, availability and ingredients can change. Confirm them on the linked product page before purchase.',
+    fallback: 'Plan 1 live search failed. These matches come from the stored Neon catalogue and may not reflect current price or availability.',
   },
   zh: {
     title: '实时联网产品推荐', subtitle: 'GPT 已根据测得的肤色搜索当前品牌和零售商网页。',
@@ -17,6 +18,7 @@ const COPY = {
     reason: '推荐理由', shop: '打开商品原网页', unavailable: '实时推荐目前不可用。',
     pending: '正在搜索最新商品页面…', empty: '没有找到可验证的商品。',
     disclaimer: '价格、库存和成分可能变化，购买前请在商品原网页再次确认。',
+    fallback: '方案一实时搜索失败，当前结果来自 Neon 备用目录，价格和库存可能不是最新状态。',
   },
 }
 
@@ -25,7 +27,7 @@ function validUrl(value) {
 }
 
 export default function Recommendations({
-  recommendations = [], status = 'ready', error = '', searchSummary = '', model = '',
+  recommendations = [], status = 'ready', error = '', searchSummary = '', model = '', fallbackUsed = false,
 }) {
   const { lang } = useLanguage()
   const c = COPY[lang] || COPY.en
@@ -50,6 +52,7 @@ export default function Recommendations({
           {model && <span>{model}</span>}
         </div>
       </header>
+      {fallbackUsed && <div className="live-recommendations__fallback" role="status">{c.fallback}</div>}
       {searchSummary && <p className="live-recommendations__summary">{searchSummary}</p>}
       <div className="live-recommendations__grid">
         {safe.map((rec, index) => {

@@ -83,6 +83,8 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
   const [recommendationStatus, setRecommendationStatus] = useState(result?.recommendations_status || 'ready')
   const [recommendationSummary, setRecommendationSummary] = useState(result?.recommendations_search_summary || '')
   const [recommendationModel, setRecommendationModel] = useState(result?.recommendations_model || '')
+  const [recommendationStrategy, setRecommendationStrategy] = useState(result?.recommendations_strategy || '')
+  const [recommendationFallbackUsed, setRecommendationFallbackUsed] = useState(result?.recommendations_fallback_used === true)
   const [currentRecommendations, setCurrentRecommendations] = useState(
     Array.isArray(result?.recommendations) ? result.recommendations : []
   )
@@ -105,6 +107,8 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
     recommendations_error,
     recommendations_search_summary,
     recommendations_model,
+    recommendations_strategy,
+    recommendations_fallback_used,
     condition_overlay,
     face_detection,
     face_image,
@@ -119,7 +123,9 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
     setRecommendationError(recommendations_error || '')
     setRecommendationSummary(recommendations_search_summary || '')
     setRecommendationModel(recommendations_model || '')
-  }, [recommendations, recommendations_status, recommendations_error, recommendations_search_summary, recommendations_model])
+    setRecommendationStrategy(recommendations_strategy || '')
+    setRecommendationFallbackUsed(recommendations_fallback_used === true)
+  }, [recommendations, recommendations_status, recommendations_error, recommendations_search_summary, recommendations_model, recommendations_strategy, recommendations_fallback_used])
 
   useEffect(() => {
     let active = true
@@ -144,6 +150,8 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
       setRecommendationError(response?.recommendations_error || '')
       setRecommendationSummary(response?.recommendations_search_summary || '')
       setRecommendationModel(response?.recommendations_model || '')
+      setRecommendationStrategy(response?.recommendations_strategy || '')
+      setRecommendationFallbackUsed(response?.recommendations_fallback_used === true)
     } catch (error) {
       setRecommendationStatus('unavailable')
       setRecommendationError(error?.response?.data?.detail || 'Unable to update live recommendations.')
@@ -291,6 +299,8 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
               selectedAllergens={selectedAllergens}
               loading={recommendationLoading}
               error={recommendationError}
+              strategy={recommendationStrategy}
+              fallbackUsed={recommendationFallbackUsed}
               onEnabledChange={handleSensitiveModeChange}
               onAllergenChange={handleAllergenChange}
               onApply={() => updateRecommendations(selectedAllergens)}
@@ -367,6 +377,8 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
                       error={recommendationError}
                       searchSummary={recommendationSummary}
                       model={recommendationModel}
+                      strategy={recommendationStrategy}
+                      fallbackUsed={recommendationFallbackUsed}
                     />
                   )}
                 </div>
