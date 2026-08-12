@@ -13,7 +13,7 @@
  *   result        {object}   — raw API JSON result
  *   onNewAnalysis {function} — callback to reset to upload step
  */
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './SkinAnalysisDashboard.css'
 
 /* Sub-layout components */
@@ -88,6 +88,7 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
   const [currentRecommendations, setCurrentRecommendations] = useState(
     Array.isArray(result?.recommendations) ? result.recommendations : []
   )
+  const automaticallyRequestedIds = useRef(new Set())
 
   /* ── Destructure API result defensively ── */
   const {
@@ -160,6 +161,18 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
     }
   }
 
+  useEffect(() => {
+    const analysisId = result?.id
+    if (
+      !analysisId ||
+      recommendations_blocked ||
+      recommendations_status !== 'pending' ||
+      automaticallyRequestedIds.current.has(analysisId)
+    ) return
+
+    automaticallyRequestedIds.current.add(analysisId)
+    updateRecommendations([])
+  }, [result?.id, recommendations_blocked, recommendations_status])
   const handleSensitiveModeChange = (enabled) => {
     setSensitiveMode(enabled)
     if (!enabled) {

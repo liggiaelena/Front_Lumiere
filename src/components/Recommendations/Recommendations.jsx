@@ -33,7 +33,7 @@ export default function Recommendations({
   const c = COPY[lang] || COPY.en
   const safe = Array.isArray(recommendations) ? recommendations : []
 
-  if (status === 'pending') return <section className="live-recommendations live-recommendations--state">{c.pending}</section>
+  if (status === 'pending' || status === 'loading') return <section className="live-recommendations live-recommendations--state">{c.pending}</section>
   if (status === 'unavailable') {
     return <section className="live-recommendations live-recommendations--state"><strong>{c.unavailable}</strong>{error && <p>{error}</p>}</section>
   }

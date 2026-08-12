@@ -74,7 +74,7 @@ export async function getCatalogAllergens() {
 }
 
 export async function refreshRecommendations(analysisId, excludedAllergens = []) {
-  const response = await api.get(`/api/analyze/${encodeURIComponent(analysisId)}/recommendations`, {
+  const response = await api.get(`/api/analyze/${encodeURIComponent(analysisId)}/recommendation`, {
     params: { excluded_allergens: excludedAllergens.join(',') },
   })
   return response.data
