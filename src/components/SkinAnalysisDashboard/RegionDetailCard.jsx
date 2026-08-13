@@ -13,7 +13,7 @@
  *   selectedRegion {string|null} — region key ('testa', 'bochecha_e', …)
  *   regioes        {object}      — full regions data from API
  */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext.jsx'
 
 /* Region → dot color class (matches MainVisualCard hotspot colors) */
@@ -23,6 +23,14 @@ const REGION_DOT_CLASS = {
   bochecha_d: 'zone-callout__dot--r-cheek',
   nariz: 'zone-callout__dot--nose',
   queixo: 'zone-callout__dot--chin',
+}
+
+const REGION_FALLBACK_BOX = {
+  testa: [20, 5, 60, 25],
+  bochecha_e: [4, 40, 40, 30],
+  bochecha_d: [56, 40, 40, 30],
+  nariz: [36, 34, 28, 38],
+  queixo: [25, 72, 50, 22],
 }
 
 const CARD_LABELS = {
@@ -35,7 +43,44 @@ const CARD_LABELS = {
   fitzpatrick: { en: 'Fitzpatrick', tw: 'Fitzpatrick', zh: 'Fitzpatrick', pt: 'Fitzpatrick', fr: 'Fitzpatrick', tr: 'Fitzpatrick' },
 }
 
-export default function RegionDetailCard({ selectedRegion, regioes, conditions = [] }) {
+function RegionPhoto({ imageUrl, box, label }) {
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas || !imageUrl || !box) return undefined
+
+    const image = new Image()
+    let cancelled = false
+    image.onload = () => {
+      if (cancelled) return
+      const context = canvas.getContext('2d')
+      if (!context) return
+
+      const x = Number(box.x)
+      const y = Number(box.y)
+      const width = Number(box.width)
+      const height = Number(box.height)
+      if (![x, y, width, height].every(Number.isFinite) || width <= 0 || height <= 0) return
+
+      const padding = 0.12
+      let sourceX = Math.max(0, (x - width * padding) * image.naturalWidth / 100)
+      let sourceY = Math.max(0, (y - height * padding) * image.naturalHeight / 100)
+      let sourceWidth = Math.min(image.naturalWidth - sourceX, width * (1 + padding * 2) * image.naturalWidth / 100)
+      let sourceHeight = Math.min(image.naturalHeight - sourceY, height * (1 + padding * 2) * image.naturalHeight / 100)
+
+      canvas.width = Math.max(1, Math.round(sourceWidth))
+      canvas.height = Math.max(1, Math.round(sourceHeight))
+      context.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height)
+    }
+    image.src = imageUrl
+    return () => { cancelled = true }
+  }, [imageUrl, box?.x, box?.y, box?.width, box?.height])
+
+  return <canvas ref={canvasRef} width="480" height="270" role="img" aria-label={label} />
+}
+
+export default function RegionDetailCard({ selectedRegion, regioes, conditions = [], imageUrl, faceDetection }) {
   const { lang, t, translateNote } = useLanguage()
   const rl = (map) => map[lang] ?? map.en
 
@@ -54,6 +99,16 @@ export default function RegionDetailCard({ selectedRegion, regioes, conditions =
 
   const regionLabel = selectedRegion ? (t.regions?.[selectedRegion] ?? selectedRegion) : ''
   const dotClass = selectedRegion ? REGION_DOT_CLASS[selectedRegion] : ''
+  const fallbackBox = selectedRegion ? REGION_FALLBACK_BOX[selectedRegion] : null
+  const faceBox = faceDetection?.bbox_percent
+  const regionBox = fallbackBox
+    ? {
+        x: (faceBox?.x ?? 0) + (faceBox?.width ?? 100) * fallbackBox[0] / 100,
+        y: (faceBox?.y ?? 0) + (faceBox?.height ?? 100) * fallbackBox[1] / 100,
+        width: (faceBox?.width ?? 100) * fallbackBox[2] / 100,
+        height: (faceBox?.height ?? 100) * fallbackBox[3] / 100,
+      }
+    : null
 
   return (
     <article className="bento-card grid-area--under-eye" aria-label="Region detail card">
@@ -74,12 +129,16 @@ export default function RegionDetailCard({ selectedRegion, regioes, conditions =
       {regionData && (
         <div className="region-detail__content">
           {/* ── Local zone photo placeholder (future feature) ── */}
-          <div className="region-detail__photo-placeholder" style={{ marginBottom: 'var(--spacing-xs)' }} aria-label={rl(CARD_LABELS.localPhoto)}>
-            <span className="region-detail__photo-placeholder-icon" aria-hidden="true">🔬</span>
-            <span className="region-detail__photo-placeholder-text">
-              {rl(CARD_LABELS.futurePlaceholder)}
-            </span>
-          </div>
+          {imageUrl ? (
+            <figure className="region-detail__photo" aria-label={`${regionLabel} - ${rl(CARD_LABELS.localPhoto)}`}>
+              <RegionPhoto imageUrl={imageUrl} box={regionBox} label={`${regionLabel} - ${rl(CARD_LABELS.localPhoto)}`} />
+              <figcaption>{regionLabel}</figcaption>
+            </figure>
+          ) : (
+            <div className="region-detail__photo-placeholder" aria-label={rl(CARD_LABELS.localPhoto)}>
+              <span className="region-detail__photo-placeholder-text">{rl(CARD_LABELS.futurePlaceholder)}</span>
+            </div>
+          )}
 
           {/* Region name + color dot */}
           <h4 className="region-detail__region-name">

@@ -44,6 +44,8 @@ const ZONE_TO_REGION_KEY = {
 }
 
 const CONFIRM_TEXT = { en: 'Confirm', tw: '確認', zh: '确认', pt: 'Confirmar', fr: 'Confirmer', tr: 'Onayla' }
+const RECOMMENDATION_POLL_ATTEMPTS = 6
+const RECOMMENDATION_POLL_INTERVAL_MS = 10000
 
 /* Mobile bottom tab bar labels */
 const TAB_LABELS = {
@@ -89,6 +91,7 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
     Array.isArray(result?.recommendations) ? result.recommendations : []
   )
   const automaticallyRequestedIds = useRef(new Set())
+  const recommendationRequestId = useRef(0)
 
   /* ── Destructure API result defensively ── */
   const {
@@ -136,31 +139,65 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
     return () => { active = false }
   }, [])
 
+  const applyRecommendationResponse = (response, forceFallback = false) => {
+    setCurrentRecommendations(Array.isArray(response?.recommendations) ? response.recommendations : [])
+    setRecommendationStatus(response?.recommendations_status || 'ready')
+    setRecommendationError(response?.recommendations_error || '')
+    setRecommendationSummary(response?.recommendations_search_summary || '')
+    setRecommendationModel(response?.recommendations_model || '')
+    setRecommendationStrategy(response?.recommendations_strategy || (forceFallback ? 'catalog' : ''))
+    setRecommendationFallbackUsed(forceFallback || response?.recommendations_fallback_used === true)
+  }
+
   const updateRecommendations = async (excluded) => {
     if (!result?.id) {
       setRecommendationError('This analysis has no ID. Please run a new analysis.')
       return
     }
+    const requestId = ++recommendationRequestId.current
     setRecommendationLoading(true)
     setRecommendationStatus('loading')
     setRecommendationError('')
     try {
-      const response = await refreshRecommendations(result.id, excluded)
-      setCurrentRecommendations(Array.isArray(response?.recommendations) ? response.recommendations : [])
-      setRecommendationStatus(response?.recommendations_status || 'ready')
-      setRecommendationError(response?.recommendations_error || '')
-      setRecommendationSummary(response?.recommendations_search_summary || '')
-      setRecommendationModel(response?.recommendations_model || '')
-      setRecommendationStrategy(response?.recommendations_strategy || '')
-      setRecommendationFallbackUsed(response?.recommendations_fallback_used === true)
-    } catch (error) {
+      let response
+
+      for (let attempt = 0; attempt < RECOMMENDATION_POLL_ATTEMPTS; attempt += 1) {
+        if (attempt > 0) {
+          await new Promise(resolve => window.setTimeout(resolve, RECOMMENDATION_POLL_INTERVAL_MS))
+        }
+        if (requestId !== recommendationRequestId.current) return
+
+        try {
+          response = await refreshRecommendations(result.id, excluded)
+        } catch {
+          break
+        }
+
+        if (!['pending', 'loading'].includes(response?.recommendations_status)) {
+          if (requestId === recommendationRequestId.current) applyRecommendationResponse(response)
+          return
+        }
+      }
+
+      if (requestId !== recommendationRequestId.current) return
+      setRecommendationStatus('loading')
+      const fallbackResponse = await refreshRecommendations(result.id, excluded, { forceFallback: true })
+      if (requestId !== recommendationRequestId.current) return
+      if (['pending', 'loading'].includes(fallbackResponse?.recommendations_status)) {
+        setRecommendationStatus('unavailable')
+        setRecommendationFallbackUsed(true)
+        setRecommendationError('The stored Neon catalogue did not return a final result.')
+        return
+      }
+      applyRecommendationResponse(fallbackResponse, true)
+    } catch (fallbackError) {
+      if (requestId !== recommendationRequestId.current) return
       setRecommendationStatus('unavailable')
-      setRecommendationError(error?.response?.data?.detail || 'Unable to update live recommendations.')
+      setRecommendationError(fallbackError?.response?.data?.detail || 'Live search and the stored catalogue are unavailable.')
     } finally {
-      setRecommendationLoading(false)
+      if (requestId === recommendationRequestId.current) setRecommendationLoading(false)
     }
   }
-
   useEffect(() => {
     const analysisId = result?.id
     if (
@@ -265,6 +302,28 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
              ───────────────────────────────────────── */}
           <main className="dashboard__grid" id="dashboard-main-grid">
 
+            {/* Priority row: allergen controls and product recommendations */}
+            <SensitiveSkinCard
+              enabled={sensitiveMode}
+              allergens={catalogAllergens}
+              selectedAllergens={selectedAllergens}
+              loading={recommendationLoading}
+              error={recommendationError}
+              strategy={recommendationStrategy}
+              fallbackUsed={recommendationFallbackUsed}
+              onEnabledChange={handleSensitiveModeChange}
+              onAllergenChange={handleAllergenChange}
+              onApply={() => updateRecommendations(selectedAllergens)}
+            />
+
+            <RecommendationsCard
+              recommendations={safeRecommendations}
+              status={recommendationStatus}
+              error={recommendationError}
+              fallbackUsed={recommendationFallbackUsed}
+              onViewAll={() => setActiveSection('recommendations')}
+            />
+
             {/* ── Col 1, Row 1-2: Main Visual Card ── */}
             <MainVisualCard
               imageUrl={face_image || imageUrl}
@@ -303,20 +362,8 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
               selectedRegion={selectedRegion}
               regioes={regioes}
               conditions={selectedRegion ? conditionsByRegion[selectedRegion] : []}
-            />
-
-            {/* ── Col 2, Row 3: Sensitive Skin Toggle ── */}
-            <SensitiveSkinCard
-              enabled={sensitiveMode}
-              allergens={catalogAllergens}
-              selectedAllergens={selectedAllergens}
-              loading={recommendationLoading}
-              error={recommendationError}
-              strategy={recommendationStrategy}
-              fallbackUsed={recommendationFallbackUsed}
-              onEnabledChange={handleSensitiveModeChange}
-              onAllergenChange={handleAllergenChange}
-              onApply={() => updateRecommendations(selectedAllergens)}
+              imageUrl={face_image || imageUrl}
+              faceDetection={face_image ? null : face_detection}
             />
 
             {/* ── Col 3, Row 1: Texture & Spots ── */}
@@ -329,13 +376,6 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
               </div>
             </div>
 
-            {/* ── Col 3, Row 3: Recommendations ── */}
-            <RecommendationsCard
-              recommendations={safeRecommendations}
-              status={recommendationStatus}
-              error={recommendationError}
-              onViewAll={() => setActiveSection('recommendations')}
-            />
           </main>
 
           {/* ─────────────────────────────────────────

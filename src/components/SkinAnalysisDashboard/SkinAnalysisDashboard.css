@@ -298,32 +298,37 @@
 }
 
 /* ─── 7. Grid Placement ─── */
-/* Col 1, Row 1-2 — Main Visual Card */
-.grid-area--main-visual {
+/* Priority row — allergen controls and recommendations */
+.grid-area--sensitive-skin {
   grid-column: 1;
-  grid-row: 1 / 3; /* Spans rows 1–2 */
-}
-
-/* Col 1, Row 3 — Condition Indicators Card */
-.grid-area--conditions {
-  grid-column: 1;
-  grid-row: 3;
-}
-
-/* Col 2, Row 1 — Skin Tone Card */
-.grid-area--skin-tone {
-  grid-column: 2;
   grid-row: 1;
 }
 
-/* Col 2, Row 2 — Region Detail Card (formerly Under Eye) */
-.grid-area--under-eye {
+.grid-area--recommendations {
+  grid-column: 2 / -1;
+  grid-row: 1;
+}
+
+/* Col 1, Rows 2-3 — Main Visual Card */
+.grid-area--main-visual {
+  grid-column: 1;
+  grid-row: 2 / 4;
+}
+
+/* Full-width final row — Condition Indicators Card */
+.grid-area--conditions {
+  grid-column: 1 / -1;
+  grid-row: 4;
+}
+
+/* Analysis row 2 */
+.grid-area--skin-tone {
   grid-column: 2;
   grid-row: 2;
 }
 
-/* Col 2, Row 3 — Sensitive Skin Card */
-.grid-area--sensitive-skin {
+/* Col 2, Row 2 — Region Detail Card (formerly Under Eye) */
+.grid-area--under-eye {
   grid-column: 2;
   grid-row: 3;
 }
@@ -331,17 +336,11 @@
 /* Col 3, Row 1 — Texture Spots */
 .grid-area--texture-spots {
   grid-column: 3;
-  grid-row: 1;
+  grid-row: 2;
 }
 
 /* Col 3, Row 2 — Multi Zone List */
 .grid-area--multi-zone {
-  grid-column: 3;
-  grid-row: 2;
-}
-
-/* Col 3, Row 3 — Recommendations */
-.grid-area--recommendations {
   grid-column: 3;
   grid-row: 3;
 }
@@ -1315,14 +1314,14 @@
   }
 
   /* Re-map grid areas for 2-column tablet layout */
-  .grid-area--main-visual { grid-column: 1; grid-row: 1; }
-  .grid-area--skin-tone { grid-column: 2; grid-row: 1; }
-  .grid-area--under-eye { grid-column: 2; grid-row: 2; }
-  .grid-area--texture-spots { grid-column: 1; grid-row: 2; }
-  .grid-area--multi-zone { grid-column: 1; grid-row: 3; }
-  .grid-area--sensitive-skin { grid-column: 2; grid-row: 3; }
-  .grid-area--conditions { grid-column: 1 / -1; grid-row: 4; }
-  .grid-area--recommendations { grid-column: 1 / -1; grid-row: 5; }
+  .grid-area--sensitive-skin { grid-column: 1; grid-row: 1; }
+  .grid-area--recommendations { grid-column: 2; grid-row: 1; }
+  .grid-area--main-visual { grid-column: 1; grid-row: 2 / 4; }
+  .grid-area--skin-tone { grid-column: 2; grid-row: 2; }
+  .grid-area--under-eye { grid-column: 2; grid-row: 3; }
+  .grid-area--texture-spots { grid-column: 1; grid-row: 4; }
+  .grid-area--multi-zone { grid-column: 2; grid-row: 4; }
+  .grid-area--conditions { grid-column: 1 / -1; grid-row: 5; }
 
   .reco-card__product-list {
     display: grid;
@@ -1773,7 +1772,36 @@
   padding-left: var(--spacing-sm);
 }
 
-/* Photo placeholder for local zone image (future) */
+/* Cropped local zone image */
+.region-detail__photo {
+  position: relative;
+  width: min(100%, 360px);
+  margin: 0 0 var(--spacing-xs);
+  overflow: hidden;
+  border: 1px solid var(--color-accent-light);
+  border-radius: var(--radius-md);
+  background-color: var(--color-background);
+}
+
+.region-detail__photo canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.region-detail__photo figcaption {
+  position: absolute;
+  right: var(--spacing-xs);
+  bottom: var(--spacing-xs);
+  padding: 0.15rem 0.5rem;
+  border-radius: 99px;
+  background: rgba(var(--color-black-rgb), 0.62);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+
+/* Fallback when the source photo is unavailable */
 .region-detail__photo-placeholder {
   border: 1.5px dashed var(--color-accent-light);
   border-radius: var(--radius-md);
@@ -1785,6 +1813,7 @@
   gap: 4px;
   padding: var(--spacing-md);
   min-height: 80px;
+  margin-bottom: var(--spacing-xs);
 }
 
 .region-detail__photo-placeholder-icon {

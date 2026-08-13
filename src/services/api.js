@@ -75,9 +75,12 @@ export async function getCatalogAllergens() {
   return Array.isArray(response.data?.allergens) ? response.data.allergens : []
 }
 
-export async function refreshRecommendations(analysisId, excludedAllergens = []) {
+export async function refreshRecommendations(analysisId, excludedAllergens = [], { forceFallback = false } = {}) {
   const response = await api.get(`/api/analyze/${encodeURIComponent(analysisId)}/recommendation`, {
-    params: { excluded_allergens: excludedAllergens.join(',') },
+    params: {
+      excluded_allergens: excludedAllergens.join(','),
+      ...(forceFallback ? { force_fallback: true } : {}),
+    },
   })
   return response.data
 }

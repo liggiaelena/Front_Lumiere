@@ -1,4 +1,4 @@
-# dependências
+# depend锚ncias
 node_modules/
 
 # build
@@ -17,3 +17,9 @@ Thumbs.db
 # editor
 .vscode/
 .idea/
+# Local dataset screening and generated audit artifacts
+.runtime/
+.tmp_*
+__pycache__/
+audit_*.jpg
+vitiligo_patches_contact.jpg
