@@ -303,17 +303,17 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
             {/* Unified allergen controls and live recommendations */}
             <div className="grid-area--live-recommendations">
               <SensitiveSkinCard
-              enabled={sensitiveMode}
-              allergens={catalogAllergens}
-              selectedAllergens={selectedAllergens}
-              loading={recommendationLoading}
-              error={recommendationError}
-              strategy={recommendationStrategy}
-              fallbackUsed={recommendationFallbackUsed}
-              onEnabledChange={handleSensitiveModeChange}
-              onAllergenChange={handleAllergenChange}
-              onApply={() => updateRecommendations(selectedAllergens)}
-            />
+                enabled={sensitiveMode}
+                allergens={catalogAllergens}
+                selectedAllergens={selectedAllergens}
+                loading={recommendationLoading}
+                error={recommendationError}
+                strategy={recommendationStrategy}
+                fallbackUsed={recommendationFallbackUsed}
+                onEnabledChange={handleSensitiveModeChange}
+                onAllergenChange={handleAllergenChange}
+                onApply={() => updateRecommendations(selectedAllergens)}
+              />
               {recommendations_blocked ? (
                 <div className="recommendations-blocked">
                   <h3 className="analysis-result__section-title">

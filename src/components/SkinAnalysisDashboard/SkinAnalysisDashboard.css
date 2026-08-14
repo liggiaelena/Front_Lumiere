@@ -304,7 +304,7 @@
 
 .grid-area--live-recommendations {
   grid-column: 1 / -1;
-  grid-row: 2;
+  grid-row: 6;
   min-width: 0;
   display: grid;
   gap: 0;
@@ -1314,7 +1314,7 @@
   /* Keep the desktop card order on tablets. */
   .grid-area--main-visual { grid-column: 1; grid-row: 1; }
   .grid-area--under-eye { grid-column: 2; grid-row: 1; }
-  .grid-area--live-recommendations { grid-column: 1 / -1; grid-row: 2; }
+  .grid-area--live-recommendations { grid-column: 1 / -1; grid-row: 6; }
   .grid-area--skin-tone { grid-column: 1 / -1; grid-row: 3; }
   .grid-area--texture-spots { grid-column: 1; grid-row: 4; }
   .grid-area--multi-zone { grid-column: 2; grid-row: 4; }
