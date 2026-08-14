@@ -25,7 +25,6 @@ import SkinToneCard from './SkinToneCard.jsx'
 import RegionDetailCard from './RegionDetailCard.jsx'
 import SensitiveSkinCard from './SensitiveSkinCard.jsx'
 import TextureSpotsCard from './TextureSpotsCard.jsx'
-import RecommendationsCard from './RecommendationsCard.jsx'
 
 /* Existing sub-components (re-used in section views) */
 import UniformityRadar from '../UniformityRadar/UniformityRadar.jsx'
@@ -301,9 +300,9 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
               Bento Grid — always visible (Overview)
              ───────────────────────────────────────── */}
           <main className="dashboard__grid" id="dashboard-main-grid">
-
-            {/* Priority row: allergen controls and product recommendations */}
-            <SensitiveSkinCard
+            {/* Unified allergen controls and live recommendations */}
+            <div className="grid-area--live-recommendations">
+              <SensitiveSkinCard
               enabled={sensitiveMode}
               allergens={catalogAllergens}
               selectedAllergens={selectedAllergens}
@@ -315,14 +314,25 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
               onAllergenChange={handleAllergenChange}
               onApply={() => updateRecommendations(selectedAllergens)}
             />
-
-            <RecommendationsCard
-              recommendations={safeRecommendations}
-              status={recommendationStatus}
-              error={recommendationError}
-              fallbackUsed={recommendationFallbackUsed}
-              onViewAll={() => setActiveSection('recommendations')}
-            />
+              {recommendations_blocked ? (
+                <div className="recommendations-blocked">
+                  <h3 className="analysis-result__section-title">
+                    {t.recommendationsBlocked?.title ?? 'Recommendations paused'}
+                  </h3>
+                  <p>{t.recommendationsBlocked?.message ?? 'Makeup recommendations are paused because this result may require medical review first.'}</p>
+                </div>
+              ) : (
+                <Recommendations
+                  recommendations={safeRecommendations}
+                  status={recommendationStatus}
+                  error={recommendationError}
+                  searchSummary={recommendationSummary}
+                  model={recommendationModel}
+                  strategy={recommendationStrategy}
+                  fallbackUsed={recommendationFallbackUsed}
+                />
+              )}
+            </div>
 
             {/* ── Col 1, Row 1-2: Main Visual Card ── */}
             <MainVisualCard

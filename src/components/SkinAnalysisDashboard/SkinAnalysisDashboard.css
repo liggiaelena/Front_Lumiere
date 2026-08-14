@@ -252,11 +252,11 @@
 
 .dashboard__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: auto auto auto;
   gap: var(--spacing-lg);
   padding: var(--spacing-lg) var(--spacing-xl);
-  align-items: start;
+  align-items: stretch;
 }
 
 /* ─── 6. Shared Bento Card Base ─── */
@@ -298,52 +298,50 @@
 }
 
 /* ─── 7. Grid Placement ─── */
-/* Priority row — allergen controls and recommendations */
-.grid-area--sensitive-skin {
-  grid-column: 1;
-  grid-row: 1;
-}
+/* Result card order */
+.grid-area--main-visual { grid-column: 1; grid-row: 1; }
+.grid-area--under-eye { grid-column: 2; grid-row: 1; }
 
-.grid-area--recommendations {
-  grid-column: 2 / -1;
-  grid-row: 1;
-}
-
-/* Col 1, Rows 2-3 — Main Visual Card */
-.grid-area--main-visual {
-  grid-column: 1;
-  grid-row: 2 / 4;
-}
-
-/* Full-width final row — Condition Indicators Card */
-.grid-area--conditions {
+.grid-area--live-recommendations {
   grid-column: 1 / -1;
-  grid-row: 4;
-}
-
-/* Analysis row 2 */
-.grid-area--skin-tone {
-  grid-column: 2;
   grid-row: 2;
+  min-width: 0;
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-accent-light);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-sm);
 }
 
-/* Col 2, Row 2 — Region Detail Card (formerly Under Eye) */
-.grid-area--under-eye {
-  grid-column: 2;
-  grid-row: 3;
+.grid-area--live-recommendations > .grid-area--sensitive-skin {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
-/* Col 3, Row 1 — Texture Spots */
-.grid-area--texture-spots {
-  grid-column: 3;
-  grid-row: 2;
+.grid-area--live-recommendations > .grid-area--sensitive-skin:hover {
+  transform: none;
+  box-shadow: none;
 }
 
-/* Col 3, Row 2 — Multi Zone List */
-.grid-area--multi-zone {
-  grid-column: 3;
-  grid-row: 3;
+.grid-area--live-recommendations > .live-recommendations {
+  border: 0;
+  border-top: 1px solid var(--color-accent-light);
+  border-radius: 0;
+  box-shadow: none;
 }
+
+.grid-area--skin-tone { grid-column: 1 / -1; grid-row: 3; }
+
+.grid-area--texture-spots { grid-column: 1; grid-row: 4; }
+.grid-area--multi-zone { grid-column: 2; grid-row: 4; }
+
+.grid-area--conditions { grid-column: 1 / -1; grid-row: 5; }
+
+.dashboard__grid > * { min-width: 0; }
+.dashboard__grid > .bento-card { height: 100%; }
 
 /* ─── 8. Main Visual Card ─── */
 .main-visual-card__face-container {
@@ -1313,12 +1311,11 @@
     padding: var(--spacing-md) var(--spacing-lg);
   }
 
-  /* Re-map grid areas for 2-column tablet layout */
-  .grid-area--sensitive-skin { grid-column: 1; grid-row: 1; }
-  .grid-area--recommendations { grid-column: 2; grid-row: 1; }
-  .grid-area--main-visual { grid-column: 1; grid-row: 2 / 4; }
-  .grid-area--skin-tone { grid-column: 2; grid-row: 2; }
-  .grid-area--under-eye { grid-column: 2; grid-row: 3; }
+  /* Keep the desktop card order on tablets. */
+  .grid-area--main-visual { grid-column: 1; grid-row: 1; }
+  .grid-area--under-eye { grid-column: 2; grid-row: 1; }
+  .grid-area--live-recommendations { grid-column: 1 / -1; grid-row: 2; }
+  .grid-area--skin-tone { grid-column: 1 / -1; grid-row: 3; }
   .grid-area--texture-spots { grid-column: 1; grid-row: 4; }
   .grid-area--multi-zone { grid-column: 2; grid-row: 4; }
   .grid-area--conditions { grid-column: 1 / -1; grid-row: 5; }
@@ -1346,7 +1343,8 @@
   .grid-area--under-eye,
   .grid-area--sensitive-skin,
   .grid-area--conditions,
-  .grid-area--recommendations {
+  .grid-area--recommendations,
+  .grid-area--live-recommendations {
     grid-column: 1 !important;
     grid-row: auto !important;
   }
@@ -1907,5 +1905,19 @@
 .dashboard-header-collapse-toggle:active {
   transform: scale(0.95);
 }
+.recommendation-spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid color-mix(in srgb, var(--color-primary) 18%, transparent);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: recommendation-spin 0.75s linear infinite;
+}
 
+@keyframes recommendation-spin {
+  to { transform: rotate(360deg); }
+}
 
+@media (prefers-reduced-motion: reduce) {
+  .recommendation-spinner { animation-duration: 1.5s; }
+}

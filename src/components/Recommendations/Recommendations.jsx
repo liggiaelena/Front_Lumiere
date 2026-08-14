@@ -31,9 +31,9 @@ export default function Recommendations({
 }) {
   const { lang } = useLanguage()
   const c = COPY[lang] || COPY.en
-  const safe = Array.isArray(recommendations) ? recommendations : []
+  const safe = Array.isArray(recommendations) ? recommendations.slice(0, 8) : []
 
-  if (status === 'pending' || status === 'loading') return <section className="live-recommendations live-recommendations--state">{c.pending}</section>
+  if (status === 'pending' || status === 'loading') return <section className="live-recommendations live-recommendations--state" role="status" aria-label={c.pending}><span className="recommendation-spinner" aria-hidden="true" /></section>
   if (status === 'unavailable') {
     return <section className="live-recommendations live-recommendations--state"><strong>{c.unavailable}</strong>{error && <p>{error}</p>}</section>
   }
