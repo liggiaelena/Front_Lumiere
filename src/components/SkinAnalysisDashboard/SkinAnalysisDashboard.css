@@ -303,8 +303,7 @@
 .grid-area--under-eye { grid-column: 2; grid-row: 1; }
 
 .grid-area--live-recommendations {
-  grid-column: 1 / -1;
-  grid-row: 6;
+  margin: 0 var(--spacing-xl) var(--spacing-xl);
   min-width: 0;
   display: grid;
   gap: 0;
@@ -313,6 +312,12 @@
   border: 1px solid var(--color-accent-light);
   border-radius: var(--card-radius);
   box-shadow: var(--shadow-sm);
+}
+
+#dashboard-main-grid,
+.dashboard__section-detail,
+#live-recommendations-section {
+  scroll-margin-top: calc(var(--header-height) + var(--spacing-md));
 }
 
 .grid-area--live-recommendations > .grid-area--sensitive-skin {
@@ -1314,7 +1319,6 @@
   /* Keep the desktop card order on tablets. */
   .grid-area--main-visual { grid-column: 1; grid-row: 1; }
   .grid-area--under-eye { grid-column: 2; grid-row: 1; }
-  .grid-area--live-recommendations { grid-column: 1 / -1; grid-row: 6; }
   .grid-area--skin-tone { grid-column: 1 / -1; grid-row: 3; }
   .grid-area--texture-spots { grid-column: 1; grid-row: 4; }
   .grid-area--multi-zone { grid-column: 2; grid-row: 4; }
@@ -1343,10 +1347,13 @@
   .grid-area--under-eye,
   .grid-area--sensitive-skin,
   .grid-area--conditions,
-  .grid-area--recommendations,
-  .grid-area--live-recommendations {
+  .grid-area--recommendations {
     grid-column: 1 !important;
     grid-row: auto !important;
+  }
+
+  .grid-area--live-recommendations {
+    margin: 0 var(--spacing-md) 80px;
   }
 
   .bottom-tab-bar {

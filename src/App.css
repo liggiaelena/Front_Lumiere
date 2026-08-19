@@ -199,13 +199,52 @@ body {
 
 @media (max-width: 680px) {
   .app__header-inner {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.6rem 0.75rem;
+    align-items: center;
+  }
+
+  .app__logo {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .app__header-titles {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+  }
+
+  .app__account {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: 100%;
+    padding: 0.6rem 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--color-accent-light);
+  }
+
+  .app__account > span {
+    min-width: 0;
+    margin-right: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .app__lang-switcher {
-    order: 3;
+    grid-column: 1 / -1;
+    grid-row: 3;
     width: 100%;
-    overflow-x: auto;
+    margin-left: 0;
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+
+  .app__lang-btn {
+    flex: 1 1 2.65rem;
+    padding-inline: 0.4rem;
   }
 }
 

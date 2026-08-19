@@ -210,6 +210,22 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
       : selectedAllergens.filter((value) => value !== allergen)
     setSelectedAllergens(next)
   }
+
+  const handleSectionNavigation = (section) => {
+    setActiveSection(section)
+    // Detail sections are conditionally rendered, so wait for React to commit
+    // the selected section before locating and scrolling to it.
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        const targetId = section === 'overview'
+          ? 'dashboard-main-grid'
+          : section === 'recommendations'
+            ? 'live-recommendations-section'
+            : `section-detail-${section}`
+        document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      })
+    })
+  }
   const safeSegformerMap = (segformerMapFromResult && typeof segformerMapFromResult === 'object')
     ? segformerMapFromResult : {}
   const safeConditionMap = {
@@ -275,7 +291,7 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
         {/* Left Sidebar */}
         <DashboardSidebar
           activeSection={activeSection}
-          onSectionChange={setActiveSection}
+          onSectionChange={handleSectionNavigation}
           onNewAnalysis={onNewAnalysis}
           isCollapsed={isSidebarCollapsed}
           onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
@@ -287,40 +303,6 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
               Bento Grid — always visible (Overview)
              ───────────────────────────────────────── */}
           <main className="dashboard__grid" id="dashboard-main-grid">
-            {/* Unified allergen controls and live recommendations */}
-            <div className="grid-area--live-recommendations">
-              <SensitiveSkinCard
-                enabled={sensitiveMode}
-                allergens={catalogAllergens}
-                selectedAllergens={selectedAllergens}
-                loading={recommendationLoading}
-                error={recommendationError}
-                strategy={recommendationStrategy}
-                fallbackUsed={recommendationFallbackUsed}
-                onEnabledChange={handleSensitiveModeChange}
-                onAllergenChange={handleAllergenChange}
-                onApply={() => updateRecommendations(selectedAllergens)}
-              />
-              {recommendations_blocked ? (
-                <div className="recommendations-blocked">
-                  <h3 className="analysis-result__section-title">
-                    {t.recommendationsBlocked?.title ?? 'Recommendations paused'}
-                  </h3>
-                  <p>{t.recommendationsBlocked?.message ?? 'Makeup recommendations are paused because this result may require medical review first.'}</p>
-                </div>
-              ) : (
-                <Recommendations
-                  recommendations={safeRecommendations}
-                  status={recommendationStatus}
-                  error={recommendationError}
-                  searchSummary={recommendationSummary}
-                  model={recommendationModel}
-                  strategy={recommendationStrategy}
-                  fallbackUsed={recommendationFallbackUsed}
-                />
-              )}
-            </div>
-
             {/* ── Col 1, Row 1-2: Main Visual Card ── */}
             <MainVisualCard
               imageUrl={face_image || imageUrl}
@@ -345,6 +327,15 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
               </article>
             )}
 
+            {/* DOM order puts region analysis first on mobile; desktop grid placement is unchanged. */}
+            <RegionDetailCard
+              selectedRegion={selectedRegion}
+              regioes={regioes}
+              conditions={selectedRegion ? conditionsByRegion[selectedRegion] : []}
+              imageUrl={face_image || imageUrl}
+              faceDetection={face_image ? null : face_detection}
+            />
+
             {/* ── Col 2, Row 1: Skin Tone Card ── */}
             <SkinToneCard
               tomGeralHex={tom_geral_hex}
@@ -352,15 +343,6 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
               subtomPredominante={subtom_predominante}
               skinTone={skin_tone}
               regioes={regioes}
-            />
-
-            {/* ── Col 2, Row 2: Region Detail Card ── */}
-            <RegionDetailCard
-              selectedRegion={selectedRegion}
-              regioes={regioes}
-              conditions={selectedRegion ? conditionsByRegion[selectedRegion] : []}
-              imageUrl={face_image || imageUrl}
-              faceDetection={face_image ? null : face_detection}
             />
 
             {/* ── Col 3, Row 1: Texture & Spots ── */}
@@ -378,7 +360,7 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
           {/* ─────────────────────────────────────────
               Section Detail Area — driven by sidebar / tab selection
              ───────────────────────────────────────── */}
-          {activeSection !== 'overview' && (
+          {activeSection !== 'overview' && activeSection !== 'recommendations' && (
             <section
               className="dashboard__section-detail"
               id={`section-detail-${activeSection}`}
@@ -410,31 +392,42 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
               {activeSection === 'conditions' && (
                 <ConditionsPanel conditionMap={safeSegformerMap} />
               )}
-
-              {activeSection === 'recommendations' && (
-                <div id="full-recommendations-section">
-                  {recommendations_blocked ? (
-                    <div className="recommendations-blocked">
-                      <h3 className="analysis-result__section-title">
-                        {t.recommendationsBlocked?.title ?? 'Recommendations paused'}
-                      </h3>
-                      <p>{t.recommendationsBlocked?.message ?? 'Makeup recommendations are paused because this result may require medical review first.'}</p>
-                    </div>
-                  ) : (
-                    <Recommendations
-                      recommendations={safeRecommendations}
-                      status={recommendationStatus}
-                      error={recommendationError}
-                      searchSummary={recommendationSummary}
-                      model={recommendationModel}
-                      strategy={recommendationStrategy}
-                      fallbackUsed={recommendationFallbackUsed}
-                    />
-                  )}
-                </div>
-              )}
             </section>
           )}
+
+          {/* Final body section: allergen controls and persisted recommendations */}
+          <div className="grid-area--live-recommendations" id="live-recommendations-section">
+            <SensitiveSkinCard
+              enabled={sensitiveMode}
+              allergens={catalogAllergens}
+              selectedAllergens={selectedAllergens}
+              loading={recommendationLoading}
+              error={recommendationError}
+              strategy={recommendationStrategy}
+              fallbackUsed={recommendationFallbackUsed}
+              onEnabledChange={handleSensitiveModeChange}
+              onAllergenChange={handleAllergenChange}
+              onApply={() => updateRecommendations(selectedAllergens)}
+            />
+            {recommendations_blocked ? (
+              <div className="recommendations-blocked">
+                <h3 className="analysis-result__section-title">
+                  {t.recommendationsBlocked?.title ?? 'Recommendations paused'}
+                </h3>
+                <p>{t.recommendationsBlocked?.message ?? 'Makeup recommendations are paused because this result may require medical review first.'}</p>
+              </div>
+            ) : (
+              <Recommendations
+                recommendations={safeRecommendations}
+                status={recommendationStatus}
+                error={recommendationError}
+                searchSummary={recommendationSummary}
+                model={recommendationModel}
+                strategy={recommendationStrategy}
+                fallbackUsed={recommendationFallbackUsed}
+              />
+            )}
+          </div>
         </div>
       </div>
 
@@ -447,7 +440,7 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
               id={`bottom-tab-${key}`}
               type="button"
               className={`bottom-tab-bar__item${activeSection === key ? ' active' : ''}`}
-              onClick={() => setActiveSection(key)}
+              onClick={() => handleSectionNavigation(key)}
               aria-current={activeSection === key ? 'page' : undefined}
             >
               <TabIcon section={key} />
