@@ -23,9 +23,9 @@ export default function RecommendationsCard({ recommendations = [], status = 're
       </div>
       <div className="bento-card__body">
         <p className={`reco-card__live-source${fallbackUsed ? ' reco-card__live-source--fallback' : ''}`}><span />{fallbackUsed ? c.fallback : c.live}</p>
-        {status === 'pending' || status === 'loading' ? <div className="reco-card__state" role="status" aria-label={c.searching}><span className="recommendation-spinner" aria-hidden="true" /></div> : null}
-        {status === 'unavailable' ? <p className="reco-card__state reco-card__state--error" title={error}>{c.unavailable}</p> : null}
-        {status === 'ready' && safe.length === 0 ? <p className="reco-card__state">{c.empty}</p> : null}
+        {['pending', 'loading', 'queued', 'processing', 'fallback_processing'].includes(status) ? <div className="reco-card__state" role="status" aria-label={c.searching}><span className="recommendation-spinner" aria-hidden="true" /></div> : null}
+        {['unavailable', 'failed'].includes(status) ? <p className="reco-card__state reco-card__state--error" title={error}>{c.unavailable}</p> : null}
+        {['ready', 'fallback_ready'].includes(status) && safe.length === 0 ? <p className="reco-card__state">{c.empty}</p> : null}
         <div className="reco-card__product-list">
           {safe.slice(0, 3).map((rec, i) => (
             <div key={`${rec?.brand}-${rec?.shade_code}-${i}`} className="reco-product-item">

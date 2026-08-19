@@ -33,8 +33,8 @@ export default function Recommendations({
   const c = COPY[lang] || COPY.en
   const safe = Array.isArray(recommendations) ? recommendations.slice(0, 8) : []
 
-  if (status === 'pending' || status === 'loading') return <section className="live-recommendations live-recommendations--state" role="status" aria-label={c.pending}><span className="recommendation-spinner" aria-hidden="true" /></section>
-  if (status === 'unavailable') {
+  if (['pending', 'loading', 'queued', 'processing', 'fallback_processing'].includes(status)) return <section className="live-recommendations live-recommendations--state" role="status" aria-label={c.pending}><span className="recommendation-spinner" aria-hidden="true" /><span>{c.pending}</span></section>
+  if (status === 'unavailable' || status === 'failed') {
     return <section className="live-recommendations live-recommendations--state"><strong>{c.unavailable}</strong>{error && <p>{error}</p>}</section>
   }
   if (safe.length === 0) return <section className="live-recommendations live-recommendations--state">{c.empty}</section>

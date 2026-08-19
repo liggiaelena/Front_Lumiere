@@ -7,11 +7,12 @@ import CameraCapture from './components/CameraCapture/CameraCapture.jsx'
 import FacePreview from './components/FacePreview/FacePreview.jsx'
 import SkinAnalysisDashboard from './components/SkinAnalysisDashboard/SkinAnalysisDashboard.jsx'
 import FaceScanningAnimation from './components/FaceScanningAnimation/FaceScanningAnimation.jsx'
+import AnalysisJobLoading from './components/AnalysisJobLoading/AnalysisJobLoading.jsx'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.jsx'
 import AnalysisHistory from './components/AnalysisHistory/AnalysisHistory.jsx'
 import './components/ErrorBoundary/ErrorBoundary.css'
 import { useAnalysis } from './hooks/useAnalysis.js'
-import { clearSession, getAnalysis, getCurrentUser, hasSession } from './services/api.js'
+import { clearSession, getCurrentUser, hasSession } from './services/api.js'
 
 const LANGUAGES = [
   { code: 'en', label: 'EN' },
@@ -40,10 +41,10 @@ function AppInner() {
   const [showCamera, setShowCamera] = useState(false)
   const [user, setUser] = useState(null)
 
-  const { loading, error, result, analyze, reset, showResult } = useAnalysis({
+  const { loading, error, result, jobStatus, analyze, reset, showResult, resumeAnalysis } = useAnalysis({
     setStep,
-    onAnalysisComplete: (data) => {
-      window.history.pushState({}, '', `/analyze/${encodeURIComponent(data.id)}`)
+    onJobAccepted: (job) => {
+      window.history.pushState({}, '', `/analyze/${encodeURIComponent(job.id)}`)
     },
   })
 
@@ -52,12 +53,15 @@ function AppInner() {
 
     async function restoreRoute() {
       const route = routeFromPathname(window.location.pathname)
-      const protectedRoute = route.step === 'history' || route.step === 'loading-result'
+      const protectedRoute = route.step === 'history'
 
       if (!hasSession()) {
         if (protectedRoute) {
           window.history.replaceState({}, '', '/')
           setStep('landing')
+        } else if (route.step === 'loading-result') {
+          setUser(null)
+          resumeAnalysis(route.analysisId).catch(() => {})
         } else {
           setStep(route.step)
         }
@@ -71,8 +75,12 @@ function AppInner() {
         if (!active) return
         clearSession()
         setUser(null)
-        window.history.replaceState({}, '', '/')
-        setStep('landing')
+        if (route.step === 'loading-result') {
+          resumeAnalysis(route.analysisId).catch(() => {})
+        } else {
+          window.history.replaceState({}, '', '/')
+          setStep('landing')
+        }
         return
       }
 
@@ -83,15 +91,7 @@ function AppInner() {
         window.history.replaceState({}, '', '/upload')
         setStep('upload')
       } else if (route.step === 'loading-result') {
-        setStep('loading-result')
-        try {
-          const analysis = await getAnalysis(route.analysisId)
-          if (active) showResult(analysis)
-        } catch {
-          if (!active) return
-          window.history.replaceState({}, '', '/history')
-          setStep('history')
-        }
+        resumeAnalysis(route.analysisId).catch(() => {})
       } else {
         setStep(route.step)
       }
@@ -237,11 +237,13 @@ function AppInner() {
         )}
 
         {step === 'loading-result' && (
-          <div className="app__loading" role="status" aria-live="polite">…</div>
+          <AnalysisJobLoading status={jobStatus} />
         )}
 
-        {step === 'analyzing' && imageUrl && (
-          <FaceScanningAnimation imageUrl={imageUrl} />
+        {step === 'analyzing' && (
+          imageUrl
+            ? <FaceScanningAnimation imageUrl={imageUrl} status={jobStatus} />
+            : <AnalysisJobLoading status={jobStatus} />
         )}
 
         {/* Dashboard replaces the old flat AnalysisResult layout */}

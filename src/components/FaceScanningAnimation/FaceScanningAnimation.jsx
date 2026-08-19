@@ -8,7 +8,6 @@ const STEPS = [
   'Analyzing right cheek...',
   'Analyzing nose...',
   'Analyzing chin...',
-  'Matching foundation shades...',
   'Preparing your results...',
 ]
 

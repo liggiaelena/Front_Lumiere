@@ -70,17 +70,33 @@ export async function getAnalysis(analysisId) {
   return response.data
 }
 
+export async function getAnalysisStatus(analysisId, { signal } = {}) {
+  const response = await api.get(`/api/analyze/${encodeURIComponent(analysisId)}/status`, { signal })
+  return response.data
+}
+
 export async function getCatalogAllergens() {
   const response = await api.get('/api/products/allergens')
   return Array.isArray(response.data?.allergens) ? response.data.allergens : []
 }
 
-export async function refreshRecommendations(analysisId, excludedAllergens = [], { forceFallback = false } = {}) {
-  const response = await api.get(`/api/analyze/${encodeURIComponent(analysisId)}/recommendation`, {
-    params: {
-      excluded_allergens: excludedAllergens.join(','),
-      ...(forceFallback ? { force_fallback: true } : {}),
-    },
+export async function requestRecommendations(analysisId, excludedAllergens = [], { forceFallback = false, lang = 'en' } = {}) {
+  const response = await api.post(`/api/analyze/${encodeURIComponent(analysisId)}/recommendations`, {
+    excluded_allergens: excludedAllergens,
+    force_fallback: forceFallback,
+    lang,
   })
+  return response.data
+}
+
+
+export async function getRecommendationStatus(jobId, { signal } = {}) {
+  const response = await api.get(`/api/recommendation-jobs/${encodeURIComponent(jobId)}/status`, { signal })
+  return response.data
+}
+
+
+export async function getSavedRecommendations(analysisId) {
+  const response = await api.get(`/api/analyze/${encodeURIComponent(analysisId)}/recommendations`)
   return response.data
 }

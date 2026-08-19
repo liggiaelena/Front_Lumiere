@@ -33,7 +33,7 @@ import RegionCard from '../RegionCard/RegionCard.jsx'
 import ConditionsPanel from '../ConditionsPanel/ConditionsPanel.jsx'
 import Recommendations from '../Recommendations/Recommendations.jsx'
 import { useLanguage } from '../../i18n/LanguageContext.jsx'
-import { getCatalogAllergens, refreshRecommendations } from '../../services/api.js'
+import { getCatalogAllergens, getRecommendationStatus, getSavedRecommendations, requestRecommendations } from '../../services/api.js'
 
 /* ── Constants ── */
 const REGION_ORDER = ['testa', 'bochecha_e', 'bochecha_d', 'nariz', 'queixo']
@@ -43,8 +43,6 @@ const ZONE_TO_REGION_KEY = {
 }
 
 const CONFIRM_TEXT = { en: 'Confirm', tw: '確認', zh: '确认', pt: 'Confirmar', fr: 'Confirmer', tr: 'Onayla' }
-const RECOMMENDATION_POLL_ATTEMPTS = 6
-const RECOMMENDATION_POLL_INTERVAL_MS = 10000
 
 /* Mobile bottom tab bar labels */
 const TAB_LABELS = {
@@ -112,6 +110,7 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
     recommendations_model,
     recommendations_strategy,
     recommendations_fallback_used,
+    recommendation_job_id,
     condition_overlay,
     face_detection,
     face_image,
@@ -148,6 +147,19 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
     setRecommendationFallbackUsed(forceFallback || response?.recommendations_fallback_used === true)
   }
 
+  const pollRecommendation = async (jobId, requestId) => {
+    while (requestId === recommendationRequestId.current) {
+      const status = await getRecommendationStatus(jobId)
+      if (!['queued', 'processing', 'fallback_processing'].includes(status?.status)) {
+        const saved = await getSavedRecommendations(result.id)
+        if (requestId === recommendationRequestId.current) applyRecommendationResponse(saved)
+        return
+      }
+      setRecommendationStatus(status.status)
+      await new Promise(resolve => window.setTimeout(resolve, (status.poll_after_seconds || 5) * 1000))
+    }
+  }
+
   const updateRecommendations = async (excluded) => {
     if (!result?.id) {
       setRecommendationError('This analysis has no ID. Please run a new analysis.')
@@ -158,37 +170,13 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
     setRecommendationStatus('loading')
     setRecommendationError('')
     try {
-      let response
-
-      for (let attempt = 0; attempt < RECOMMENDATION_POLL_ATTEMPTS; attempt += 1) {
-        if (attempt > 0) {
-          await new Promise(resolve => window.setTimeout(resolve, RECOMMENDATION_POLL_INTERVAL_MS))
-        }
-        if (requestId !== recommendationRequestId.current) return
-
-        try {
-          response = await refreshRecommendations(result.id, excluded)
-        } catch {
-          break
-        }
-
-        if (!['pending', 'loading'].includes(response?.recommendations_status)) {
-          if (requestId === recommendationRequestId.current) applyRecommendationResponse(response)
-          return
-        }
-      }
-
+      const response = await requestRecommendations(result.id, excluded, { lang })
       if (requestId !== recommendationRequestId.current) return
-      setRecommendationStatus('loading')
-      const fallbackResponse = await refreshRecommendations(result.id, excluded, { forceFallback: true })
-      if (requestId !== recommendationRequestId.current) return
-      if (['pending', 'loading'].includes(fallbackResponse?.recommendations_status)) {
-        setRecommendationStatus('unavailable')
-        setRecommendationFallbackUsed(true)
-        setRecommendationError('The stored Neon catalogue did not return a final result.')
+      if (['ready', 'fallback_ready', 'blocked', 'failed'].includes(response?.recommendations_status)) {
+        applyRecommendationResponse(response)
         return
       }
-      applyRecommendationResponse(fallbackResponse, true)
+      await pollRecommendation(response.recommendation_job_id, requestId)
     } catch (fallbackError) {
       if (requestId !== recommendationRequestId.current) return
       setRecommendationStatus('unavailable')
@@ -198,17 +186,16 @@ export default function SkinAnalysisDashboard({ result, imageUrl, onNewAnalysis 
     }
   }
   useEffect(() => {
-    const analysisId = result?.id
-    if (
-      !analysisId ||
-      recommendations_blocked ||
-      recommendations_status !== 'pending' ||
-      automaticallyRequestedIds.current.has(analysisId)
-    ) return
-
-    automaticallyRequestedIds.current.add(analysisId)
-    updateRecommendations([])
-  }, [result?.id, recommendations_blocked, recommendations_status])
+    if (!result?.id || !recommendation_job_id || recommendations_blocked ||
+        !['queued', 'processing', 'fallback_processing'].includes(recommendations_status) ||
+        automaticallyRequestedIds.current.has(recommendation_job_id)) return
+    automaticallyRequestedIds.current.add(recommendation_job_id)
+    const requestId = ++recommendationRequestId.current
+    setRecommendationLoading(true)
+    pollRecommendation(recommendation_job_id, requestId)
+      .catch(() => setRecommendationError('Unable to refresh recommendations.'))
+      .finally(() => { if (requestId === recommendationRequestId.current) setRecommendationLoading(false) })
+  }, [result?.id, recommendation_job_id, recommendations_blocked, recommendations_status])
   const handleSensitiveModeChange = (enabled) => {
     setSensitiveMode(enabled)
     if (!enabled) {
