@@ -41,7 +41,7 @@ function AppInner() {
   const [showCamera, setShowCamera] = useState(false)
   const [user, setUser] = useState(null)
 
-  const { loading, error, result, jobStatus, analyze, reset, showResult, resumeAnalysis } = useAnalysis({
+  const { loading, error, result, jobStatus, analyze, reset, dismissError, showResult, resumeAnalysis } = useAnalysis({
     setStep,
     onJobAccepted: (job) => {
       window.history.pushState({}, '', `/analyze/${encodeURIComponent(job.id)}`)
@@ -257,15 +257,33 @@ function AppInner() {
           </ErrorBoundary>
         )}
 
-        {error && step !== 'analyzing' && (
-          <div className="app__error">
-            <p className="app__error-message">{error}</p>
-            <button className="app__error-retry" onClick={handleRetry}>
+      </main>
+
+      {error && (
+        <div className="error-dialog__backdrop" role="presentation">
+          <section
+            className="error-dialog"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="analysis-error-title"
+            aria-describedby="analysis-error-message"
+          >
+            <button
+              type="button"
+              className="error-dialog__close"
+              aria-label="Close"
+              onClick={dismissError}
+            >
+              ×
+            </button>
+            <h2 id="analysis-error-title">{t.errors?.title ?? 'Analysis failed'}</h2>
+            <p id="analysis-error-message">{error}</p>
+            <button type="button" className="error-dialog__retry" onClick={handleRetry}>
               {t.errors.tryAgain}
             </button>
-          </div>
-        )}
-      </main>
+          </section>
+        </div>
+      )}
 
       {showCamera && (
         <CameraCapture

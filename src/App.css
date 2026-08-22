@@ -327,3 +327,60 @@ button, p, h1, h2, h3, h4, h5, h6, span, label, a, li {
 .app__main--landing {
   max-width: 1180px;
 }
+
+.error-dialog__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: var(--spacing-md);
+  background: rgba(var(--color-black-rgb), 0.55);
+}
+
+.error-dialog {
+  position: relative;
+  width: min(100%, 460px);
+  padding: var(--spacing-xl);
+  border: 1px solid rgba(var(--color-error-rgb), 0.3);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+
+.error-dialog h2 {
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-error);
+}
+
+.error-dialog p {
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-text);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.error-dialog__close {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  width: 36px;
+  height: 36px;
+  border: 0;
+  background: transparent;
+  color: var(--color-muted-text);
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.error-dialog__retry {
+  min-width: 140px;
+  padding: 0.7rem 1.25rem;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  color: var(--color-white);
+  font-weight: 700;
+  cursor: pointer;
+}

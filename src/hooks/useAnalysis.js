@@ -4,6 +4,17 @@ import { useLanguage } from '../i18n/LanguageContext.jsx'
 
 const TERMINAL_FAILURES = new Set(['failed', 'cancelled', 'expired'])
 
+function responseErrorMessage(err, fallback) {
+  const data = err?.response?.data
+  const detail = data?.detail
+  return data?.message
+    || data?.error
+    || data?.analysis_error
+    || (typeof detail === 'string' ? detail : detail?.message)
+    || err?.message
+    || fallback
+}
+
 function wait(milliseconds, signal) {
   return new Promise((resolve, reject) => {
     const timer = window.setTimeout(resolve, milliseconds)
@@ -43,8 +54,14 @@ export function useAnalysis({ setStep, onJobAccepted }) {
           return data
         }
         if (TERMINAL_FAILURES.has(status.analysis_status)) {
-          const terminalError = new Error(status.analysis_error || 'Analysis could not be completed.')
+          const terminalError = new Error(
+            status.message
+              || status.error
+              || status.analysis_error
+              || 'Analysis could not be completed.',
+          )
           terminalError.isTerminal = true
+          terminalError.code = status.error_code
           throw terminalError
         }
         await wait((status.poll_after_seconds || 2) * 1000, controller.signal)
@@ -70,12 +87,8 @@ export function useAnalysis({ setStep, onJobAccepted }) {
       await pollUntilReady(job.id)
     } catch (err) {
       const message = err?.response?.status === 429
-        ? (err.response.data?.detail?.message || 'The analysis queue is full. Please try again shortly.')
-        : err?.response?.status === 413
-          ? t.errors.tooLarge
-          : err?.response?.status === 422
-            ? t.errors.noFace
-            : (err?.message || t.errors.generic)
+        ? responseErrorMessage(err, 'The analysis queue is full. Please try again shortly.')
+        : responseErrorMessage(err, t.errors.generic)
       setError(message)
       setStep('preview')
       setLoading(false)
@@ -89,7 +102,7 @@ export function useAnalysis({ setStep, onJobAccepted }) {
     try {
       return await pollUntilReady(analysisId)
     } catch (err) {
-      setError(err?.message || t.errors.generic)
+      setError(responseErrorMessage(err, t.errors.generic))
       setLoading(false)
       throw err
     }
@@ -103,6 +116,10 @@ export function useAnalysis({ setStep, onJobAccepted }) {
     setJobStatus(null)
   }
 
+  function dismissError() {
+    setError(null)
+  }
+
   function showResult(data) {
     controllerRef.current?.abort()
     setError(null)
@@ -111,5 +128,5 @@ export function useAnalysis({ setStep, onJobAccepted }) {
     setStep('result')
   }
 
-  return { loading, error, result, jobStatus, analyze, reset, showResult, resumeAnalysis }
+  return { loading, error, result, jobStatus, analyze, reset, dismissError, showResult, resumeAnalysis }
 }
